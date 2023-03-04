@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/quotes_card_view"
+            app:cardBackgroundColor="#EFEAEA"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_quotes"
+                    android:text="QUOTES | QUOTES | QUOTES | QUOTES"
+                    android:layout_toLeftOf="@id/iv_delete"
+                    android:layout_margin="5dp"
+                    />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:id="@+id/iv_delete"
+                    android:src="@drawable/ic_delete"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="5dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_auther"
+                    android:text="~ Auther"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/tv_quotes"
+                    android:layout_marginRight="2dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    />
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
+</layout>

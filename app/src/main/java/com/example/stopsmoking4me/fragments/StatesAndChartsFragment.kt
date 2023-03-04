@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.example.stopsmoking4me.R
 import com.example.stopsmoking4me.databinding.FragmentStatesAndChartsBinding
 
-//
+// https://www.codingdemos.com/draw-android-line-chart/
 class StatesAndChartsFragment : Fragment() {
     private lateinit var binding: FragmentStatesAndChartsBinding
     private var xAxisData = arrayOf("1/3/2023", "2/3/2023", "3/3/2023", "4/3/2023", "5/3/2023", "6/3/2023", "7/3/2023")

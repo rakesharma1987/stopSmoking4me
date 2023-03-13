@@ -5,29 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.StatesAndChartsFragment">
+    tools:context=".fragments.StatesAndChartsFragment"
+    android:padding="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/rl_yes_no"
         app:layout_constraintHeight_percent=".5"
-        app:layout_constraintTop_toTopOf="parent">
-        <lecho.lib.hellocharts.view.LineChartView
-            android:id="@+id/chart_yes_no"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="10dp">
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graph_yes_no"
             android:layout_width="match_parent"
-            android:layout_height="0dp" />
+            android:layout_height="match_parent"
+            />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/rl_reason"
         app:layout_constraintHeight_percent=".5"
-        app:layout_constraintTop_toTopOf="parent">
-        <lecho.lib.hellocharts.view.LineChartView
-            android:id="@+id/chart_reason"
+        app:layout_constraintTop_toBottomOf="@id/rl_yes_no"
+        android:layout_marginTop="10dp">
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graph_reason"
             android:layout_width="match_parent"
-            android:layout_height="0dp" />
+            android:layout_height="match_parent" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

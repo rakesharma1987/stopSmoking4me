@@ -6,16 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.stopsmoking4me.R
 import com.example.stopsmoking4me.databinding.FragmentStatesAndChartsBinding
-import com.jjoe64.graphview.GraphView
-import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
-import java.util.*
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
 class StatesAndChartsFragment : Fragment() {
     private lateinit var binding: FragmentStatesAndChartsBinding
-    lateinit var lineGraphView: GraphView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,41 +33,38 @@ class StatesAndChartsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val series: LineGraphSeries<DataPoint> = LineGraphSeries(
-            arrayOf(
-                // on below line we are adding
-                // each point on our x and y axis.
-                DataPoint(Date("6/3/23"), 1.0),
-                DataPoint(Date("7/3/23"), 2.0),
-                DataPoint(Date("8/3/23"), 4.0),
-                DataPoint(Date("9/3/23"), 5.0),
-                DataPoint(Date("10/3/23"), 7.0),
-                DataPoint(Date("11/3/23"), 8.0),
-                DataPoint(Date("12/3/23"), 10.0),
-            )
-        )
+        var xAxis: XAxis = binding.activityMainLinechart.xAxis
+//        xAxis.valueFormatter
 
-        // on below line adding animation
-        lineGraphView.animate()
+//        setLineChartData()
 
-        // on below line we are setting scrollable
-        // for point graph view
-        lineGraphView.viewport.isScrollable = true
+        }
+    private fun setLineChartData(yesLine: ArrayList<Entry>, noLine: ArrayList<Entry>){
+        var dataSet: ArrayList<LineDataSet> = arrayListOf()
 
-        // on below line we are setting scalable.
-        lineGraphView.viewport.isScalable = true
+        val yesLineDataSet = LineDataSet(yesLine, "Yes")
+        yesLineDataSet.setDrawCircleHole(true)
+        yesLineDataSet.setCircleRadius(4f)
+        yesLineDataSet.setDrawValues(false)
+        yesLineDataSet.lineWidth = 3f
+        yesLineDataSet.setColor(Color.GREEN)
+        yesLineDataSet.setCircleColor(Color.GREEN)
+        dataSet.add(yesLineDataSet)
 
-        // on below line we are setting scalable y
-        lineGraphView.viewport.setScalableY(true)
+        val noLineDataSet = LineDataSet(noLine, "No")
+        noLineDataSet.setDrawCircleHole(true)
+        noLineDataSet.setCircleRadius(4f)
+        noLineDataSet.setDrawValues(false)
+        noLineDataSet.lineWidth = 3f
+        noLineDataSet.setColor(Color.RED)
+        noLineDataSet.setCircleColor(Color.RED)
+        dataSet.add(noLineDataSet)
 
-        // on below line we are setting scrollable y
-        lineGraphView.viewport.setScrollableY(true)
 
-        // on below line we are setting color for series.
-        series.color = R.color.purple_200
+        val lineData = LineData(dataSet as List<ILineDataSet>?)
+        binding.activityMainLinechart.data = lineData
+        binding.activityMainLinechart.invalidate()
 
-        // on below line we are adding
-        // data series to our graph view.
-        lineGraphView.addSeries(series)
+
     }
 }

@@ -143,7 +143,8 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                     override fun run() {
                         binding.btnYes.isEnabled = true
 
-                        (requireContext() as MainActivity).reasonData.date = Calendar.getInstance().time!!
+//                        (requireContext() as MainActivity).reasonData.date = Calendar.getInstance().time!!
+                        (requireContext() as MainActivity).reasonData.date = (requireContext() as MainActivity).getSystemDate()
                         (requireContext() as MainActivity).reasonData.yesOrNo = true
                         btnYesOrNoClicked = btnYesOrNoClicked.plus(1)
                         blinkTextViewReason()
@@ -176,7 +177,8 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                             alertDialog.setTitle(getString(R.string.app_name))
                             alertDialog.setMessage("You have choosen NO \n Thank You")
                             alertDialog.setPositiveButton("Ok") { dialog, which ->
-                                (requireContext() as MainActivity).reasonData.date = Calendar.getInstance().time!!
+//                                (requireContext() as MainActivity).reasonData.date =
+                                (requireContext() as MainActivity).reasonData.date = (requireContext() as MainActivity).getSystemDate()
                                 (requireContext() as MainActivity).viewModel.saveReason((requireContext() as MainActivity).reasonData)
                                 dialog!!.dismiss()
                             }

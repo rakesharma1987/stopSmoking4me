@@ -50,6 +50,9 @@ interface AppDao {
     @Query("SELECT * from reason GROUP BY yesOrNo")
     fun getTotalCount(): LiveData<Reason>
 
+//    @Query("SELECT yesOrNo,  date, count(*) from Reason GROUP BY yesOrNo, date")
+//    fun getYesNoCountDateWise()
+
 
 
 }

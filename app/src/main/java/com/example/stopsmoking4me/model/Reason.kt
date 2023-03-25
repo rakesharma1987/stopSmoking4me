@@ -16,5 +16,6 @@ data class Reason(
     var whomName: String = "",
     var dropDownReason: String = "",
     var yesOrNo: Boolean = false,
-    var date: Date = Date(),
+    var date: String = ""
+//    var date: Date = Date(),
 )

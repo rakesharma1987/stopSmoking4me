@@ -229,7 +229,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getSystemDate(): String{
-        val simpleDateFormat: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.US)
+        val simpleDateFormat: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
         return simpleDateFormat.format(Date())
     }
 }

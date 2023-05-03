@@ -27,6 +27,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 val tabsArray = arrayOf("Take My \n Permission", "Quotes", "States \u0026 Charts")
 val titlesArray = arrayOf("Mr.", "Mrs.", "Ms.", "Miss")
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
     var reasonData = Reason()
     private var countYes: Int = 0
     private var countNo: Int = 0
+    var reasonList = ArrayList<Reason>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -174,6 +176,10 @@ class MainActivity : AppCompatActivity() {
         
         viewModel.getTotalCount().observe(this@MainActivity, Observer {
             Log.d("Reason: ", "onResume: $it")
+        })
+
+        viewModel.getReason().observe(this, Observer {
+            reasonList = it as ArrayList<Reason>
         })
     }
 

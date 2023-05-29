@@ -181,6 +181,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.getReason().observe(this, Observer {
             reasonList = it as ArrayList<Reason>
         })
+        Log.d("REASON_LIST", "onResume: $reasonList")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -8,6 +8,7 @@ import androidx.room.Query
 import com.example.stopsmoking4me.model.Reason
 import com.example.stopsmoking4me.model.Messages
 import com.example.stopsmoking4me.model.Quotes
+import java.util.Date
 
 @Dao
 interface AppDao {
@@ -38,8 +39,8 @@ interface AppDao {
     @Query("SELECT (SELECT COUNT(*) FROM reason) == 0")
     fun isEmptyReasonTable(): Boolean
 
-    @Query("SELECT * FROM reason")
-    fun getReason(): LiveData<List<Reason>>
+    @Query("SELECT * FROM reason WHERE date >= :startDate ORDER BY date DESC")
+    fun getReason(startDate : Date): LiveData<List<Reason>>
 
     @Query("SELECT COUNT(yesOrNo) FROM reason WHERE yesOrNo = 1")
     fun getYesCount(): LiveData<Int>

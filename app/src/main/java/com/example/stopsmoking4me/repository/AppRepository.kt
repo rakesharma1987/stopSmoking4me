@@ -1,10 +1,12 @@
 package com.example.stopsmoking4me.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.stopsmoking4me.db.AppDao
 import com.example.stopsmoking4me.model.Reason
 import com.example.stopsmoking4me.model.Messages
 import com.example.stopsmoking4me.model.Quotes
+import java.util.Calendar
 
 class AppRepository(private val appDao: AppDao) {
     suspend fun insertMessages(msgList: List<Messages>){
@@ -44,7 +46,11 @@ class AppRepository(private val appDao: AppDao) {
     }
 
     fun getReason(): LiveData<List<Reason>>{
-        return appDao.getReason()
+        val calender = Calendar.getInstance()
+        calender.add(Calendar.DAY_OF_YEAR, -7)
+        val startDate = calender.time
+        Log.d("START_DATE", "startDate: $startDate")
+        return appDao.getReason(startDate)
     }
 
     fun getYesCount(): LiveData<Int>{

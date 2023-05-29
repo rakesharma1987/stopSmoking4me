@@ -2,6 +2,7 @@ package com.example.stopsmoking4me.fragments
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,16 +17,22 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.github.mikephil.charting.utils.EntryXComparator
+import java.text.SimpleDateFormat
 
 class StatesAndChartsFragment : Fragment() {
     private lateinit var binding: FragmentStatesAndChartsBinding
-    private var reasonList = ArrayList<Reason>()
-    private var count = 0
+    private var dataPoints = ArrayList<Reason>()
+    private lateinit var chart: LineChart
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        dataPoints = (requireActivity() as MainActivity).reasonList
+
+        Log.d("START_DATE", "startDate: $dataPoints")
 
     }
 
@@ -34,153 +41,77 @@ class StatesAndChartsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentStatesAndChartsBinding.inflate(layoutInflater, container, false)
+        chart = binding.chart
 
-        reasonList = (requireActivity() as MainActivity).reasonList
+//        reasonList = (requireActivity() as MainActivity).reasonList
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setLineChartDataForYesNo()
-        setLineChartDataForReason()
+//        setLineChartDataForReason()
 
         }
-    var uniqueDateToList = ArrayList<String>()
-    var trueCountList = ArrayList<String>()
-    var falseCountList = ArrayList<String>()
     private fun setLineChartDataForYesNo(){
+        // Create entries for the chart
+        val entries = mutableListOf<Entry>()
+        val entriesNo = mutableListOf<Entry>()
+        val dates = mutableListOf<String>()
 
-        val uniqueDate = reasonList.map {
-            it.date
-        }.toSet()
-
-
-        uniqueDateToList = uniqueDate.toList() as ArrayList<String>
-
-        trueCountList = uniqueDate.map { date ->
-            reasonList.filter { it.date == date && it.yesOrNo }.count().toString()
-        } as ArrayList<String>
-
-        falseCountList = uniqueDate.map { date ->
-            reasonList.filter { it.date == date && !it.yesOrNo }.count().toString()
-        } as ArrayList<String>
-
-
-        var xValue = ArrayList<String>()
-//        xValue.add("01/03/2023")
-//        xValue.add("02/03/2023")
-//        xValue.add("03/03/2023")
-//        xValue.add("04/03/2023")
-//        xValue.add("05/03/2023")
-//        xValue.add("06/03/2023")
-//        xValue.add("07/03/2023")
-        xValue = uniqueDateToList
-
-        val lineEntryYes = ArrayList<Entry>()
-//        lineEntryYes.add(Entry(10f, 0))
-//        lineEntryYes.add(Entry(20f, 1))
-//        lineEntryYes.add(Entry(30f, 3))
-//        lineEntryYes.add(Entry(40f, 4))
-//        lineEntryYes.add(Entry(50f, 5))
-        var count = 0
-        for (dataYes in trueCountList){
-            lineEntryYes.add(Entry(dataYes.toFloat(), count))
-            count++
+        for (i in dataPoints.indices) {
+            val dataPoint = dataPoints[i]
+            val date = dataPoint.date
+            val formatter = SimpleDateFormat("dd/MM/yyyy")
+            val dateNew = formatter.parse(date)
+            val desiredFormat = SimpleDateFormat("MMM-dd").format(dateNew)
+            val countYes = countOccurrences(dataPoints, date, true)
+            val countNo = countOccurrences(dataPoints, date, false)
+            entries.add(Entry(i.toFloat(), countYes.toFloat()))
+            entriesNo.add(Entry(i.toFloat(), countNo.toFloat()))
+            dates.add(desiredFormat)
         }
 
-        val lineEntryNo = ArrayList<Entry>()
-//        lineEntryNo.add(Entry(13f, 0))
-//        lineEntryNo.add(Entry(22f, 1))
-//        lineEntryNo.add(Entry(33f, 3))
-//        lineEntryNo.add(Entry(44f, 4))
-//        lineEntryNo.add(Entry(53f, 5))
-        var countNo = 0
-        for (dataYes in falseCountList){
-            lineEntryYes.add(Entry(dataYes.toFloat(), countNo))
-            countNo++
-        }
+        // Sort entries by X-axis value
+        entries.sortWith(EntryXComparator())
 
-//        for (item in reasonList){
-//                var yes = 0
-//                var no = 0
-//                var countYes = 0
-//                var countNo = 0
-//
-//                if (item.yesOrNo){
-//                    countYes++
-//                    yes = countYes
-//                }else{
-//                    countNo++
-//                    no = countNo
-//                }
-//
-//            if (!xValue.contains(item.date)){
-//                xValue.add(item.date)
-//                lineEntryYes.add(Entry(yes.toFloat(), count))
-//                lineEntryNo.add(Entry(no.toFloat(), count))
-//                yes = 0
-//                no = 0
-//                countYes = 0
-//                countNo = 0
-//                count++
-//            }
-//
-//        }
+        // Create a LineDataSet for yes counts
+        val yesDataSet = LineDataSet(entries, "Yes")
+        yesDataSet.color = Color.GREEN
 
-        val lineDataSet = LineDataSet(lineEntryYes, "Yes")
-        lineDataSet.color = resources.getColor(R.color.purple_500)
+        // Create a LineDataSet for no counts
+        val noDataSet = LineDataSet(entriesNo, "No")
+        noDataSet.color = Color.RED
 
-        val lineDataSet1 = LineDataSet(lineEntryNo, "No")
-        lineDataSet1.color = resources.getColor(R.color.teal_200)
+        // Combine the datasets
+        val dataSets = ArrayList<ILineDataSet>()
+        dataSets.add(yesDataSet)
+        dataSets.add(noDataSet)
 
-        val finalDataSet = ArrayList<LineDataSet>()
-        finalDataSet.add(lineDataSet)
-        finalDataSet.add(lineDataSet1)
+        // Create a LineData object with the datasets
+        val lineData = LineData(dataSets)
 
-        val data = LineData(xValue, finalDataSet as List<ILineDataSet>?)
-        binding.activityMainLinechart.data = data
-        binding.activityMainLinechart.setBackgroundColor(resources.getColor(R.color.white))
-        binding.activityMainLinechart.animateXY(3000, 3000)
+        // Customize the X-axis
+        val xAxis: XAxis = chart.xAxis
+        xAxis.valueFormatter = IndexAxisValueFormatter(dates)
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.granularity = 1f
+
+        // Set the data to the chart and refresh
+        chart.data = lineData
+        chart.animateXY(300, 300)
+        chart.invalidate()
 
     }
-    private fun setLineChartDataForReason(){
-        val xValue = ArrayList<String>()
-        xValue.add("01/03/2023")
-        xValue.add("02/03/2023")
-        xValue.add("03/03/2023")
-        xValue.add("04/03/2023")
-        xValue.add("05/03/2023")
-        xValue.add("06/03/2023")
-        xValue.add("07/03/2023")
 
-        val lineEntryYes = ArrayList<Entry>()
-        lineEntryYes.add(Entry(10f, 0))
-        lineEntryYes.add(Entry(20f, 1))
-        lineEntryYes.add(Entry(30f, 3))
-        lineEntryYes.add(Entry(40f, 4))
-        lineEntryYes.add(Entry(50f, 5))
-
-        val lineEntryNo = ArrayList<Entry>()
-        lineEntryNo.add(Entry(13f, 0))
-        lineEntryNo.add(Entry(22f, 1))
-        lineEntryNo.add(Entry(33f, 3))
-        lineEntryNo.add(Entry(44f, 4))
-        lineEntryNo.add(Entry(53f, 5))
-
-        val lineDataSet = LineDataSet(lineEntryYes, "Yes")
-        lineDataSet.color = resources.getColor(R.color.purple_500)
-
-        val lineDataSet1 = LineDataSet(lineEntryNo, "No")
-        lineDataSet1.color = resources.getColor(R.color.teal_200)
-
-        val finalDataSet = ArrayList<LineDataSet>()
-        finalDataSet.add(lineDataSet)
-        finalDataSet.add(lineDataSet1)
-
-        val data = LineData(xValue, finalDataSet as List<ILineDataSet>?)
-        binding.activityMainLinechart1.data = data
-        binding.activityMainLinechart1.setBackgroundColor(resources.getColor(R.color.white))
-        binding.activityMainLinechart1.animateXY(3000, 3000)
-
+    // Function to count occurrences of yes or no for a specific date
+    private fun countOccurrences(dataPoints: List<Reason>, date: String, isYes: Boolean): Int {
+        var count = 0
+        for (dataPoint in dataPoints) {
+            if (dataPoint.date == date && dataPoint.yesOrNo == isYes) {
+                count++
+            }
+        }
+        return count
     }
 }

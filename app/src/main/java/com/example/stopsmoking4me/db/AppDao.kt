@@ -39,8 +39,8 @@ interface AppDao {
     @Query("SELECT (SELECT COUNT(*) FROM reason) == 0")
     fun isEmptyReasonTable(): Boolean
 
-    @Query("SELECT * FROM reason WHERE date >= :startDate ORDER BY date DESC")
-    fun getReason(startDate : Date): LiveData<List<Reason>>
+    @Query("SELECT * FROM Reason WHERE dateString BETWEEN :endDate AND :startDate ORDER BY dateString DESC")
+    fun getReason(startDate : String, endDate: String): LiveData<List<Reason>>
 
     @Query("SELECT COUNT(yesOrNo) FROM reason WHERE yesOrNo = 1")
     fun getYesCount(): LiveData<Int>

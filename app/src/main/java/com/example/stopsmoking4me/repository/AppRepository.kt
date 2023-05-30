@@ -6,7 +6,9 @@ import com.example.stopsmoking4me.db.AppDao
 import com.example.stopsmoking4me.model.Reason
 import com.example.stopsmoking4me.model.Messages
 import com.example.stopsmoking4me.model.Quotes
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 class AppRepository(private val appDao: AppDao) {
     suspend fun insertMessages(msgList: List<Messages>){
@@ -46,11 +48,13 @@ class AppRepository(private val appDao: AppDao) {
     }
 
     fun getReason(): LiveData<List<Reason>>{
+        val dateFormate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val calender = Calendar.getInstance()
+        val endDate = dateFormate.format(calender.time)
         calender.add(Calendar.DAY_OF_YEAR, -7)
-        val startDate = calender.time
+        val startDate = dateFormate.format(calender.time)
         Log.d("START_DATE", "startDate: $startDate")
-        return appDao.getReason(startDate)
+        return appDao.getReason(endDate, startDate)
     }
 
     fun getYesCount(): LiveData<Int>{

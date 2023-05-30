@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.room.paging.util.queryItemCount
 import com.example.stopsmoking4me.MainActivity
 import com.example.stopsmoking4me.R
@@ -21,17 +22,21 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.EntryXComparator
+import com.google.gson.internal.bind.ArrayTypeAdapter
 import java.text.SimpleDateFormat
 
 class StatesAndChartsFragment : Fragment() {
     private lateinit var binding: FragmentStatesAndChartsBinding
     private var dataPoints = ArrayList<Reason>()
     private lateinit var chart: LineChart
+    private lateinit var dropDownAdapter: ArrayAdapter<String>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataPoints = (requireActivity() as MainActivity).reasonList
 
+        dropDownAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, resources.getStringArray(R.array.drop_down))
         Log.d("START_DATE", "startDate: $dataPoints")
 
     }
@@ -42,6 +47,7 @@ class StatesAndChartsFragment : Fragment() {
     ): View? {
         binding = FragmentStatesAndChartsBinding.inflate(layoutInflater, container, false)
         chart = binding.chart
+        binding.spiner.adapter = dropDownAdapter
 
 //        reasonList = (requireActivity() as MainActivity).reasonList
         return binding.root
@@ -54,6 +60,8 @@ class StatesAndChartsFragment : Fragment() {
 
         }
     private fun setLineChartDataForYesNo(){
+        if (dataPoints.isEmpty()) return
+
         // Create entries for the chart
         val entries = mutableListOf<Entry>()
         val entriesNo = mutableListOf<Entry>()
@@ -61,7 +69,7 @@ class StatesAndChartsFragment : Fragment() {
 
         for (i in dataPoints.indices) {
             val dataPoint = dataPoints[i]
-            val date = dataPoint.date
+            val date = dataPoint.dateString
             val formatter = SimpleDateFormat("dd/MM/yyyy")
             val dateNew = formatter.parse(date)
             val desiredFormat = SimpleDateFormat("MMM-dd").format(dateNew)
@@ -108,7 +116,7 @@ class StatesAndChartsFragment : Fragment() {
     private fun countOccurrences(dataPoints: List<Reason>, date: String, isYes: Boolean): Int {
         var count = 0
         for (dataPoint in dataPoints) {
-            if (dataPoint.date == date && dataPoint.yesOrNo == isYes) {
+            if (dataPoint.dateString == date && dataPoint.yesOrNo == isYes) {
                 count++
             }
         }

@@ -26,11 +26,14 @@ import com.example.stopsmoking4me.R
 import com.example.stopsmoking4me.adapter.MyRecyclerviewAdapter
 import com.example.stopsmoking4me.databinding.FragmentTakeMyPermissionBinding
 import com.example.stopsmoking4me.model.Messages
+import com.example.stopsmoking4me.model.StopSmoking
 import com.example.stopsmoking4me.prefs.MyPreferences
+import com.example.stopsmoking4me.util.Utility
 import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Runnable
 import java.io.ByteArrayOutputStream
+import java.text.DateFormat
 import java.util.*
 
 
@@ -46,6 +49,12 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
     private var dropDownList = mutableListOf<String>()
     private lateinit var animator1: ObjectAnimator
     private lateinit var animator2: ObjectAnimator
+
+    private val TAKE_MY_PERMISSION = "_takeMyPermission"
+
+    private var stopSmoking: StopSmoking = StopSmoking()
+    private var reason: String = ""
+    private var smoking: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,8 +105,12 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                 dropDownReason = parent?.getItemAtPosition(position).toString()
                 if ((requireContext() as MainActivity).reasonData.yesOrNo) {
                     (requireContext() as MainActivity).reasonData.dropDownReason = dropDownReason
+                    stopSmoking.reason = dropDownReason
+                    reason = dropDownReason
                 }else{
                     (requireContext() as MainActivity).reasonData.dropDownReason = "no reason"
+                    stopSmoking.reason = "-----"
+                    reason = "--------"
                 }
             }
 
@@ -132,29 +145,39 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                 }else if(btnYesOrNoClicked == 0){
                     Toast.makeText(context, "Please confirm \n Are you going for smoking?", Toast.LENGTH_SHORT).show()
                 }else{
-                    (requireContext() as MainActivity).viewModel.saveReason((requireContext() as MainActivity).reasonData)
+//                    (requireContext() as MainActivity).viewModel.saveReason((requireContext() as MainActivity).reasonData)
+//                    (requireActivity() as MainActivity).viewModel.saveDataIntoStopSmoking(stopSmoking)
+                    (requireActivity() as MainActivity).dbAdapter.saveData(reason, smoking)
+
                     btnYesOrNoClicked = 0 // reset btn yes/no
                 }
             }
 
             R.id.btn_yes ->{
                 binding.btnYes.isEnabled = false
+
+                stopSmoking.isSmoking = true
+                stopSmoking.dateString = (requireActivity() as MainActivity).getSystemDate()
+                stopSmoking.day = android.text.format.DateFormat.format("EEEE", Calendar.getInstance()).toString()
+                stopSmoking.hour = Utility().getCurrentTime()
+
                 Handler().postDelayed(object: Runnable{
                     override fun run() {
                         binding.btnYes.isEnabled = true
 
-//                        (requireContext() as MainActivity).reasonData.date = Calendar.getInstance().time!!
                         (requireContext() as MainActivity).reasonData.dateString = (requireContext() as MainActivity).getSystemDate()
                         (requireContext() as MainActivity).reasonData.yesOrNo = true
                         btnYesOrNoClicked = btnYesOrNoClicked.plus(1)
                         blinkTextViewReason()
+                        stopSmoking.isSmoking = true
+                        smoking = "Yes"
                         CoroutineScope(Dispatchers.Main).launch {
                             delay(5000)
                             stopBlinkingReason()
                         }
                     }
 
-                }, 120000)
+                }, 5000)
 
             }
 
@@ -166,6 +189,7 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                     Toast.makeText(context, "Please fill details for selecting this option.", Toast.LENGTH_SHORT).show()
                 }else {
                     binding.btnNo.isEnabled = false
+                    smoking = "No"
 
                     Handler().postDelayed(object: Runnable{
                         override fun run() {
@@ -173,19 +197,27 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                             (requireContext() as MainActivity).reasonData.yesOrNo = false
                             btnYesOrNoClicked = btnYesOrNoClicked.plus(1)
 
+                            stopSmoking.isSmoking = false
+                            stopSmoking.dateString = (requireActivity() as MainActivity).getSystemDate()
+                            stopSmoking.day = android.text.format.DateFormat.format("EEEE", Calendar.getInstance()).toString()
+                            stopSmoking.hour = Utility().getCurrentTime()
+                            stopSmoking.reason = "------"
+                            reason = "---------"
+
                             var alertDialog = AlertDialog.Builder(context)
                             alertDialog.setTitle(getString(R.string.app_name))
                             alertDialog.setMessage("You have choosen NO \n Thank You")
                             alertDialog.setPositiveButton("Ok") { dialog, which ->
-//                                (requireContext() as MainActivity).reasonData.date =
                                 (requireContext() as MainActivity).reasonData.dateString = (requireContext() as MainActivity).getSystemDate()
                                 (requireContext() as MainActivity).viewModel.saveReason((requireContext() as MainActivity).reasonData)
+                                (requireContext() as MainActivity).viewModel.saveDataIntoStopSmoking(stopSmoking)
+                                (requireActivity() as MainActivity).dbAdapter.saveData(reason, smoking)
                                 dialog!!.dismiss()
                             }
                             alertDialog.create().show()
                         }
 
-                    }, 120000)
+                    }, 5000)
                 }
             }
         }

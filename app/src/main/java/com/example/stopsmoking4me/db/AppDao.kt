@@ -8,6 +8,7 @@ import androidx.room.Query
 import com.example.stopsmoking4me.model.Reason
 import com.example.stopsmoking4me.model.Messages
 import com.example.stopsmoking4me.model.Quotes
+import com.example.stopsmoking4me.model.StopSmoking
 import java.util.Date
 
 @Dao
@@ -35,6 +36,9 @@ interface AppDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun saveReason(msgList: Reason)
+
+    @Insert(onConflict = REPLACE)
+    suspend fun saveDataIntoStopSmoking(data: StopSmoking)
 
     @Query("SELECT (SELECT COUNT(*) FROM reason) == 0")
     fun isEmptyReasonTable(): Boolean

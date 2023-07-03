@@ -27,17 +27,112 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="wrap_content"
         android:id="@+id/rl_reason"
         app:layout_constraintTop_toBottomOf="@id/rl_spinner"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginBottom="50dp">
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chart"
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/list_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:background="#F1EDED">
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:text="No"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        />
+
+                    <View xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#EBE7E7"/>
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Date"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        />
+
+                    <View xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#EBE7E7"/>
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Day"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        />
+
+                    <View xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#EBE7E7"/>
+
+                    <TextView
+                        android:id="@+id/tv_accountNo"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Reason"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        />
+
+                    <View xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#EBE7E7"/>
+
+                    <TextView
+                        android:id="@+id/tv_email"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Count"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        />
+                    <View xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#EBE7E7"/>
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Percentage"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_Data"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/heading"/>
+
+            </RelativeLayout>
+        </HorizontalScrollView>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

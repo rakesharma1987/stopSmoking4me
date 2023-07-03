@@ -6,6 +6,7 @@ import com.example.stopsmoking4me.db.AppDao
 import com.example.stopsmoking4me.model.Reason
 import com.example.stopsmoking4me.model.Messages
 import com.example.stopsmoking4me.model.Quotes
+import com.example.stopsmoking4me.model.StopSmoking
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -43,15 +44,30 @@ class AppRepository(private val appDao: AppDao) {
         appDao.saveReason(reason)
     }
 
+    suspend fun saveDataIntoStopSmoking(data: StopSmoking){
+        appDao.saveDataIntoStopSmoking(data)
+    }
+
     fun isEmptyReasonTable(): Boolean{
         return appDao.isEmptyReasonTable()
     }
 
-    fun getReason(): LiveData<List<Reason>>{
+    fun getReason(value: String): LiveData<List<Reason>>{
         val dateFormate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val calender = Calendar.getInstance()
         val endDate = dateFormate.format(calender.time)
-        calender.add(Calendar.DAY_OF_YEAR, -7)
+        if (value.equals("Last day")) {
+            calender.add(Calendar.DAY_OF_YEAR, -1)
+        }
+        if (value.equals("Last Week")) {
+            calender.add(Calendar.DAY_OF_YEAR, -7)
+        }
+        if (value.equals("Last month")) {
+            calender.add(Calendar.DAY_OF_YEAR, -30)
+        }
+        if (value.equals("Lifetime")) {
+            calender.add(Calendar.DAY_OF_YEAR, 0)
+        }
         val startDate = dateFormate.format(calender.time)
         Log.d("START_DATE", "startDate: $startDate")
         return appDao.getReason(endDate, startDate)

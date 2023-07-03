@@ -15,6 +15,7 @@ import com.example.stopsmoking4me.adapter.ViewPagerAdapter
 import com.example.stopsmoking4me.databinding.ActivityMainBinding
 import com.example.stopsmoking4me.databinding.LayoutUserProfileBinding
 import com.example.stopsmoking4me.db.AppDatabase
+import com.example.stopsmoking4me.db.DBAdapter
 import com.example.stopsmoking4me.factory.AppFactory
 import com.example.stopsmoking4me.model.Messages
 import com.example.stopsmoking4me.model.Quotes
@@ -43,7 +44,8 @@ class MainActivity : AppCompatActivity() {
     var reasonData = Reason()
     private var countYes: Int = 0
     private var countNo: Int = 0
-    var reasonList = ArrayList<Reason>()
+    lateinit var dbAdapter: DBAdapter
+//    var reasonList = ArrayList<Reason>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +54,8 @@ class MainActivity : AppCompatActivity() {
         val dao = AppDatabase.getInstance(this).dao
         factory = AppFactory(AppRepository(dao))
         viewModel = ViewModelProvider(this, factory)[AppViewModel::class.java]
+
+        dbAdapter = DBAdapter(this)
 
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         binding.viewPager.adapter = adapter
@@ -178,10 +182,10 @@ class MainActivity : AppCompatActivity() {
             Log.d("Reason: ", "onResume: $it")
         })
 
-        viewModel.getReason().observe(this, Observer {
-            reasonList = it as ArrayList<Reason>
-        })
-        Log.d("REASON_LIST", "onResume: $reasonList")
+//        viewModel.getReason().observe(this, Observer {
+//            reasonList = it as ArrayList<Reason>
+//        })
+//        Log.d("REASON_LIST", "onResume: $reasonList")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

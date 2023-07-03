@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.stopsmoking4me.model.Reason
 import com.example.stopsmoking4me.model.Messages
 import com.example.stopsmoking4me.model.Quotes
+import com.example.stopsmoking4me.model.StopSmoking
 import com.example.stopsmoking4me.repository.AppRepository
 import kotlinx.coroutines.launch
 
@@ -49,12 +50,18 @@ class AppViewModel(private val appRepository: AppRepository): ViewModel() {
         }
     }
 
+    fun saveDataIntoStopSmoking(data: StopSmoking){
+        viewModelScope.launch {
+            appRepository.saveDataIntoStopSmoking(data)
+        }
+    }
+
     fun isEmptyReasonTable(): Boolean{
         return appRepository.isEmptyReasonTable()
     }
 
-    fun getReason(): LiveData<List<Reason>>{
-        return appRepository.getReason()
+    fun getReason(value: String): LiveData<List<Reason>>{
+        return appRepository.getReason(value)
     }
 
     fun getYesCount(): LiveData<Int>{

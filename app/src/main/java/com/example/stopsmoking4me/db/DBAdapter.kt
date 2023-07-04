@@ -3,7 +3,9 @@ package com.example.stopsmoking4me.db
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.stopsmoking4me.model.DayWiseSmokeCount
 import com.example.stopsmoking4me.model.OneDayAnalyticsData
+import com.example.stopsmoking4me.model.SmokeCountAndPercentage
 
 
 private const val DB_NAME = "TabQuitSmokingApp"
@@ -115,7 +117,8 @@ class DBAdapter(private var context: Context) {
         return arrayList
     }
 
-    fun getOneDaySmokedPercentage() {
+    fun getOneDaySmokedPercentageAnalytic(): ArrayList<SmokeCountAndPercentage>{
+        var arrayList = ArrayList<SmokeCountAndPercentage>()
         val query = """
     SELECT (a.SmokedCount + b.NoSmokedCount) AS TotalAttempts,
     a.SmokedCount,
@@ -145,15 +148,16 @@ class DBAdapter(private var context: Context) {
                 val noSmokedCount = cursor.getInt(2)
                 val smokedPercentage = cursor.getString(3)
                 val noSmokedPercentage = cursor.getString(4)
-
-                // Process the retrieved data as needed
+                arrayList.add(SmokeCountAndPercentage(totalAttempts.toString(), smokedCount.toString(), noSmokedCount.toString(), smokedPercentage, noSmokedPercentage))
 
             } while (cursor.moveToNext())
         }
+        return arrayList;
 
     }
 
-    fun getSevenDaysAnalytics(){
+    fun getSevenDaysAnalytics(): ArrayList<OneDayAnalyticsData>{
+        var arrayList = ArrayList<OneDayAnalyticsData>()
         val query = """
     SELECT a.Date, a.Day, a.Reason, a.SmokedCount,
     ((a.SmokedCount * 100) / b.SmokedSumEntireDay) || '%' AS ContributedReasonPercentage
@@ -182,13 +186,15 @@ class DBAdapter(private var context: Context) {
                 val smokedCount = cursor.getInt(3)
                 val contributedReasonPercentage = cursor.getString(4)
 
-                // Process the retrieved data as needed
+                arrayList.add(OneDayAnalyticsData(date, day, reason, smokedCount.toString(), contributedReasonPercentage))
 
             } while (cursor.moveToNext())
         }
+        return arrayList
     }
 
-    fun getSevenDaysDayWiseAnalytics(){
+    fun getSevenDaysDayWiseAnalytics(): ArrayList<DayWiseSmokeCount>{
+        var arrayList = ArrayList<DayWiseSmokeCount>()
         val query = """
     SELECT
         CASE
@@ -228,12 +234,49 @@ class DBAdapter(private var context: Context) {
                 val reason = cursor.getString(2)
                 val smokedCount = cursor.getInt(3)
                 val contributedReasonPercentage = cursor.getString(4)
+                arrayList.add(DayWiseSmokeCount(day, reason, smokedCount.toString(), contributedReasonPercentage))
+            } while (cursor.moveToNext())
+        }
+        return arrayList
 
-                // Process the retrieved data as needed
+    }
+
+    fun getSevenDaysSmokePercentageAnalytic(): ArrayList<SmokeCountAndPercentage>{
+        var arrayList = ArrayList<SmokeCountAndPercentage>()
+        val db = dbHelper.readableDatabase
+        val query = """
+    SELECT
+        (a.SmokedCount + b.NoSmokedCount) AS TotalAttempts,
+        a.SmokedCount,
+        b.NoSmokedCount,
+        round((a.SmokedCount * 100.0) / (a.SmokedCount + b.NoSmokedCount), 2) || '%' AS SmokedPercentage,
+        round((b.NoSmokedCount * 100.0) / (a.SmokedCount + b.NoSmokedCount), 2) || '%' AS NoSmokedPercentage
+    FROM (
+        SELECT 1 AS DummyCol, count(*) AS SmokedCount
+        FROM TabQuitSmokingApp tqsab
+        WHERE Smoking = 'Yes' AND Date >= date('now', '-7 day', 'localtime')
+    ) AS a,
+    (
+        SELECT 1 AS DummyCol, count(*) AS NoSmokedCount
+        FROM TabQuitSmokingApp tqsab
+        WHERE Smoking = 'No' AND Date >= date('now', '-7 day', 'localtime')
+    ) AS b
+    WHERE a.DummyCol = b.DummyCol;
+""".trimIndent()
+
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val totalAttempts = cursor.getInt(0)
+                val smokedCount = cursor.getInt(1)
+                val noSmokedCount = cursor.getInt(2)
+                val smokedPercentage = cursor.getString(3)
+                val noSmokedPercentage = cursor.getString(4)
+                arrayList.add(SmokeCountAndPercentage(totalAttempts.toString(), smokedCount.toString(), noSmokedCount.toString(), smokedPercentage, noSmokedPercentage))
 
             } while (cursor.moveToNext())
         }
-
+        return arrayList
     }
 
 

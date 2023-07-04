@@ -459,11 +459,13 @@ class DBAdapter(private var context: Context) {
     FROM (
         SELECT Day, Reason, COUNT(Smoking) AS SmokedCount
         FROM TabQuitSmokingApp tqsaa
+        where Smoking = 'Yes'
         GROUP BY Day, Reason
     ) AS a,
     (
         SELECT Day, COUNT(*) AS SmokedSumEntireDay
         FROM TabQuitSmokingApp tqsab
+        where Smoking = 'Yes'
         GROUP BY Day
     ) AS b
     WHERE a.Day = b.Day

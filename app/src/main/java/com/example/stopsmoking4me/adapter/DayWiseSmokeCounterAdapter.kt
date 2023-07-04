@@ -19,6 +19,7 @@ class DayWiseSmokeCounterAdapter(private val context: Context, private val listI
         val binding: LayoutDataItemsBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.layout_data_items, parent, false)
+        binding.tvSrNo.visibility = View.GONE
         return CustomViewHolder(binding)
     }
 

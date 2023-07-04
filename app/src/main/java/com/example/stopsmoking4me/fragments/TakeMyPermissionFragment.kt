@@ -109,8 +109,8 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                     reason = dropDownReason
                 }else{
                     (requireContext() as MainActivity).reasonData.dropDownReason = "no reason"
-                    stopSmoking.reason = "-----"
-                    reason = "--------"
+                    stopSmoking.reason = ""
+                    reason = ""
                 }
             }
 
@@ -147,7 +147,12 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                 }else{
 //                    (requireContext() as MainActivity).viewModel.saveReason((requireContext() as MainActivity).reasonData)
 //                    (requireActivity() as MainActivity).viewModel.saveDataIntoStopSmoking(stopSmoking)
-                    (requireActivity() as MainActivity).dbAdapter.saveData(reason, smoking)
+                    if (reason == ""){
+                        Toast.makeText(requireContext(), "Please select reason from drop down.", Toast.LENGTH_SHORT).show()
+                    }else {
+                        (requireActivity() as MainActivity).dbAdapter.saveData(reason, smoking)
+                        Toast.makeText(requireContext(), "Data saved successfully.", Toast.LENGTH_SHORT).show()
+                    }
 
                     btnYesOrNoClicked = 0 // reset btn yes/no
                 }
@@ -201,8 +206,8 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                             stopSmoking.dateString = (requireActivity() as MainActivity).getSystemDate()
                             stopSmoking.day = android.text.format.DateFormat.format("EEEE", Calendar.getInstance()).toString()
                             stopSmoking.hour = Utility().getCurrentTime()
-                            stopSmoking.reason = "------"
-                            reason = "---------"
+                            stopSmoking.reason = ""
+                            reason = ""
 
                             var alertDialog = AlertDialog.Builder(context)
                             alertDialog.setTitle(getString(R.string.app_name))
@@ -319,8 +324,8 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
             ObjectAnimator.ofInt(binding.btnAreUGoing4Smoking, "backgroundColor", Color.GREEN, Color.RED, Color.BLUE)
         animator1.duration = 500
         animator1.setEvaluator(ArgbEvaluator())
-        animator1.repeatCount = Animation.REVERSE
-        animator1.repeatCount = Animation.INFINITE
+        animator1.repeatCount = Animation.ABSOLUTE
+        animator1.repeatCount = Animation.ABSOLUTE
         animator1.start()
     }
 
@@ -329,8 +334,8 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
             ObjectAnimator.ofInt(binding.tvReason, "backgroundColor", Color.GREEN, Color.RED, Color.BLUE)
         animator2.duration = 500
         animator2.setEvaluator(ArgbEvaluator())
-        animator2.repeatCount = Animation.REVERSE
-        animator2.repeatCount = Animation.INFINITE
+        animator2.repeatCount = Animation.ABSOLUTE
+        animator2.repeatCount = Animation.ABSOLUTE
         animator2.start()
     }
 

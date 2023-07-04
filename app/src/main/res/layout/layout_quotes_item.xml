@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/quotes_card_view"
-            app:cardBackgroundColor="#EFEAEA"
+            app:cardBackgroundColor="#F1EDED"
             app:cardCornerRadius="5dp"
             app:cardElevation="3dp"
             app:cardUseCompatPadding="true"

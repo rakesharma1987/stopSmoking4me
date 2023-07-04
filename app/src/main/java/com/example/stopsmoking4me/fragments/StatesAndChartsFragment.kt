@@ -91,6 +91,23 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
         if (value == "30 days"){
             binding.rlReason2.visibility = View.VISIBLE
             binding.tvDate3.visibility = View.GONE
+            adapterData = StatesRecyclerViewAdapter(requireContext(), (requireActivity() as MainActivity).dbAdapter.get30DaysAnalytics())
+            binding.rvData.adapter = adapterData
+            adapterData.notifyDataSetChanged()
+
+            smokedCountPercentageAdapter = SmokCountPercentageAdapter(requireContext(), (requireContext() as MainActivity).dbAdapter.get30DaysSmokePercentageAnalytic())
+            binding.rvData1.adapter = smokedCountPercentageAdapter
+            smokedCountPercentageAdapter.notifyDataSetChanged()
+
+            dayWiseSmokeCounterAdapter = DayWiseSmokeCounterAdapter(requireContext(), (requireActivity() as MainActivity).dbAdapter.get30DaysDayWiseAnalytics())
+            binding.rvData2.adapter = dayWiseSmokeCounterAdapter
+            dayWiseSmokeCounterAdapter.notifyDataSetChanged()
+
+        }
+
+        if (value == "Life time"){
+            binding.rlReason2.visibility = View.VISIBLE
+            binding.tvDate3.visibility = View.GONE
             adapterData = StatesRecyclerViewAdapter(requireContext(), (requireActivity() as MainActivity).dbAdapter.getLifeTimeAnalytics())
             binding.rvData.adapter = adapterData
             adapterData.notifyDataSetChanged()

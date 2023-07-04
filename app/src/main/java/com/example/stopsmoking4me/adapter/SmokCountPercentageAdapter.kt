@@ -2,6 +2,7 @@ package com.example.stopsmoking4me.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,7 @@ class SmokCountPercentageAdapter(private val context: Context, private val listI
         val binding: LayoutDataItemsBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.layout_data_items, parent, false)
+        binding.tvSrNo.visibility = View.GONE
         return CustomViewHolder(binding)
     }
 

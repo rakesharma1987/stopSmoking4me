@@ -3,9 +3,9 @@
     <string name="ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
     <string-array name="drop_down">
-        <item>One day</item>
-        <item>Seven days</item>
-<!--        <item>Last month</item>-->
-<!--        <item>Lifetime</item>-->
+        <item>1 day</item>
+        <item>7 days</item>
+        <item>30 days</item>
+        <item>Life time</item>
     </string-array>
 </resources>

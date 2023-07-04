@@ -279,6 +279,248 @@ class DBAdapter(private var context: Context) {
         return arrayList
     }
 
+    fun get30DaysAnalytics(): ArrayList<OneDayAnalyticsData>{
+        var arrayList = ArrayList<OneDayAnalyticsData>()
+        val query = """
+    SELECT a.Date, a.Day, a.Reason, a.SmokedCount,
+    ((a.SmokedCount * 100) / b.SmokedSumEntireDay) || '%' AS ContributedReasonPercentage
+    FROM (
+        SELECT Date, Day, Reason, count(Smoking) AS SmokedCount
+        FROM TabQuitSmokingApp tqsaa
+        WHERE Smoking = 'Yes' AND Date >= date('now', '-30 day', 'localtime')
+        GROUP BY Date, Day, Reason
+    ) AS a,
+    (
+        SELECT date, count(*) AS SmokedSumEntireDay
+        FROM TabQuitSmokingApp tqsab
+        WHERE Smoking = 'Yes' AND Date >= date('now', '-30 day', 'localtime')
+        GROUP BY Date
+    ) AS b
+    WHERE a.Date = b.Date
+    ORDER BY 1 DESC, 4 DESC;
+""".trimIndent()
+
+        val cursor = sqliteDatabase.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val date = cursor.getString(0)
+                val day = cursor.getString(1)
+                val reason = cursor.getString(2)
+                val smokedCount = cursor.getInt(3)
+                val contributedReasonPercentage = cursor.getString(4)
+
+                arrayList.add(OneDayAnalyticsData(date, day, reason, smokedCount.toString(), contributedReasonPercentage))
+
+            } while (cursor.moveToNext())
+        }
+        return arrayList
+    }
+
+    fun get30DaysDayWiseAnalytics(): ArrayList<DayWiseSmokeCount>{
+        var arrayList = ArrayList<DayWiseSmokeCount>()
+        val query = """
+    SELECT
+        CASE
+            WHEN a.Day = 'Sunday' THEN 0
+            WHEN a.Day = 'Monday' THEN 1
+            WHEN a.Day = 'Tuesday' THEN 2
+            WHEN a.Day = 'Wednesday' THEN 3
+            WHEN a.Day = 'Thursday' THEN 4
+            WHEN a.Day = 'Friday' THEN 5
+            ELSE 6
+        END AS SrNoDay,
+        a.Day,
+        a.Reason,
+        a.SmokedCount,
+        ((a.SmokedCount * 100) / b.SmokedSumEntireDay) || '%' AS ContributedReasonPercentage
+    FROM (
+        SELECT Day, Reason, count(Smoking) AS SmokedCount
+        FROM TabQuitSmokingApp tqsaa
+        WHERE Smoking = 'Yes' AND Date >= date('now', '-30 day', 'localtime')
+        GROUP BY Day, Reason
+    ) AS a,
+    (
+        SELECT Day, count(*) AS SmokedSumEntireDay
+        FROM TabQuitSmokingApp tqsab
+        WHERE Smoking = 'Yes' AND Date >= date('now', '-30 day', 'localtime')
+        GROUP BY Day
+    ) AS b
+    WHERE a.Day = b.Day
+    ORDER BY 1 ASC, 4 DESC;
+""".trimIndent()
+
+        val cursor = sqliteDatabase.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val srNoDay = cursor.getInt(0)
+                val day = cursor.getString(1)
+                val reason = cursor.getString(2)
+                val smokedCount = cursor.getInt(3)
+                val contributedReasonPercentage = cursor.getString(4)
+                arrayList.add(DayWiseSmokeCount(day, reason, smokedCount.toString(), contributedReasonPercentage))
+            } while (cursor.moveToNext())
+        }
+        return arrayList
+
+    }
+
+    fun get30DaysSmokePercentageAnalytic(): ArrayList<SmokeCountAndPercentage>{
+        var arrayList = ArrayList<SmokeCountAndPercentage>()
+        val db = dbHelper.readableDatabase
+        val query = """
+    SELECT
+        (a.SmokedCount + b.NoSmokedCount) AS TotalAttempts,
+        a.SmokedCount,
+        b.NoSmokedCount,
+        round((a.SmokedCount * 100.0) / (a.SmokedCount + b.NoSmokedCount), 2) || '%' AS SmokedPercentage,
+        round((b.NoSmokedCount * 100.0) / (a.SmokedCount + b.NoSmokedCount), 2) || '%' AS NoSmokedPercentage
+    FROM (
+        SELECT 1 AS DummyCol, count(*) AS SmokedCount
+        FROM TabQuitSmokingApp tqsab
+        WHERE Smoking = 'Yes' AND Date >= date('now', '-30 day', 'localtime')
+    ) AS a,
+    (
+        SELECT 1 AS DummyCol, count(*) AS NoSmokedCount
+        FROM TabQuitSmokingApp tqsab
+        WHERE Smoking = 'No' AND Date >= date('now', '-30 day', 'localtime')
+    ) AS b
+    WHERE a.DummyCol = b.DummyCol;
+""".trimIndent()
+
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val totalAttempts = cursor.getInt(0)
+                val smokedCount = cursor.getInt(1)
+                val noSmokedCount = cursor.getInt(2)
+                val smokedPercentage = cursor.getString(3)
+                val noSmokedPercentage = cursor.getString(4)
+                arrayList.add(SmokeCountAndPercentage(totalAttempts.toString(), smokedCount.toString(), noSmokedCount.toString(), smokedPercentage, noSmokedPercentage))
+
+            } while (cursor.moveToNext())
+        }
+        return arrayList
+    }
+
+    fun getLifeTimeAnalytics(): ArrayList<OneDayAnalyticsData>{
+        var arrayList = ArrayList<OneDayAnalyticsData>()
+        val db = dbHelper.readableDatabase
+        val query = """
+    SELECT a.Date, a.Day, a.Reason, a.SmokedCount,
+    ((a.SmokedCount * 100) / b.SmokedSumEntireDay) || '%' AS ContributedReasonPercentage
+    FROM (
+        SELECT Date, Day, Reason, count(Smoking) AS SmokedCount
+        FROM TabQuitSmokingApp tqsaa
+        WHERE Smoking = 'Yes'
+        GROUP BY Date, Day, Reason
+    ) AS a,
+    (
+        SELECT date, count(*) AS SmokedSumEntireDay
+        FROM TabQuitSmokingApp tqsab
+        WHERE Smoking = 'Yes'
+        GROUP BY Date
+    ) AS b
+    WHERE a.Date = b.Date
+    ORDER BY 1 DESC, 4 DESC;
+""".trimIndent()
+
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val date = cursor.getString(0)
+                val day = cursor.getString(1)
+                val reason = cursor.getString(2)
+                val smokedCount = cursor.getInt(3)
+                val contributedReasonPercentage = cursor.getString(4)
+                arrayList.add(OneDayAnalyticsData(date, day, reason, smokedCount.toString(), contributedReasonPercentage))
+            } while (cursor.moveToNext())
+        }
+        return arrayList
+    }
+
+    fun getLifetimeAnalyticsDayWise(): ArrayList<DayWiseSmokeCount>{
+        var arrayList = ArrayList<DayWiseSmokeCount>()
+        val db = dbHelper.readableDatabase
+        val query = """
+    SELECT 
+        CASE 
+            WHEN a.Day = 'Sunday' THEN 0
+            WHEN a.Day = 'Monday' THEN 1
+            WHEN a.Day = 'Tuesday' THEN 2
+            WHEN a.Day = 'Wednesday' THEN 3
+            WHEN a.Day = 'Thursday' THEN 4
+            WHEN a.Day = 'Friday' THEN 5
+            ELSE 6
+        END AS SrNoDay,
+        a.Day,
+        a.Reason,
+        a.SmokedCount,
+        ((a.SmokedCount * 100) / b.SmokedSumEntireDay) || '%' AS ContributedReasonPercentage
+    FROM (
+        SELECT Day, Reason, COUNT(Smoking) AS SmokedCount
+        FROM TabQuitSmokingApp tqsaa
+        GROUP BY Day, Reason
+    ) AS a,
+    (
+        SELECT Day, COUNT(*) AS SmokedSumEntireDay
+        FROM TabQuitSmokingApp tqsab
+        GROUP BY Day
+    ) AS b
+    WHERE a.Day = b.Day
+    ORDER BY 1 ASC, 4 DESC;
+""".trimIndent()
+
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val srNoDay = cursor.getInt(0)
+                val day = cursor.getString(1)
+                val reason = cursor.getString(2)
+                val smokedCount = cursor.getInt(3)
+                val contributedReasonPercentage = cursor.getString(4)
+                arrayList.add(DayWiseSmokeCount(day, reason, smokedCount.toString(), contributedReasonPercentage))
+
+            } while (cursor.moveToNext())
+        }
+        return arrayList
+    }
+
+    fun getLifetimeAnalyticsCountPercentage(): ArrayList<SmokeCountAndPercentage>{
+        var arrayList = ArrayList<SmokeCountAndPercentage>()
+        val db = dbHelper.readableDatabase
+        val query = """
+    SELECT 
+        (a.SmokedCount + b.NoSmokedCount) AS TotalAttempts,
+        a.SmokedCount,
+        b.NoSmokedCount,
+        ROUND((a.SmokedCount * 100.0) / (a.SmokedCount + b.NoSmokedCount), 2) || '%' AS SmokedPercentage,
+        ROUND((b.NoSmokedCount * 100.0) / (a.SmokedCount + b.NoSmokedCount), 2) || '%' AS NoSmokedPercentage
+    FROM (
+        SELECT 1 AS DummyCol, COUNT(*) AS SmokedCount
+        FROM TabQuitSmokingApp tqsab
+        WHERE Smoking = 'Yes'
+    ) AS a,
+    (
+        SELECT 1 AS DummyCol, COUNT(*) AS NoSmokedCount
+        FROM TabQuitSmokingApp tqsab
+        WHERE Smoking = 'No'
+    ) AS b
+    WHERE a.DummyCol = b.DummyCol;
+""".trimIndent()
+
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            val totalAttempts = cursor.getInt(0)
+            val smokedCount = cursor.getInt(1)
+            val noSmokedCount = cursor.getInt(2)
+            val smokedPercentage = cursor.getString(3)
+            val noSmokedPercentage = cursor.getString(4)
+            arrayList.add(SmokeCountAndPercentage(totalAttempts.toString(), smokedCount.toString(), noSmokedCount.toString(), smokedPercentage, noSmokedPercentage))
+
+        }
+        return arrayList
+    }
+
 
     inner class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
         override fun onCreate(db: SQLiteDatabase?) {

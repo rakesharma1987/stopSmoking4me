@@ -30,7 +30,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-val tabsArray = arrayOf("Take My \n Permission", "Quotes", "States \u0026 Charts")
+val tabsArray = arrayOf("Take My Permission", "Quotes", "States \u0026 Charts")
 val titlesArray = arrayOf("Mr.", "Mrs.", "Ms.", "Miss")
 val relativeArray = arrayOf("Mother", "Father", "Son/s", "Daughter/s", "Sister/s", "Brother/s", "Friend/s", "Family", "Self", "Spose",
                     "Grandson/s", "Granddaughters")

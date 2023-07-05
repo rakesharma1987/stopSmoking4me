@@ -177,7 +177,9 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                         stopSmoking.isSmoking = true
                         smoking = "Yes"
                         CoroutineScope(Dispatchers.Main).launch {
-                            delay(5000)
+                            delay(1000)
+                            binding.tvReason.background = resources.getDrawable(R.drawable.drawable_rectangle_shap)
+                            binding.tvReason.setTextColor(resources.getColor(R.color.black))
                             stopBlinkingReason()
                         }
                     }
@@ -277,8 +279,11 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
             override fun onFinish() {
                 blinkTextviewAreYouGoingForSmoking()
                 CoroutineScope(Dispatchers.Main).launch {
-                    delay(5000)
+                    delay(1000)
+                    binding.btnAreUGoing4Smoking.background = resources.getDrawable(R.drawable.drawable_rectangle_shap)
+                    binding.btnAreUGoing4Smoking.setTextColor(resources.getColor(R.color.black))
                     stopBlinkingAreYouGoingForSmoking()
+
                 }
                 binding.tvDisplayMsg.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
@@ -332,8 +337,7 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
     fun blinkTextViewReason(){
         animator2 =
             ObjectAnimator.ofInt(binding.tvReason, "backgroundColor", Color.GREEN, Color.RED, Color.BLUE)
-        binding.tvReason.background = resources.getDrawable(R.drawable.drawable_rectangle_shap)
-        animator2.duration = 500
+        animator2.duration = 1000
         animator2.setEvaluator(ArgbEvaluator())
         animator2.repeatCount = Animation.ABSOLUTE
         animator2.repeatCount = Animation.ABSOLUTE

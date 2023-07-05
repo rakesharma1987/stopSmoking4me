@@ -9,7 +9,8 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@color/column_line">
 
                 <TextView
                     android:id="@+id/tv_sr_no"
@@ -22,7 +23,7 @@
                 <View xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="#EBE7E7" />
+                    android:background="@color/column_haeder" />
 
                 <TextView
                     android:id="@+id/tv_date"
@@ -35,7 +36,7 @@
                 <View xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="#EBE7E7" />
+                    android:background="@color/column_haeder" />
 
                 <TextView
                     android:id="@+id/tv_day"
@@ -48,7 +49,7 @@
                 <View xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="#EBE7E7" />
+                    android:background="@color/column_haeder" />
 
                 <TextView
                     android:id="@+id/tv_reason"
@@ -61,7 +62,7 @@
                 <View xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="#EBE7E7" />
+                    android:background="@color/column_haeder" />
 
                 <TextView
                     android:id="@+id/tv_count"
@@ -74,7 +75,7 @@
                 <View xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="#EBE7E7" />
+                    android:background="@color/column_haeder" />
 
                 <TextView
                     android:id="@+id/tv_percentage"

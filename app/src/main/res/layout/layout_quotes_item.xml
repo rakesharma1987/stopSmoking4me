@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/quotes_card_view"
-            app:cardBackgroundColor="#F1EDED"
+            app:cardBackgroundColor="#4F4F4F"
             app:cardCornerRadius="5dp"
             app:cardElevation="3dp"
             app:cardUseCompatPadding="true"
@@ -32,6 +32,7 @@
                     android:text="QUOTES | QUOTES | QUOTES | QUOTES"
                     android:layout_toLeftOf="@id/iv_delete"
                     android:layout_margin="5dp"
+                    android:textColor="@color/white"
                     />
 
                 <ImageView
@@ -54,6 +55,7 @@
                     android:textStyle="bold"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
+                    android:textColor="@color/white"
                     />
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>

@@ -27,7 +27,7 @@
             android:layout_marginBottom="16dp"
             android:src="@drawable/ic_create_quote"
             app:fabSize="normal"
-            android:backgroundTint="@color/purple_500"
+            android:backgroundTint="#FFD417"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

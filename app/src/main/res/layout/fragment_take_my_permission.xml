@@ -17,7 +17,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHeight_percent=".25"
             android:id="@+id/rl_level_1"
-            android:backgroundTint="#46BBB0"
+            android:backgroundTint="#9AC5F4"
             android:background="@drawable/ic_background">
             <ImageView
                 android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                 android:id="@+id/btn_shall_go_4_smoke"
                 android:text="Shall I Go For Smoke?"
                 android:textAllCaps="false"
-                android:backgroundTint="#D9AB22"
+                android:backgroundTint="@color/purple_500"
                 android:textColor="@color/black"
                 android:layout_centerHorizontal="true"
                 />
@@ -66,7 +66,7 @@
             android:id="@+id/rl_level_3"
             app:layout_constraintTop_toBottomOf="@id/rl_level_2"
             app:layout_constraintHeight_percent=".18"
-            android:backgroundTint="#575A59"
+            android:backgroundTint="#4F4F4F"
             android:background="@drawable/ic_background">
             <LinearLayout
                 android:id="@+id/ll_circles"
@@ -112,7 +112,7 @@
 
                 <TextView
                     android:id="@+id/tv_1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
                     android:layout_weight="1"
@@ -123,7 +123,7 @@
 
                 <TextView
                     android:id="@+id/tv_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
                     android:layout_weight="1"
@@ -134,7 +134,7 @@
 
                 <TextView
                     android:id="@+id/tv_3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
                     android:layout_weight="1"
@@ -181,7 +181,7 @@
             android:id="@+id/rl_level_5"
             app:layout_constraintTop_toBottomOf="@id/rl_level_4"
             app:layout_constraintHeight_percent=".15"
-            android:backgroundTint="#575A59"
+            android:backgroundTint="#FCE312"
             android:layout_marginTop="4dp"
             android:background="@drawable/ic_background">
             <TextView
@@ -212,7 +212,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
-                    android:backgroundTint="#B1261C"
+                    android:backgroundTint="#FF484E"
                     android:text="Yes"
                     android:textAllCaps="false"
                     android:layout_weight=".5"/>
@@ -223,7 +223,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_weight=".5"
-                    android:backgroundTint="#27B62D"
+                    android:backgroundTint="#4EDE7D"
                     android:text="No"
                     android:textAllCaps="false" />
             </LinearLayout>
@@ -246,6 +246,7 @@
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:background="@drawable/drawable_rectangle_shap"
+                android:backgroundTintMode="multiply"
                 android:layout_marginLeft="100dp"
                 android:layout_marginRight="100dp" />
             <RelativeLayout
@@ -262,18 +263,19 @@
                     android:spinnerMode="dialog"
                     />
             </RelativeLayout>
+
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn_submit"
-                android:text="Submit"
-                android:textAllCaps="false"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp"
-                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
                 android:layout_marginLeft="5dp"
-                android:visibility="visible"
-                android:layout_centerInParent="true"/>
+                android:layout_marginRight="5dp"
+                android:text="Submit"
+                android:backgroundTint="@color/purple_500"
+                android:textAllCaps="false"
+                android:visibility="visible" />
         </RelativeLayout>
 
         <!--        <com.google.android.gms.ads.AdView-->

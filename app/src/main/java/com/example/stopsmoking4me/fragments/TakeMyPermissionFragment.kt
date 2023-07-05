@@ -332,6 +332,7 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
     fun blinkTextViewReason(){
         animator2 =
             ObjectAnimator.ofInt(binding.tvReason, "backgroundColor", Color.GREEN, Color.RED, Color.BLUE)
+        binding.tvReason.background = resources.getDrawable(R.drawable.drawable_rectangle_shap)
         animator2.duration = 500
         animator2.setEvaluator(ArgbEvaluator())
         animator2.repeatCount = Animation.ABSOLUTE

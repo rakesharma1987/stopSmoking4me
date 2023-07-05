@@ -56,11 +56,13 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, factory)[AppViewModel::class.java]
 
         dbAdapter = DBAdapter(this)
-        for (i in 1..50){
-            if (i % 5 == 0){
-                dbAdapter.saveData("", "No")
-            }else{
-                dbAdapter.saveData("Break at work", "Yes")
+        if(BuildConfig.DEBUG){
+            for (i in 1..50){
+                if (i % 5 == 0){
+                    dbAdapter.saveData("", "No")
+                }else{
+                    dbAdapter.saveData("Break at work", "Yes")
+                }
             }
         }
 

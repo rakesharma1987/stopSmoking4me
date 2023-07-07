@@ -1,33 +1,49 @@
 package com.example.stopsmoking4me
 
+import android.app.AlarmManager
 import android.app.Dialog
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.example.stopsmoking4me.adapter.ViewPagerAdapter
 import com.example.stopsmoking4me.databinding.ActivityMainBinding
 import com.example.stopsmoking4me.databinding.LayoutUserProfileBinding
 import com.example.stopsmoking4me.db.AppDatabase
 import com.example.stopsmoking4me.db.DBAdapter
 import com.example.stopsmoking4me.factory.AppFactory
+import com.example.stopsmoking4me.fragments.MyDialogFragment
 import com.example.stopsmoking4me.model.Messages
 import com.example.stopsmoking4me.model.Quotes
 import com.example.stopsmoking4me.model.Reason
+import com.example.stopsmoking4me.prefs.MyPreferences
+import com.example.stopsmoking4me.receiver.DialogReceiver
 import com.example.stopsmoking4me.repository.AppRepository
 import com.example.stopsmoking4me.viewModel.AppViewModel
+import com.example.stopsmoking4me.workManager.MyDialgWorkManager
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 val tabsArray = arrayOf("Take My Permission", "Quotes", "States \u0026 Charts")
@@ -45,7 +61,8 @@ class MainActivity : AppCompatActivity() {
     private var countYes: Int = 0
     private var countNo: Int = 0
     lateinit var dbAdapter: DBAdapter
-//    var reasonList = ArrayList<Reason>()
+    lateinit var alarmManager: AlarmManager
+    lateinit var alarmIntent: PendingIntent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,15 +73,15 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, factory)[AppViewModel::class.java]
 
         dbAdapter = DBAdapter(this)
-        if(BuildConfig.DEBUG){
-            for (i in 1..50){
-                if (i % 5 == 0){
-                    dbAdapter.saveData("", "No")
-                }else{
-                    dbAdapter.saveData("Break at work", "Yes")
-                }
-            }
-        }
+//        if(BuildConfig.DEBUG){
+//            for (i in 1..50){
+//                if (i % 5 == 0){
+//                    dbAdapter.saveData("", "No")
+//                }else{
+//                    dbAdapter.saveData("Break at work", "Yes")
+//                }
+//            }
+//        }
 
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         binding.viewPager.adapter = adapter
@@ -159,6 +176,24 @@ class MainActivity : AppCompatActivity() {
         dropDownMessage.add("Specifi Time")
         dropDownMessage.add("Other")
 
+//        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+//        val dialogIntent = Intent(this, DialogReceiver::class.java)
+//        alarmIntent = PendingIntent.getBroadcast(
+//            this,
+//            0,
+//            dialogIntent,
+//            PendingIntent.FLAG_IMMUTABLE
+//        )
+//        val calender = Calendar.getInstance()
+//        calender.add(Calendar.DAY_OF_YEAR, 1)
+////        val intervalInMillis = 24 * 60 * 60 * 1000
+//        val intervalInMillis = 60 * 1000
+//        alarmManager.setRepeating(
+//            AlarmManager.RTC_WAKEUP,
+//            calender.timeInMillis,
+//            intervalInMillis.toLong(),
+//            alarmIntent
+//        )
     }
 
     override fun onResume() {
@@ -191,10 +226,31 @@ class MainActivity : AppCompatActivity() {
             Log.d("Reason: ", "onResume: $it")
         })
 
-//        viewModel.getReason().observe(this, Observer {
-//            reasonList = it as ArrayList<Reason>
-//        })
-//        Log.d("REASON_LIST", "onResume: $reasonList")
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val showDialogInPeriodicRequest = PeriodicWorkRequest.Builder(
+            MyDialgWorkManager::class.java, 16, TimeUnit.MINUTES)
+            .setConstraints(constraints)
+            .build()
+
+        val workManager = WorkManager.getInstance(this)
+        workManager.enqueue(showDialogInPeriodicRequest)
+//        workManager.enqueueUniquePeriodicWork(
+//            "dialogWork",
+//            ExistingPeriodicWorkPolicy.UPDATE,
+//            showDialogInPeriodicRequest
+//        )
+
+        workManager.getWorkInfoByIdLiveData(showDialogInPeriodicRequest.id)
+            .observe(this, Observer {
+                if (it != null && it.state == WorkInfo.State.SUCCEEDED){
+                    Log.d("PERIODIC_WORK", "onResume: ${it.state.name}")
+                    val dialogFragment = MyDialogFragment()
+                    dialogFragment.show(supportFragmentManager, "dialog")
+                }
+            })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -216,6 +272,12 @@ class MainActivity : AppCompatActivity() {
                     WindowManager.LayoutParams.MATCH_PARENT,
                     WindowManager.LayoutParams.WRAP_CONTENT
                 )
+                //Setting data from preference
+                if (MyPreferences.getTitle()!!.isNotEmpty()) lupBinding.titleDropdown.setText(MyPreferences.getTitle())
+                if (MyPreferences.getTitleName()!!.isNotEmpty()) lupBinding.name.setText(MyPreferences.getTitleName())
+                if (MyPreferences.getWhom()!!.isNotEmpty()) lupBinding.dropdownWhom.setText(MyPreferences.getTitle())
+                if (MyPreferences.getWhomName()!!.isNotEmpty()) lupBinding.whomName.setText(MyPreferences.getWhomName())
+
                 var titleAdapter = ArrayAdapter<String>(this@MainActivity, android.R.layout.simple_list_item_1, titlesArray)
                 var relativeAdapter = ArrayAdapter<String>(this@MainActivity, android.R.layout.simple_list_item_1, relativeArray)
                 lupBinding.dropdownWhom.setAdapter(relativeAdapter)
@@ -223,10 +285,12 @@ class MainActivity : AppCompatActivity() {
 
                 lupBinding.titleDropdown.setOnItemClickListener { parent, view, position, id ->
                     reasonData.title = titleAdapter.getItem(position).toString()
+                    MyPreferences.saveTitle(reasonData.title)
                 }
 
                 lupBinding.dropdownWhom.setOnItemClickListener { parent, view, position, id ->
                     reasonData.forWhom = relativeAdapter.getItem(position).toString()
+                    MyPreferences.saveWhom(reasonData.forWhom)
                 }
 
                 lupBinding.ivClose.setOnClickListener {
@@ -237,6 +301,8 @@ class MainActivity : AppCompatActivity() {
                             lupBinding.titleDropdown.text.isNotEmpty() || lupBinding.tilForWhom.editText!!.text.isNotEmpty()){
                             reasonData.name = lupBinding.tilName.editText!!.text.toString()
                             reasonData.whomName = lupBinding.etWhomName.editText!!.text.toString()
+                            MyPreferences.saveTitleName(reasonData.name)
+                            MyPreferences.saveWhomName(reasonData.whomName)
                         dialog.dismiss()
 
                     }else{
@@ -252,4 +318,11 @@ class MainActivity : AppCompatActivity() {
         val simpleDateFormat: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
         return simpleDateFormat.format(Date())
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        alarmManager.cancel(alarmIntent)
+    }
+
+
 }

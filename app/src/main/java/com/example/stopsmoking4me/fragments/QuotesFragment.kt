@@ -61,7 +61,7 @@ class QuotesFragment : Fragment(), View.OnClickListener {
         }
         bindingQuoteLayout.btnSaveQuote.setOnClickListener {
             var list = mutableListOf<Quotes>()
-            list.add(Quotes(0, bindingQuoteLayout.tilQuote.editText!!.text.toString(), "User Created"))
+            list.add(Quotes(0, bindingQuoteLayout.tilQuote.editText!!.text.toString(), ""))
             (requireContext() as MainActivity).viewModel.insertQuotes(list)
             dialog.dismiss()
         }

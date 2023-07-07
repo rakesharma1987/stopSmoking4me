@@ -78,7 +78,7 @@ class DBAdapter(private var context: Context) {
         var arrayList = ArrayList<OneDayAnalyticsData>()
         val query = """
     SELECT a.Date, a.Day, a.Reason, a.SmokedCount,
-    ((a.SmokedCount * 100.0) / b.SmokedSumEntireDay) || '%' AS ContributedReasonPercentage
+    round(((a.SmokedCount * 100.0) / b.SmokedSumEntireDay), 2) || '%' AS ContributedReasonPercentage
     FROM (
         SELECT Date, Day, Reason, count(Smoking) AS SmokedCount
         FROM TabQuitSmokingApp tqsaa
@@ -160,7 +160,7 @@ class DBAdapter(private var context: Context) {
         var arrayList = ArrayList<OneDayAnalyticsData>()
         val query = """
     SELECT a.Date, a.Day, a.Reason, a.SmokedCount,
-    ((a.SmokedCount * 100.0) / b.SmokedSumEntireDay) || '%' AS ContributedReasonPercentage
+    round(((a.SmokedCount * 100.0) / b.SmokedSumEntireDay), 2) || '%' AS ContributedReasonPercentage
     FROM (
         SELECT Date, Day, Reason, count(Smoking) AS SmokedCount
         FROM TabQuitSmokingApp tqsaa
@@ -209,7 +209,7 @@ class DBAdapter(private var context: Context) {
         a.Day,
         a.Reason,
         a.SmokedCount,
-        ((a.SmokedCount * 100.0) / b.SmokedSumEntireDay) || '%' AS ContributedReasonPercentage
+        round(((a.SmokedCount * 100.0) / b.SmokedSumEntireDay), 2) || '%' AS ContributedReasonPercentage
     FROM (
         SELECT Day, Reason, count(Smoking) AS SmokedCount
         FROM TabQuitSmokingApp tqsaa
@@ -283,7 +283,7 @@ class DBAdapter(private var context: Context) {
         var arrayList = ArrayList<OneDayAnalyticsData>()
         val query = """
     SELECT a.Date, a.Day, a.Reason, a.SmokedCount,
-    ((a.SmokedCount * 100.0) / b.SmokedSumEntireDay) || '%' AS ContributedReasonPercentage
+    round(((a.SmokedCount * 100.0) / b.SmokedSumEntireDay), 2) || '%' AS ContributedReasonPercentage
     FROM (
         SELECT Date, Day, Reason, count(Smoking) AS SmokedCount
         FROM TabQuitSmokingApp tqsaa
@@ -332,7 +332,7 @@ class DBAdapter(private var context: Context) {
         a.Day,
         a.Reason,
         a.SmokedCount,
-        ((a.SmokedCount * 100.0) / b.SmokedSumEntireDay) || '%' AS ContributedReasonPercentage
+        round(((a.SmokedCount * 100.0) / b.SmokedSumEntireDay), 2) || '%' AS ContributedReasonPercentage
     FROM (
         SELECT Day, Reason, count(Smoking) AS SmokedCount
         FROM TabQuitSmokingApp tqsaa
@@ -407,7 +407,7 @@ class DBAdapter(private var context: Context) {
         val db = dbHelper.readableDatabase
         val query = """
     SELECT a.Date, a.Day, a.Reason, a.SmokedCount,
-    ((a.SmokedCount * 100.0) / b.SmokedSumEntireDay) || '%' AS ContributedReasonPercentage
+    round(((a.SmokedCount * 100.0) / b.SmokedSumEntireDay), 2) || '%' AS ContributedReasonPercentage
     FROM (
         SELECT Date, Day, Reason, count(Smoking) AS SmokedCount
         FROM TabQuitSmokingApp tqsaa
@@ -455,7 +455,7 @@ class DBAdapter(private var context: Context) {
         a.Day,
         a.Reason,
         a.SmokedCount,
-        ((a.SmokedCount * 100.0) / b.SmokedSumEntireDay) || '%' AS ContributedReasonPercentage
+        round(((a.SmokedCount * 100.0) / b.SmokedSumEntireDay), 2) || '%' AS ContributedReasonPercentage
     FROM (
         SELECT Day, Reason, COUNT(Smoking) AS SmokedCount
         FROM TabQuitSmokingApp tqsaa
@@ -521,6 +521,20 @@ class DBAdapter(private var context: Context) {
 
         }
         return arrayList
+    }
+
+    fun getTotalNoOfDays(): Int{
+        var lifetimeDays = 0
+        var db = dbHelper.readableDatabase
+        val query = """
+    SELECT COUNT(DISTINCT Date) AS LifetimeDays
+    FROM TabQuitSmokingApp;
+""".trimIndent()
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()){
+            lifetimeDays = cursor.getInt(0)
+        }
+        return lifetimeDays
     }
 
 

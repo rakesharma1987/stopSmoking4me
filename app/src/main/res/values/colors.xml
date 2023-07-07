@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="column_haeder">#D4DCF7</color>
+    <color name="column_haeder">#4F4F4F</color>
     <color name="column_line">#F5F7FD</color>
+    <color name="txt_color">#E6EAE8</color>
 </resources>

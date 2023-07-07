@@ -40,6 +40,22 @@
             android:weightSum="3">
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rl_total_no_of_days"
+                android:background="@drawable/drawable_rectangle_black_border"
+                android:layout_weight=".20"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_total_days"
+                    android:text="Total Nos of days - 45"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintTop_toBottomOf="@id/rl_spinner"
                 android:layout_marginTop="8dp"
@@ -52,7 +68,8 @@
                     android:layout_height="wrap_content"
                     android:text="Header With Lorem Ipsum"
                     android:textAlignment="center"
-                    android:background="@drawable/drawable_rectangle"/>
+                    android:background="@drawable/drawable_rectangle_black_border"
+                    android:textColor="@color/purple_500"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -61,7 +78,7 @@
                 >
                 <HorizontalScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
                     <RelativeLayout
                         android:id="@+id/list_view"
                         android:layout_width="wrap_content"
@@ -96,7 +113,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Date"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 />
 
                             <View xmlns:android="http://schemas.android.com/apk/res/android"
@@ -110,7 +127,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Day"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 />
 
                             <View xmlns:android="http://schemas.android.com/apk/res/android"
@@ -124,7 +141,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Reason"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 />
 
                             <View xmlns:android="http://schemas.android.com/apk/res/android"
@@ -138,7 +155,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Count"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 />
                             <View xmlns:android="http://schemas.android.com/apk/res/android"
                                 android:layout_width="1dp"
@@ -151,7 +168,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Percentage"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 />
 
                         </LinearLayout>
@@ -171,14 +188,15 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/rl_reason_1"
                 android:layout_marginTop="5dp"
-                android:layout_weight=".5">
+                android:layout_weight=".30">
                 <TextView
                     android:id="@+id/tv_header_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Header With Lorem Ipsum"
                     android:textAlignment="center"
-                    android:background="@drawable/drawable_rectangle"/>
+                    android:background="@drawable/drawable_rectangle_black_border"
+                    android:textColor="@color/purple_500"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -197,7 +215,7 @@
                         <LinearLayout
                             android:id="@+id/heading_1"
                             android:layout_width="match_parent"
-                            android:layout_height="35dp"
+                            android:layout_height="45dp"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:background="@color/column_haeder">
@@ -207,7 +225,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="No"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 android:visibility="gone"
                                 />
 
@@ -221,7 +239,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Total \n Attempts"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 />
 
                             <View xmlns:android="http://schemas.android.com/apk/res/android"
@@ -234,7 +252,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Smoke\nCount"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 />
 
                             <View xmlns:android="http://schemas.android.com/apk/res/android"
@@ -247,7 +265,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="No Smoke\nCount"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 />
 
                             <View xmlns:android="http://schemas.android.com/apk/res/android"
@@ -260,7 +278,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Smoke\nPercentage"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 />
                             <View xmlns:android="http://schemas.android.com/apk/res/android"
                                 android:layout_width="1dp"
@@ -272,7 +290,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="No Smoke\nPercentage"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 />
 
                         </LinearLayout>
@@ -302,7 +320,8 @@
                     android:layout_height="wrap_content"
                     android:text="Header With Lorem Ipsum"
                     android:textAlignment="center"
-                    android:background="@drawable/drawable_rectangle"/>
+                    android:background="@drawable/drawable_rectangle_black_border"
+                    android:textColor="@color/purple_500"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -331,7 +350,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="No"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 android:visibility="gone"
                                 />
 
@@ -346,7 +365,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Date"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 />
 
                             <View xmlns:android="http://schemas.android.com/apk/res/android"
@@ -359,7 +378,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Day"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 />
 
                             <View xmlns:android="http://schemas.android.com/apk/res/android"
@@ -372,7 +391,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Reason"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 />
 
                             <View xmlns:android="http://schemas.android.com/apk/res/android"
@@ -385,7 +404,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Count"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 />
                             <View xmlns:android="http://schemas.android.com/apk/res/android"
                                 android:layout_height="match_parent"
@@ -397,7 +416,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Percentage"
                                 android:textAlignment="center"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 />
 
                         </LinearLayout>

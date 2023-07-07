@@ -33,7 +33,7 @@ class QuotesRecyclerViewAdapter(private val context: Context):
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.layoutItemBinding.tvQuotes.text = listItem[position].quotes
-        """~${listItem[position].author}""".also { holder.layoutItemBinding.tvAuther.text = it }
+        """${listItem[position].author}""".also { holder.layoutItemBinding.tvAuther.text = it }
         holder.layoutItemBinding.ivDelete.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 (context as MainActivity).viewModel.deleteQuotes(listItem[position].id)

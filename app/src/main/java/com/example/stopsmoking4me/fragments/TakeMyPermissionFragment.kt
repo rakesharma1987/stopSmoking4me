@@ -137,10 +137,16 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
             }
 
             R.id.btn_submit ->{
-                if ((requireContext() as MainActivity).reasonData.title.isNullOrEmpty() ||
-                    (requireContext() as MainActivity).reasonData.name.isNullOrEmpty() ||
-                    (requireContext() as MainActivity).reasonData.forWhom.isNullOrEmpty() ||
-                    (requireContext() as MainActivity).reasonData.whomName.isNullOrEmpty()){
+//                if ((requireContext() as MainActivity).reasonData.title.isNullOrEmpty() ||
+//                    (requireContext() as MainActivity).reasonData.name.isNullOrEmpty() ||
+//                    (requireContext() as MainActivity).reasonData.forWhom.isNullOrEmpty() ||
+//                    (requireContext() as MainActivity).reasonData.whomName.isNullOrEmpty()){
+//                    Toast.makeText(context, "Please fill details", Toast.LENGTH_SHORT).show()
+//                }
+                if (MyPreferences.getTitle().isNullOrEmpty() ||
+                    MyPreferences.getTitleName().isNullOrEmpty() ||
+                    MyPreferences.getWhom().isNullOrEmpty() ||
+                    MyPreferences.getWhomName().isNullOrEmpty()){
                     Toast.makeText(context, "Please fill details", Toast.LENGTH_SHORT).show()
                 }else if(btnYesOrNoClicked == 0){
                     Toast.makeText(context, "Please confirm \n Are you going for smoking?", Toast.LENGTH_SHORT).show()
@@ -179,7 +185,7 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                         CoroutineScope(Dispatchers.Main).launch {
                             delay(1000)
                             binding.tvReason.background = resources.getDrawable(R.drawable.drawable_rectangle_shap)
-                            binding.tvReason.setTextColor(resources.getColor(R.color.black))
+                            binding.tvReason.setTextColor(resources.getColor(R.color.white))
                             stopBlinkingReason()
                         }
                     }
@@ -189,11 +195,11 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
             }
 
             R.id.btn_no ->{
-                if ((requireContext() as MainActivity).reasonData.title.isNullOrEmpty() ||
-                    (requireContext() as MainActivity).reasonData.name.isNullOrEmpty() ||
-                    (requireContext() as MainActivity).reasonData.forWhom.isNullOrEmpty() ||
-                    (requireContext() as MainActivity).reasonData.whomName.isNullOrEmpty()){
-                    Toast.makeText(context, "Please fill details for selecting this option.", Toast.LENGTH_SHORT).show()
+                if (MyPreferences.getTitle().isNullOrEmpty() ||
+                    MyPreferences.getTitleName().isNullOrEmpty() ||
+                    MyPreferences.getWhom().isNullOrEmpty() ||
+                    MyPreferences.getWhomName().isNullOrEmpty()){
+                    Toast.makeText(context, "Please fill details", Toast.LENGTH_SHORT).show()
                 }else {
                     binding.btnNo.isEnabled = false
                     smoking = "No"
@@ -281,7 +287,7 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                 CoroutineScope(Dispatchers.Main).launch {
                     delay(1000)
                     binding.btnAreUGoing4Smoking.background = resources.getDrawable(R.drawable.drawable_rectangle_shap)
-                    binding.btnAreUGoing4Smoking.setTextColor(resources.getColor(R.color.black))
+                    binding.btnAreUGoing4Smoking.setTextColor(resources.getColor(R.color.white))
                     stopBlinkingAreYouGoingForSmoking()
 
                 }

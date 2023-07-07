@@ -65,6 +65,7 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
         if (value == "1 day"){
             binding.tvCount.text = "Count"
             binding.rlReason2.visibility = View.GONE
+            binding.rlTotalNoOfDays.visibility = View.GONE
             var list = (requireActivity() as MainActivity).dbAdapter.getOneDayAnalytics()
             adapterData = StatesRecyclerViewAdapter(requireContext(), list)
             binding.rvData.adapter = adapterData
@@ -75,6 +76,7 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
         if (value == "7 days"){
             binding.rlReason2.visibility = View.VISIBLE
             binding.tvDate3.visibility = View.GONE
+            binding.rlTotalNoOfDays.visibility = View.GONE
             adapterData = StatesRecyclerViewAdapter(requireContext(), (requireActivity() as MainActivity).dbAdapter.getSevenDaysAnalytics())
             binding.rvData.adapter = adapterData
             adapterData.notifyDataSetChanged()
@@ -91,6 +93,7 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
         if (value == "30 days"){
             binding.rlReason2.visibility = View.VISIBLE
             binding.tvDate3.visibility = View.GONE
+            binding.rlTotalNoOfDays.visibility = View.GONE
             adapterData = StatesRecyclerViewAdapter(requireContext(), (requireActivity() as MainActivity).dbAdapter.get30DaysAnalytics())
             binding.rvData.adapter = adapterData
             adapterData.notifyDataSetChanged()
@@ -108,6 +111,8 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
         if (value == "Life time"){
             binding.rlReason2.visibility = View.VISIBLE
             binding.tvDate3.visibility = View.GONE
+            binding.rlTotalNoOfDays.visibility = View.VISIBLE
+            binding.tvTotalDays.text = "Total No Of Days - ${(requireActivity() as MainActivity).dbAdapter.getTotalNoOfDays().toString()}"
             adapterData = StatesRecyclerViewAdapter(requireContext(), (requireActivity() as MainActivity).dbAdapter.getLifeTimeAnalytics())
             binding.rvData.adapter = adapterData
             adapterData.notifyDataSetChanged()

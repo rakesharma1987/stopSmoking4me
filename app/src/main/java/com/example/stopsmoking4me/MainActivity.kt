@@ -3,17 +3,11 @@ package com.example.stopsmoking4me
 import android.app.AlarmManager
 import android.app.Dialog
 import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.work.Constraints
@@ -50,7 +44,7 @@ val tabsArray = arrayOf("Take My Permission", "Quotes", "States \u0026 Charts")
 val titlesArray = arrayOf("Mr.", "Mrs.", "Ms.", "Miss")
 val relativeArray = arrayOf("Mother", "Father", "Son/s", "Daughter/s", "Sister/s", "Brother/s", "Friend/s", "Family", "Self", "Spose",
                     "Grandson/s", "Granddaughters")
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var factory: AppFactory
     lateinit var viewModel: AppViewModel
@@ -194,6 +188,8 @@ class MainActivity : AppCompatActivity() {
 //            intervalInMillis.toLong(),
 //            alarmIntent
 //        )
+
+        startPeriodicWorkRequest()
     }
 
     override fun onResume() {
@@ -225,32 +221,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.getTotalCount().observe(this@MainActivity, Observer {
             Log.d("Reason: ", "onResume: $it")
         })
-
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
-
-        val showDialogInPeriodicRequest = PeriodicWorkRequest.Builder(
-            MyDialgWorkManager::class.java, 16, TimeUnit.MINUTES)
-            .setConstraints(constraints)
-            .build()
-
-        val workManager = WorkManager.getInstance(this)
-        workManager.enqueue(showDialogInPeriodicRequest)
-//        workManager.enqueueUniquePeriodicWork(
-//            "dialogWork",
-//            ExistingPeriodicWorkPolicy.UPDATE,
-//            showDialogInPeriodicRequest
-//        )
-
-        workManager.getWorkInfoByIdLiveData(showDialogInPeriodicRequest.id)
-            .observe(this, Observer {
-                if (it != null && it.state == WorkInfo.State.SUCCEEDED){
-                    Log.d("PERIODIC_WORK", "onResume: ${it.state.name}")
-                    val dialogFragment = MyDialogFragment()
-                    dialogFragment.show(supportFragmentManager, "dialog")
-                }
-            })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -306,7 +276,7 @@ class MainActivity : AppCompatActivity() {
                         dialog.dismiss()
 
                     }else{
-                        Toast.makeText(this, "Please fill all fields.", Toast.LENGTH_SHORT).show()
+                        showToast("Please fill all fields.")
                     }
                 }
             }
@@ -322,6 +292,34 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         alarmManager.cancel(alarmIntent)
+    }
+
+    fun startPeriodicWorkRequest(){
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val showDialogInPeriodicRequest = PeriodicWorkRequest.Builder(
+            MyDialgWorkManager::class.java, 15, TimeUnit.MINUTES)
+            .setConstraints(constraints)
+            .build()
+
+        val workManager = WorkManager.getInstance(this)
+//        workManager.enqueue(showDialogInPeriodicRequest)
+        workManager.enqueueUniquePeriodicWork(
+            "dialogWork",
+            ExistingPeriodicWorkPolicy.KEEP,
+            showDialogInPeriodicRequest
+        )
+
+        workManager.getWorkInfoByIdLiveData(showDialogInPeriodicRequest.id)
+            .observe(this, Observer {
+                if (it != null && it.state == WorkInfo.State.SUCCEEDED){
+                    Log.d("PERIODIC_WORK", "onResume: ${it.state.name}")
+                    val dialogFragment = MyDialogFragment()
+                    dialogFragment.show(supportFragmentManager, "dialog")
+                }
+            })
     }
 
 

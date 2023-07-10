@@ -81,9 +81,9 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
         dropDownList.addAll((requireContext() as MainActivity).dropDownMessage)
         binding.imageView.setOnClickListener(this)
 
-        binding.ivGreen.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_nuetral))
-        binding.ivYellow.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_nuetral))
-        binding.ivRed.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_nuetral))
+        binding.ivGreen.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_green))
+        binding.ivYellow.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_yellow))
+        binding.ivRed.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_red))
 
         binding.btnShallGo4Smoke.setOnClickListener(this)
         binding.btnSubmit.setOnClickListener(this)
@@ -147,17 +147,21 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                     MyPreferences.getTitleName().isNullOrEmpty() ||
                     MyPreferences.getWhom().isNullOrEmpty() ||
                     MyPreferences.getWhomName().isNullOrEmpty()){
-                    Toast.makeText(context, "Please fill details", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
+                    (requireContext() as MainActivity).showToast("Please fill details")
                 }else if(btnYesOrNoClicked == 0){
-                    Toast.makeText(context, "Please confirm \n Are you going for smoking?", Toast.LENGTH_SHORT).show()
+                    (requireContext() as MainActivity).showToast("Please confirm Are you going for smoking?")
+//                    Toast.makeText(context, "Please confirm \n Are you going for smoking?", Toast.LENGTH_SHORT).show()
                 }else{
 //                    (requireContext() as MainActivity).viewModel.saveReason((requireContext() as MainActivity).reasonData)
 //                    (requireActivity() as MainActivity).viewModel.saveDataIntoStopSmoking(stopSmoking)
                     if (reason == ""){
-                        Toast.makeText(requireContext(), "Please select reason from drop down.", Toast.LENGTH_SHORT).show()
+                        (requireContext() as MainActivity).showToast("Please select reason from drop down.")
+//                        Toast.makeText(requireContext(), "", Toast.LENGTH_SHORT).show()
                     }else {
                         (requireActivity() as MainActivity).dbAdapter.saveData(reason, smoking)
-                        Toast.makeText(requireContext(), "Data saved successfully.", Toast.LENGTH_SHORT).show()
+                        (requireContext() as MainActivity).showToast("Data saved successfully.")
+//                        Toast.makeText(requireContext(), "", Toast.LENGTH_SHORT).show()
                     }
 
                     btnYesOrNoClicked = 0 // reset btn yes/no
@@ -199,7 +203,8 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                     MyPreferences.getTitleName().isNullOrEmpty() ||
                     MyPreferences.getWhom().isNullOrEmpty() ||
                     MyPreferences.getWhomName().isNullOrEmpty()){
-                    Toast.makeText(context, "Please fill details", Toast.LENGTH_SHORT).show()
+                    (requireContext() as MainActivity).showToast("Please fill details")
+//                    Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
                 }else {
                     binding.btnNo.isEnabled = false
                     smoking = "No"
@@ -230,7 +235,7 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                             alertDialog.create().show()
                         }
 
-                    }, 5000)
+                    }, 100)
                 }
             }
         }
@@ -265,17 +270,17 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                     withContext(Dispatchers.Main){
                         if (value1 in v741){
                             binding.ivGreen.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_green))
-                            binding.ivYellow.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_nuetral))
-                            binding.ivRed.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_nuetral))
+                            binding.ivYellow.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_yellow))
+                            binding.ivRed.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_red))
                         }
                         if (value1 in v852){
-                            binding.ivGreen.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_nuetral))
+                            binding.ivGreen.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_green))
                             binding.ivYellow.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_yellow))
-                            binding.ivRed.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_nuetral))
+                            binding.ivRed.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_red))
                         }
                         if (value1 in v963){
-                            binding.ivGreen.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_nuetral))
-                            binding.ivYellow.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_nuetral))
+                            binding.ivGreen.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_green))
+                            binding.ivYellow.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_yellow))
                             binding.ivRed.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_red))
                         }
                     }
@@ -293,9 +298,9 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                 }
                 binding.tvDisplayMsg.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
-                binding.ivGreen.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_nuetral))
-                binding.ivYellow.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_nuetral))
-                binding.ivRed.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_nuetral))
+                binding.ivGreen.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_green))
+                binding.ivYellow.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_yellow))
+                binding.ivRed.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_red))
                 var colorType = ""
 
                 val randomNumber = (1..3).random()

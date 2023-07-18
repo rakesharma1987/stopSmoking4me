@@ -3,7 +3,11 @@ package com.example.stopsmoking4me.fragments
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
 import android.app.Activity.RESULT_OK
+import android.app.AlarmManager
 import android.app.AlertDialog
+import android.app.PendingIntent
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -18,16 +22,19 @@ import android.view.animation.Animation
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stopsmoking4me.MainActivity
 import com.example.stopsmoking4me.R
+import com.example.stopsmoking4me.activity.BillingActivity
 import com.example.stopsmoking4me.adapter.MyRecyclerviewAdapter
 import com.example.stopsmoking4me.databinding.FragmentTakeMyPermissionBinding
 import com.example.stopsmoking4me.model.Messages
 import com.example.stopsmoking4me.model.StopSmoking
 import com.example.stopsmoking4me.prefs.MyPreferences
+import com.example.stopsmoking4me.receiver.DialogReceiver
 import com.example.stopsmoking4me.util.Utility
 import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.*
@@ -55,16 +62,19 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
     private var stopSmoking: StopSmoking = StopSmoking()
     private var reason: String = ""
     private var smoking: String = ""
+    private var TAG = "TakeMyPermissionFragment"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MobileAds.initialize(requireContext())
+        Log.d(TAG, "onCreate: ")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d(TAG, "onCreateView: ")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_take_my_permission, container, false)
 
         if (MyPreferences.getImageFromBase64()!!.isNotEmpty()) {
@@ -361,5 +371,98 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
 
     fun stopBlinkingReason(){
         animator2.cancel()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d(TAG, "onViewCreated: ")
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        Log.d(TAG, "onViewStateRestored: ")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG, "onStart: ")
+    }
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume: ")
+//        if ((requireArguments() as MainActivity).hasTwoDaysPassed()){
+//            AlertDialog.Builder(requireContext())
+//                .setTitle("Reminder")
+//                .setMessage("Reminder for money")
+//                .setPositiveButton("Get Premium", object: DialogInterface.OnClickListener{
+//                    override fun onClick(dialog: DialogInterface?, which: Int) {
+//                        Log.d("WorkManager: ", "onClick: ")
+//                    }
+//
+//                })
+//                .create()
+//                .show()
+
+
+            if ((requireContext() as MainActivity).hasTwoDaysPassed()) {
+                if (!MyPreferences.isPurchased()){
+                    var alertDialog = AlertDialog.Builder(context)
+                    alertDialog.setTitle("Reminder")
+                    alertDialog.setMessage("Reminder for money")
+                    alertDialog.setCancelable(false)
+                    alertDialog.setPositiveButton("Get Premium", object : DialogInterface.OnClickListener {
+                        override fun onClick(dialog: DialogInterface?, which: Int) {
+                            context?.startActivity(Intent(activity?.applicationContext, BillingActivity::class.java))
+                        }
+
+                    })
+                    alertDialog.setNegativeButton("Cancel", object: DialogInterface.OnClickListener{
+                        override fun onClick(dialog: DialogInterface?, which: Int) {
+                            dialog?.dismiss()
+                        }
+
+                    })
+
+                    alertDialog.create().show()
+                }
+            }else{
+                (requireContext() as MainActivity).setRepeatingAlarm(requireContext())
+            }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause: ")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop: ")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d(TAG, "onSaveInstanceState: ")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d(TAG, "onDestroyView: ")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy: ")
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d(TAG, "onAttach: ")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d(TAG, "onDetach: ")
     }
 }

@@ -13,12 +13,28 @@ object MyPreferences {
     private const val TITLE_NAME = "_title_name"
     private const val WHOM = "_whom"
     private const val WHOM_NAME = "_whom_name"
+    private const val IS_FIRST_LAUNCH = "_is_first_launch"
+    private var isFirstlaunch: Boolean = false
+    var firstTimeLaunch: Long = 0
 
 
     fun init(context: Context){
         prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         editor = prefs.edit()
         editor.commit()
+
+        isFirstlaunch = prefs.getBoolean(IS_FIRST_LAUNCH, true)
+        firstTimeLaunch = prefs.getLong("first_launch_time", 0)
+    }
+
+//    private var isFirstlaunch: Boolean = prefs.getBoolean(IS_FIRST_LAUNCH, true)
+//    var firstTimeLaunch = prefs.getLong("first_launch_time", 0)
+    public fun isFirstLaunch(){
+        if (isFirstlaunch){
+            editor.putLong("first_launch_time", System.currentTimeMillis())
+            editor.putBoolean(IS_FIRST_LAUNCH, false)
+            editor.commit()
+        }
     }
 
     public fun savePurchaseValueToPref(b : Boolean){

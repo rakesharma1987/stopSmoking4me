@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name=".StopSmokingApplication"
+        android:name="com.example.stopsmoking4me.StopSmokingApplication"
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,7 +17,7 @@
         android:theme="@style/Theme.StopSmoking4Me"
         tools:targetApi="31">
         <activity
-            android:name=".activity.BillingActivity"
+            android:name="com.example.stopsmoking4me.activity.BillingActivity"
             android:exported="false" />
 
         <meta-data
@@ -25,13 +25,12 @@
             android:value="ca-app-pub-3940256099942544~3347511713" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.stopsmoking4me.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -40,7 +39,7 @@
                 android:value="" />
         </activity>
 
-        <receiver android:name=".receiver.DialogReceiver" />
+        <receiver android:name="com.example.stopsmoking4me.receiver.DialogReceiver" />
     </application>
 
 </manifest>

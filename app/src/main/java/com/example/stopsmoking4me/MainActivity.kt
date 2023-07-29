@@ -4,29 +4,22 @@ import android.app.AlarmManager
 import android.app.Dialog
 import android.app.PendingIntent
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.example.stopsmoking4me.adapter.ViewPagerAdapter
-import com.example.stopsmoking4me.databinding.ActivityMainBinding
-import com.example.stopsmoking4me.databinding.LayoutUserProfileBinding
 import com.example.stopsmoking4me.db.AppDatabase
 import com.example.stopsmoking4me.db.DBAdapter
 import com.example.stopsmoking4me.factory.AppFactory
-import com.example.stopsmoking4me.fragments.MyDialogFragment
 import com.example.stopsmoking4me.model.Messages
 import com.example.stopsmoking4me.model.Quotes
 import com.example.stopsmoking4me.model.Reason
@@ -36,13 +29,15 @@ import com.example.stopsmoking4me.repository.AppRepository
 import com.example.stopsmoking4me.viewModel.AppViewModel
 import com.example.stopsmoking4me.workManager.MyDialgWorkManager
 import com.google.android.material.tabs.TabLayoutMediator
+import com.stopsmoking4me.aitylgames.R
+import com.stopsmoking4me.aitylgames.databinding.ActivityMainBinding
+import com.stopsmoking4me.aitylgames.databinding.LayoutUserProfileBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 val tabsArray = arrayOf("Take My Permission", "Quotes", "States \u0026 Charts")
 val titlesArray = arrayOf("Mr.", "Mrs.", "Ms.", "Miss")

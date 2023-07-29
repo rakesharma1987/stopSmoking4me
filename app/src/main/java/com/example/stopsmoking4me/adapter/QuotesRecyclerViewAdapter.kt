@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stopsmoking4me.MainActivity
-import com.example.stopsmoking4me.R
-import com.example.stopsmoking4me.databinding.LayoutQuotesItemBinding
-import com.example.stopsmoking4me.model.Messages
 import com.example.stopsmoking4me.model.Quotes
+import com.stopsmoking4me.aitylgames.R
+import com.stopsmoking4me.aitylgames.databinding.LayoutQuotesItemBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

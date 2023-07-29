@@ -3,9 +3,7 @@ package com.example.stopsmoking4me.fragments
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
 import android.app.Activity.RESULT_OK
-import android.app.AlarmManager
 import android.app.AlertDialog
-import android.app.PendingIntent
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -21,26 +19,22 @@ import android.view.*
 import android.view.animation.Animation
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stopsmoking4me.MainActivity
-import com.example.stopsmoking4me.R
 import com.example.stopsmoking4me.activity.BillingActivity
 import com.example.stopsmoking4me.adapter.MyRecyclerviewAdapter
-import com.example.stopsmoking4me.databinding.FragmentTakeMyPermissionBinding
 import com.example.stopsmoking4me.model.Messages
 import com.example.stopsmoking4me.model.StopSmoking
 import com.example.stopsmoking4me.prefs.MyPreferences
-import com.example.stopsmoking4me.receiver.DialogReceiver
 import com.example.stopsmoking4me.util.Utility
 import com.google.android.gms.ads.MobileAds
+import com.stopsmoking4me.aitylgames.R
+import com.stopsmoking4me.aitylgames.databinding.FragmentTakeMyPermissionBinding
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Runnable
 import java.io.ByteArrayOutputStream
-import java.text.DateFormat
 import java.util.*
 
 
@@ -423,11 +417,11 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
 
                     })
 
-                    alertDialog.create().show()
-                }
-            }else{
-                (requireContext() as MainActivity).setRepeatingAlarm(requireContext())
-            }
+        alertDialog.create().show()
+    }
+}else{
+    (requireContext() as MainActivity).setRepeatingAlarm(requireContext())
+}
 
     }
 

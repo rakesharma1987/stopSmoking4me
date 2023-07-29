@@ -18,11 +18,11 @@ import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
 import com.example.stopsmoking4me.OnCLickProduct
-import com.example.stopsmoking4me.R
 import com.example.stopsmoking4me.adapter.ProductDetailAdapter
-import com.example.stopsmoking4me.databinding.ActivityBillingBinding
 import com.example.stopsmoking4me.prefs.MyPreferences
 import com.google.common.collect.ImmutableList
+import com.stopsmoking4me.aitylgames.R
+import com.stopsmoking4me.aitylgames.databinding.ActivityBillingBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -57,24 +57,18 @@ class BillingActivity : AppCompatActivity(), OnCLickProduct {
                 }
             }.build()
 
-        //start the connection after initializing the billing client
-
-        //start the connection after initializing the billing client
-        establishConnection()
+          establishConnection()
     }
 
     fun establishConnection() {
         billingClient!!.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    // The BillingClient is ready. You can query purchases here.
                     showProducts()
                 }
             }
 
             override fun onBillingServiceDisconnected() {
-                // Try to restart the connection on the next request to
-                // Google Play by calling the startConnection() method.
                 establishConnection()
             }
         })
@@ -96,11 +90,6 @@ class BillingActivity : AppCompatActivity(), OnCLickProduct {
                     .setProductType(BillingClient.ProductType.SUBS)
                     .build()
 
-                /* QueryProductDetailsParams.Product.newBuilder()
-             .setProductId("test_id_shar")
-             .setProductType(BillingClient.ProductType.SUBS)
-             .build()*/
-
             )
         val params = QueryProductDetailsParams.newBuilder()
             .setProductList(productList)
@@ -110,7 +99,9 @@ class BillingActivity : AppCompatActivity(), OnCLickProduct {
             productDetailList.clear()
             Timer().schedule(2000) {
                 Log.d(TAG, "posted delayed")
-                prodDetailsList[0].subscriptionOfferDetails?.let { productDetailList.addAll(it) }
+                prodDetailsList[0].subscriptionOfferDetails?.let {
+                    productDetailList.addAll(it)
+                }
                 Log.d(TAG, productDetailList.size.toString() + " number of products")
                 runOnUiThread(Runnable {
                     billingActivityBinding.pbLoading.visibility = View.GONE

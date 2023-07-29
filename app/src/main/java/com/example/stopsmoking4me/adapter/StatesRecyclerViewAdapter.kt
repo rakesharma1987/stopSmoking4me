@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.stopsmoking4me.R
-import com.example.stopsmoking4me.databinding.LayoutDataItemsBinding
-import com.example.stopsmoking4me.databinding.LayoutItemBinding
-import com.example.stopsmoking4me.model.Messages
 import com.example.stopsmoking4me.model.OneDayAnalyticsData
+import com.stopsmoking4me.aitylgames.R
+import com.stopsmoking4me.aitylgames.databinding.LayoutDataItemsBinding
 
 class StatesRecyclerViewAdapter (private val context: Context, private val listItem: List<OneDayAnalyticsData>):
     RecyclerView.Adapter<StatesRecyclerViewAdapter.CustomViewHolder>(){

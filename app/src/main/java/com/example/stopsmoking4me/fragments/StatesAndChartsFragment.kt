@@ -9,11 +9,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stopsmoking4me.MainActivity
-import com.example.stopsmoking4me.R
 import com.example.stopsmoking4me.adapter.DayWiseSmokeCounterAdapter
 import com.example.stopsmoking4me.adapter.SmokCountPercentageAdapter
 import com.example.stopsmoking4me.adapter.StatesRecyclerViewAdapter
-import com.example.stopsmoking4me.databinding.FragmentStatesAndChartsBinding
+import com.stopsmoking4me.aitylgames.R
+import com.stopsmoking4me.aitylgames.databinding.FragmentStatesAndChartsBinding
+
 class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var binding: FragmentStatesAndChartsBinding
     private lateinit var dropDownAdapter: ArrayAdapter<String>
@@ -25,7 +26,8 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dropDownAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, resources.getStringArray(R.array.drop_down))
+        dropDownAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, resources.getStringArray(
+            R.array.drop_down))
 //        adapterData = StatesRecyclerViewAdapter(requireContext(), (requireActivity() as MainActivity).dbAdapter.getOneDayAnalytics())
     }
 

@@ -1,6 +1,5 @@
 package com.example.stopsmoking4me.fragments
 
-import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.*
@@ -8,11 +7,11 @@ import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stopsmoking4me.MainActivity
-import com.example.stopsmoking4me.R
 import com.example.stopsmoking4me.adapter.QuotesRecyclerViewAdapter
-import com.example.stopsmoking4me.databinding.FragmentQuotesBinding
-import com.example.stopsmoking4me.databinding.LayoutMakeQuoteBinding
 import com.example.stopsmoking4me.model.Quotes
+import com.stopsmoking4me.aitylgames.R
+import com.stopsmoking4me.aitylgames.databinding.FragmentQuotesBinding
+import com.stopsmoking4me.aitylgames.databinding.LayoutMakeQuoteBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.stopsmoking4me.R
-import com.example.stopsmoking4me.databinding.LayoutDataItemsBinding
 import com.example.stopsmoking4me.model.DayWiseSmokeCount
-import com.example.stopsmoking4me.model.SmokeCountAndPercentage
+import com.stopsmoking4me.aitylgames.R
+import com.stopsmoking4me.aitylgames.databinding.LayoutDataItemsBinding
 
 class DayWiseSmokeCounterAdapter(private val context: Context, private val listItem: List<DayWiseSmokeCount>):
     RecyclerView.Adapter<DayWiseSmokeCounterAdapter.CustomViewHolder>(){

@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-kapt'
 }
 
+/* password - ssfm123 */
 android {
     namespace 'com.stopsmoking4me.aitylgames'
     compileSdk 33

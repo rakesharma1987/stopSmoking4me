@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -67,29 +68,21 @@ class MainActivity : BaseActivity() {
     private var countYes: Int = 0
     private var countNo: Int = 0
     lateinit var dbAdapter: DBAdapter
-    lateinit var alarmManager: AlarmManager
+//    lateinit var alarmManager: AlarmManager
     lateinit var alarmIntent: PendingIntent
     var twoDaysIinMillis = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding.toolbar)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         val dao = AppDatabase.getInstance(this).dao
         factory = AppFactory(AppRepository(dao))
         viewModel = ViewModelProvider(this, factory)[AppViewModel::class.java]
 
         dbAdapter = DBAdapter(this)
-//        if(BuildConfig.DEBUG){
-//            for (i in 1..50){
-//                if (i % 5 == 0){
-//                    dbAdapter.saveData("", "No")
-//                }else{
-//                    dbAdapter.saveData("Break at work", "Yes")
-//                }
-//            }
-//        }
-
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         binding.viewPager.adapter = adapter
         binding.viewPager.isUserInputEnabled = true
@@ -494,28 +487,6 @@ class MainActivity : BaseActivity() {
         dropDownMessage.add("Around other smokers")
         dropDownMessage.add("Specifi Time")
         dropDownMessage.add("Other")
-
-//        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-//        val dialogIntent = Intent(this, DialogReceiver::class.java)
-//        alarmIntent = PendingIntent.getBroadcast(
-//            this,
-//            0,
-//            dialogIntent,
-//            PendingIntent.FLAG_IMMUTABLE
-//        )
-//        val calender = Calendar.getInstance()
-//        calender.add(Calendar.DAY_OF_YEAR, 1)
-////        val intervalInMillis = 24 * 60 * 60 * 1000
-//        val intervalInMillis = 60 * 1000
-//        alarmManager.setRepeating(
-//            AlarmManager.RTC_WAKEUP,
-//            calender.timeInMillis,
-//            intervalInMillis.toLong(),
-//            alarmIntent
-//        )
-
-//        startPeriodicWorkRequest()
-
         MyPreferences.isFirstLaunch()
     }
 
@@ -529,10 +500,6 @@ class MainActivity : BaseActivity() {
             if (viewModel.isEmptyQuotTable()) {
                 viewModel.insertQuotes(quotes = quoteList)
             }
-
-//            if (viewModel.isEmptyDropDownTable()){
-//                viewModel.saveDropDownMessage(dropDownMessage)
-//            }
         }
 
         viewModel.getYesCount().observe(this@MainActivity, Observer {
@@ -548,24 +515,6 @@ class MainActivity : BaseActivity() {
         viewModel.getTotalCount().observe(this@MainActivity, Observer {
             Log.d("Reason: ", "onResume: $it")
         })
-
-        /*if (hasTwoDaysPassed()){
-            AlertDialog.Builder(applicationContext)
-                .setTitle("Reminder")
-                .setMessage("Reminder for money")
-                .setPositiveButton("Get Premium", object: DialogInterface.OnClickListener{
-                    override fun onClick(dialog: DialogInterface?, which: Int) {
-                        Log.d("WorkManager: ", "onClick: ")
-                    }
-
-                })
-                .show()
-        }else{
-//            var intent = Intent(this, DialogReceiver::class.java)
-//            var pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-//            var alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-//            alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + twoDaysIinMillis, pendingIntent)
-        }*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -654,7 +603,6 @@ class MainActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        alarmManager.cancel(alarmIntent)
     }
 
     fun startPeriodicWorkRequest() {

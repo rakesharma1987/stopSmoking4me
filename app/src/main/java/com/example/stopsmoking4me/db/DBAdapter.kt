@@ -282,8 +282,17 @@ class DBAdapter(private var context: Context) {
                 val noSmokedCount = cursor.getInt(2)
                 val smokedPercentage = cursor.getString(3)
                 val noSmokedPercentage = cursor.getString(4)
-                arrayList.add(SmokeCountAndPercentage(totalAttempts.toString(), smokedCount.toString(), noSmokedCount.toString(), smokedPercentage, noSmokedPercentage))
-
+                if (smokedPercentage != null && noSmokedPercentage != null) {
+                    arrayList.add(
+                        SmokeCountAndPercentage(
+                            totalAttempts.toString(),
+                            smokedCount.toString(),
+                            noSmokedCount.toString(),
+                            smokedPercentage,
+                            noSmokedPercentage
+                        )
+                    )
+                }
             } while (cursor.moveToNext())
         }
         return arrayList
@@ -405,8 +414,17 @@ class DBAdapter(private var context: Context) {
                 val noSmokedCount = cursor.getInt(2)
                 val smokedPercentage = cursor.getString(3)
                 val noSmokedPercentage = cursor.getString(4)
-                arrayList.add(SmokeCountAndPercentage(totalAttempts.toString(), smokedCount.toString(), noSmokedCount.toString(), smokedPercentage, noSmokedPercentage))
-
+                if (smokedPercentage != null && noSmokedPercentage != null) {
+                    arrayList.add(
+                        SmokeCountAndPercentage(
+                            totalAttempts.toString(),
+                            smokedCount.toString(),
+                            noSmokedCount.toString(),
+                            smokedPercentage,
+                            noSmokedPercentage
+                        )
+                    )
+                }
             } while (cursor.moveToNext())
         }
         return arrayList
@@ -527,8 +545,17 @@ class DBAdapter(private var context: Context) {
             val noSmokedCount = cursor.getInt(2)
             val smokedPercentage = cursor.getString(3)
             val noSmokedPercentage = cursor.getString(4)
-            arrayList.add(SmokeCountAndPercentage(totalAttempts.toString(), smokedCount.toString(), noSmokedCount.toString(), smokedPercentage, noSmokedPercentage))
-
+            if (smokedPercentage != null && noSmokedPercentage != null) {
+                arrayList.add(
+                    SmokeCountAndPercentage(
+                        totalAttempts.toString(),
+                        smokedCount.toString(),
+                        noSmokedCount.toString(),
+                        smokedPercentage,
+                        noSmokedPercentage
+                    )
+                )
+            }
         }
         return arrayList
     }

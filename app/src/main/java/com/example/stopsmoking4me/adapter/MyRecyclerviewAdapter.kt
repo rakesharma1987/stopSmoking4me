@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stopsmoking4me.model.Messages
-import com.stopsmoking4me.aitylgames.R
-import com.stopsmoking4me.aitylgames.databinding.LayoutItemBinding
+import com.stopsmokingforfamily.aityl.R
+import com.stopsmokingforfamily.aityl.databinding.LayoutItemBinding
 
 class MyRecyclerviewAdapter(private val context: Context, private val listItem: List<Messages>):
 RecyclerView.Adapter<MyRecyclerviewAdapter.CustomViewHolder>(){

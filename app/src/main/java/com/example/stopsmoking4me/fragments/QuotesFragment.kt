@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stopsmoking4me.MainActivity
 import com.example.stopsmoking4me.adapter.QuotesRecyclerViewAdapter
 import com.example.stopsmoking4me.model.Quotes
-import com.stopsmoking4me.aitylgames.R
-import com.stopsmoking4me.aitylgames.databinding.FragmentQuotesBinding
-import com.stopsmoking4me.aitylgames.databinding.LayoutMakeQuoteBinding
+import com.stopsmokingforfamily.aityl.R
+import com.stopsmokingforfamily.aityl.databinding.FragmentQuotesBinding
+import com.stopsmokingforfamily.aityl.databinding.LayoutMakeQuoteBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

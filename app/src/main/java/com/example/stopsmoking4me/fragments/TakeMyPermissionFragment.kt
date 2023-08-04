@@ -29,9 +29,8 @@ import com.example.stopsmoking4me.model.Messages
 import com.example.stopsmoking4me.model.StopSmoking
 import com.example.stopsmoking4me.prefs.MyPreferences
 import com.example.stopsmoking4me.util.Utility
-import com.google.android.gms.ads.MobileAds
-import com.stopsmoking4me.aitylgames.R
-import com.stopsmoking4me.aitylgames.databinding.FragmentTakeMyPermissionBinding
+import com.stopsmokingforfamily.aityl.R
+import com.stopsmokingforfamily.aityl.databinding.FragmentTakeMyPermissionBinding
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Runnable
 import java.io.ByteArrayOutputStream
@@ -60,7 +59,6 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MobileAds.initialize(requireContext())
         Log.d(TAG, "onCreate: ")
     }
 

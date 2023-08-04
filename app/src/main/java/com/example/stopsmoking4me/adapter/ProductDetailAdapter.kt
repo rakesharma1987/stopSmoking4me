@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.billingclient.api.ProductDetails
 import com.example.stopsmoking4me.OnCLickProduct
-import com.stopsmoking4me.aitylgames.R
+import com.stopsmokingforfamily.aityl.R
 
 
 class ProductDetailAdapter(private val onCLickProduct: OnCLickProduct,

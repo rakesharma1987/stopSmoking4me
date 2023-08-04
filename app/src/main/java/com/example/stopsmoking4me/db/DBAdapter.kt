@@ -47,7 +47,7 @@ class DBAdapter(private var context: Context) {
             ")"
 
     private var dbHelper: DBHelper = DBHelper(context = context)
-    private var sqliteDatabase: SQLiteDatabase = dbHelper.writableDatabase
+    var sqliteDatabase: SQLiteDatabase = dbHelper.writableDatabase
 
     fun saveData(reasonInput: String, smokingInput: String) {
         val query = "INSERT INTO TabQuitSmokingApp (Date, Hour, Day, Reason, Smoking) " +

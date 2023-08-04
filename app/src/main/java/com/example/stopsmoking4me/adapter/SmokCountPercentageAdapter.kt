@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stopsmoking4me.model.SmokeCountAndPercentage
-import com.stopsmoking4me.aitylgames.R
-import com.stopsmoking4me.aitylgames.databinding.LayoutDataItemsBinding
+import com.stopsmokingforfamily.aityl.R
+import com.stopsmokingforfamily.aityl.databinding.LayoutDataItemsBinding
 
 class SmokCountPercentageAdapter(private val context: Context, private val listItem: List<SmokeCountAndPercentage>):
     RecyclerView.Adapter<SmokCountPercentageAdapter.CustomViewHolder>(){

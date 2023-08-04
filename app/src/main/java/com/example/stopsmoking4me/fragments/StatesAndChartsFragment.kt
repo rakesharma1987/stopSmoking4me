@@ -12,8 +12,8 @@ import com.example.stopsmoking4me.MainActivity
 import com.example.stopsmoking4me.adapter.DayWiseSmokeCounterAdapter
 import com.example.stopsmoking4me.adapter.SmokCountPercentageAdapter
 import com.example.stopsmoking4me.adapter.StatesRecyclerViewAdapter
-import com.stopsmoking4me.aitylgames.R
-import com.stopsmoking4me.aitylgames.databinding.FragmentStatesAndChartsBinding
+import com.stopsmokingforfamily.aityl.R
+import com.stopsmokingforfamily.aityl.databinding.FragmentStatesAndChartsBinding
 
 class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var binding: FragmentStatesAndChartsBinding

@@ -21,8 +21,8 @@ import com.example.stopsmoking4me.OnCLickProduct
 import com.example.stopsmoking4me.adapter.ProductDetailAdapter
 import com.example.stopsmoking4me.prefs.MyPreferences
 import com.google.common.collect.ImmutableList
-import com.stopsmoking4me.aitylgames.R
-import com.stopsmoking4me.aitylgames.databinding.ActivityBillingBinding
+import com.stopsmokingforfamily.aityl.R
+import com.stopsmokingforfamily.aityl.databinding.ActivityBillingBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Stop Smoking For Me</string>
+    <string name="app_name">Stop Smoking For Family/Self</string>
     <string name="ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
     <string-array name="drop_down">
-        <item>1 day</item>
-        <item>7 days</item>
-        <item>30 days</item>
-        <item>Life time</item>
+        <item>Last 1 Day</item>
+        <item>Last 7 Days</item>
+        <item>Last 30 Days</item>
+        <item>All</item>
     </string-array>
 </resources>

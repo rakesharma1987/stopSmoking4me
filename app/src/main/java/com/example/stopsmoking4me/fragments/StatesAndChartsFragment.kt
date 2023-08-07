@@ -64,7 +64,7 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     // Function to count occurrences of yes or no for a specific date
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         var value = parent?.getItemAtPosition(position).toString()
-        if (value == "1 day"){
+        if (value == "Last 1 Day"){
             binding.tvCount.text = "Count"
             binding.rlReason2.visibility = View.GONE
             binding.rlTotalNoOfDays.visibility = View.GONE
@@ -75,7 +75,7 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             binding.rvData1.adapter = smokedCountPercentageAdapter
             adapterData.notifyDataSetChanged()
         }
-        if (value == "7 days"){
+        if (value == "Last 7 Days"){
             binding.rlReason2.visibility = View.VISIBLE
             binding.tvDate3.visibility = View.GONE
             binding.rlTotalNoOfDays.visibility = View.GONE
@@ -92,7 +92,7 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             dayWiseSmokeCounterAdapter.notifyDataSetChanged()
 
         }
-        if (value == "30 days"){
+        if (value == "Last 30 Days"){
             binding.rlReason2.visibility = View.VISIBLE
             binding.tvDate3.visibility = View.GONE
             binding.rlTotalNoOfDays.visibility = View.GONE
@@ -110,7 +110,7 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         }
 
-        if (value == "Life time"){
+        if (value == "All"){
             binding.rlReason2.visibility = View.VISIBLE
             binding.tvDate3.visibility = View.GONE
             binding.rlTotalNoOfDays.visibility = View.VISIBLE

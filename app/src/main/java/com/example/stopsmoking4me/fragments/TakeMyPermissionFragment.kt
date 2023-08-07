@@ -225,8 +225,8 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                             reason = ""
 
                             var alertDialog = AlertDialog.Builder(context)
-                            alertDialog.setTitle(getString(R.string.app_name))
-                            alertDialog.setMessage("You have choosen NO \n Thank You")
+//                            alertDialog.setTitle(getString(R.string.app_name))
+                            alertDialog.setMessage("Thank you so much for not smoking.")
                             alertDialog.setPositiveButton("Ok") { dialog, which ->
                                 (requireContext() as MainActivity).reasonData.dateString = (requireContext() as MainActivity).getSystemDate()
                                 (requireContext() as MainActivity).viewModel.saveReason((requireContext() as MainActivity).reasonData)
@@ -339,7 +339,7 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
 
     fun blinkTextviewAreYouGoingForSmoking(){
         animator1 =
-            ObjectAnimator.ofInt(binding.btnAreUGoing4Smoking, "backgroundColor", Color.GREEN, Color.RED, Color.BLUE)
+            ObjectAnimator.ofInt(binding.btnAreUGoing4Smoking, "backgroundColor", Color.RED, Color.GREEN, Color.RED)
         animator1.duration = 500
         animator1.setEvaluator(ArgbEvaluator())
         animator1.repeatCount = Animation.ABSOLUTE
@@ -349,7 +349,7 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
 
     fun blinkTextViewReason(){
         animator2 =
-            ObjectAnimator.ofInt(binding.tvReason, "backgroundColor", Color.GREEN, Color.RED, Color.BLUE)
+            ObjectAnimator.ofInt(binding.tvReason, "backgroundColor", Color.RED, Color.GREEN, Color.RED)
         animator2.duration = 1000
         animator2.setEvaluator(ArgbEvaluator())
         animator2.repeatCount = Animation.ABSOLUTE
@@ -399,8 +399,8 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
             if ((requireContext() as MainActivity).hasTwoDaysPassed()) {
                 if (!MyPreferences.isPurchased()){
                     var alertDialog = AlertDialog.Builder(context)
-                    alertDialog.setTitle("Reminder")
-                    alertDialog.setMessage("Reminder for money")
+//                    alertDialog.setTitle("Reminder")
+                    alertDialog.setMessage("Go Premium! The trial version is available for 2 days.")
                     alertDialog.setCancelable(false)
                     alertDialog.setPositiveButton("Get Premium", object : DialogInterface.OnClickListener {
                         override fun onClick(dialog: DialogInterface?, which: Int) {

@@ -97,24 +97,33 @@ class BillingActivity : AppCompatActivity(), OnCLickProduct {
         billingClient!!.queryProductDetailsAsync(params) {
                 billingResult: BillingResult?, prodDetailsList: List<ProductDetails> ->
             productDetailList.clear()
-            Timer().schedule(2000) {
-                Log.d(TAG, "posted delayed")
-                prodDetailsList[0].subscriptionOfferDetails?.let {
-                    productDetailList.addAll(it)
+            try {
+                Timer().schedule(2000) {
+                    Log.d(TAG, "posted delayed")
+                    prodDetailsList[0].subscriptionOfferDetails?.let {
+                        productDetailList.addAll(it)
+                    }
+                    Log.d(TAG, productDetailList.size.toString() + " number of products")
+                    runOnUiThread(Runnable {
+                        billingActivityBinding.pbLoading.visibility = View.GONE
+                        var productDetailAdapter = ProductDetailAdapter(
+                            onCLickProduct,
+                            this@BillingActivity,
+                            prodDetailsList[0].subscriptionOfferDetails,
+                            prodDetailsList[0]
+                        )
+                        billingActivityBinding.rvSubscriptionList.setHasFixedSize(true)
+                        billingActivityBinding.rvSubscriptionList.layoutManager =
+                            LinearLayoutManager(
+                                this@BillingActivity,
+                                LinearLayoutManager.VERTICAL,
+                                false
+                            )
+                        billingActivityBinding.rvSubscriptionList.adapter = productDetailAdapter
+                    })
                 }
-                Log.d(TAG, productDetailList.size.toString() + " number of products")
-                runOnUiThread(Runnable {
-                    billingActivityBinding.pbLoading.visibility = View.GONE
-                    var productDetailAdapter = ProductDetailAdapter(
-                        onCLickProduct, this@BillingActivity,prodDetailsList[0].subscriptionOfferDetails,prodDetailsList[0])
-                    billingActivityBinding.rvSubscriptionList.setHasFixedSize(true)
-                    billingActivityBinding.rvSubscriptionList.layoutManager = LinearLayoutManager(
-                        this@BillingActivity,
-                        LinearLayoutManager.VERTICAL,
-                        false
-                    )
-                    billingActivityBinding.rvSubscriptionList.adapter = productDetailAdapter
-                })
+            }catch (e: Exception){
+                Log.d(TAG, "showProducts: ${e.stackTrace}")
             }
         }
     }

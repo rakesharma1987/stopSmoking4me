@@ -5,7 +5,7 @@
     android:id="@+id/custom_toast_layout"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:backgroundTint="@color/purple_500"
+    android:backgroundTint="#4f4f4f"
     android:background="@drawable/background_capsule_shape"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"

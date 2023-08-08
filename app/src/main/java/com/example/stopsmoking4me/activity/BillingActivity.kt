@@ -94,9 +94,13 @@ class BillingActivity : AppCompatActivity(), OnCLickProduct {
         val params = QueryProductDetailsParams.newBuilder()
             .setProductList(productList)
             .build()
+        params.let {
+//            Log.d(TAG, "showProducts: ${it.}")
+        }
         billingClient!!.queryProductDetailsAsync(params) {
                 billingResult: BillingResult?, prodDetailsList: List<ProductDetails> ->
             productDetailList.clear()
+
             try {
                 Timer().schedule(2000) {
                     Log.d(TAG, "posted delayed")

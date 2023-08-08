@@ -42,9 +42,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-val tabsArray = arrayOf("Please Consider My Permission", "Write Your Quotes", "Reports \u0026 Charts")
+val tabsArray = arrayOf("Please Consider My Permission", "Quotes / Write Your Quotes", "Reports")
 val titlesArray = arrayOf("Mr.", "Mrs.", "Ms.", "Miss")
 val relativeArray = arrayOf(
+    "God",
     "Mother",
     "Father",
     "Son/s",
@@ -532,7 +533,7 @@ class MainActivity : BaseActivity() {
         )
 
         dropDownMessage = mutableListOf()
-        dropDownMessage.add("Please Select Options")
+        dropDownMessage.add("Please Select Option")
         dropDownMessage.add("Stress")
         dropDownMessage.add("Anxiety")
         dropDownMessage.add("Depression")

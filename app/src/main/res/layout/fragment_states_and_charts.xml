@@ -65,7 +65,7 @@
                     android:id="@+id/tv_header_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Date wise summary"
+                    android:text="Date Wise Summary"
                     android:textAlignment="center"
                     android:background="@drawable/drawable_rectangle_black_border"
                     android:textColor="@color/purple_500"/>
@@ -192,7 +192,7 @@
                     android:id="@+id/tv_header_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="No smoke and smoke summary"
+                    android:text="No Smoke and Smoke Summary"
                     android:textAlignment="center"
                     android:background="@drawable/drawable_rectangle_black_border"
                     android:textColor="@color/purple_500"/>
@@ -311,13 +311,13 @@
                 app:layout_constraintTop_toBottomOf="@id/rl_spinner"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="15dp"
-                android:layout_weight="1.25"
+                android:layout_weight="1"
                 android:visibility="gone">
                 <TextView
                     android:id="@+id/tv_header_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Day wise summary"
+                    android:text="Day Wise Summary"
                     android:textAlignment="center"
                     android:background="@drawable/drawable_rectangle_black_border"
                     android:textColor="@color/purple_500"/>
@@ -430,6 +430,132 @@
                 </HorizontalScrollView>
             </RelativeLayout>
             </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rl_hourly_analytics"
+                app:layout_constraintTop_toBottomOf="@id/rl_spinner"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight=".25">
+                <TextView
+                    android:id="@+id/tv_header_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hourly Summary"
+                    android:textAlignment="center"
+                    android:background="@drawable/drawable_rectangle_black_border"
+                    android:textColor="@color/purple_500"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/tv_header_4"
+                    >
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RelativeLayout
+                            android:id="@+id/list_view_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:id="@+id/heading_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="35dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:background="@color/column_haeder">
+
+                                <TextView
+                                    android:layout_width="50dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="No"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone"
+                                    />
+
+                                <View xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/column_haeder"/>
+
+                                <TextView
+                                    android:id="@+id/tv_sno"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="SeqN"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    />
+
+                                <View xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/column_haeder"/>
+
+                                <TextView
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Hour"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    />
+
+                                <View xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/column_haeder"/>
+
+                                <TextView
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Reason"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    />
+
+                                <View xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/column_haeder"/>
+
+                                <TextView
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Smoke Count"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    />
+                                <View xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:layout_height="match_parent"
+                                    android:layout_width="1dp"
+                                    android:background="@color/column_haeder"/>
+
+                                <TextView
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Percentage"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    />
+
+                            </LinearLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_Data_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_below="@+id/heading_3"/>
+
+                        </RelativeLayout>
+                    </HorizontalScrollView>
+                </RelativeLayout>
+            </RelativeLayout>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

@@ -224,8 +224,7 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                             stopSmoking.reason = ""
                             reason = ""
 
-                            var alertDialog = AlertDialog.Builder(context)
-//                            alertDialog.setTitle(getString(R.string.app_name))
+                            var alertDialog = AlertDialog.Builder(context, R.style.MyDialogTheme)
                             alertDialog.setMessage("Thank you so much for not smoking.")
                             alertDialog.setPositiveButton("Ok") { dialog, which ->
                                 (requireContext() as MainActivity).reasonData.dateString = (requireContext() as MainActivity).getSystemDate()
@@ -234,7 +233,8 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                                 (requireActivity() as MainActivity).dbAdapter.saveData(reason, smoking)
                                 dialog!!.dismiss()
                             }
-                            alertDialog.create().show()
+                            var dialog = alertDialog.create()
+                            dialog.show()
                         }
 
                     }, 100)

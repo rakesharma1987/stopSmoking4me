@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.stopsmoking4me.model.DayWiseSmokeCount
+import com.example.stopsmoking4me.model.HourlyAnalyticData
 import com.example.stopsmoking4me.model.OneDayAnalyticsData
 import com.example.stopsmoking4me.model.SmokeCountAndPercentage
 
@@ -573,6 +574,243 @@ class DBAdapter(private var context: Context) {
         }
         return lifetimeDays
     }
+
+    fun getOneDayHourlyAnalytics(): ArrayList<HourlyAnalyticData>{
+        var list = ArrayList<HourlyAnalyticData>()
+        val db = dbHelper.readableDatabase
+        val query = """
+    SELECT a.Hour AS Seqno,
+    CASE
+        WHEN a.hour BETWEEN 1 AND 11 THEN a.hour || ' a.m.'
+        WHEN a.hour = 24 THEN 'midnight'
+        WHEN a.hour = 12 THEN '12 p.m.'
+        WHEN a.hour = 13 THEN '1 p.m.'
+        WHEN a.hour = 14 THEN '2 p.m.'
+        WHEN a.hour = 15 THEN '3 p.m.'
+        WHEN a.hour = 16 THEN '4 p.m.'
+        WHEN a.hour = 17 THEN '5 p.m.'
+        WHEN a.hour = 18 THEN '6 p.m.'
+        WHEN a.hour = 19 THEN '7 p.m.'
+        WHEN a.hour = 20 THEN '8 p.m.'
+        WHEN a.hour = 21 THEN '9 p.m.'
+        WHEN a.hour = 22 THEN '10 p.m.'
+        WHEN a.hour = 23 THEN '11 p.m.'
+    END AS Hour,
+    a.Reason,
+    a.SmokedCount,
+    ROUND(((a.SmokedCount * 100.0) / b.SmokedSumHourly), 2) || '%' AS ContributedReasonPercentage
+    FROM (
+            SELECT hour,
+                Reason,
+                COUNT(Smoking) AS SmokedCount
+            FROM TabQuitSmokingApp tqsaa
+            WHERE Smoking = 'Yes'
+                AND Date >= date('now', '-1 day', 'localtime')
+            GROUP BY hour, Reason
+        ) AS a,
+        (
+            SELECT hour,
+                COUNT(*) AS SmokedSumHourly
+            FROM TabQuitSmokingApp tqsab
+            WHERE Smoking = 'Yes'
+                AND Date >= date('now', '-1 day', 'localtime')
+            GROUP BY hour
+        ) AS b
+    WHERE a.hour = b.hour
+    ORDER BY 1 DESC, 4 DESC;
+""".trimIndent()
+
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val seqNo = cursor.getInt(0)
+                val hour = cursor.getString(1)
+                val reason = cursor.getString(2)
+                val smokedCount = cursor.getInt(3)
+                val contributedReasonPercentage = cursor.getString(4)
+                list.add(HourlyAnalyticData(seqNo, hour, reason, smokedCount, contributedReasonPercentage))
+            } while (cursor.moveToNext())
+        }
+        return list
+    }
+
+    fun getSevenDaysHourlyAnalytics(): ArrayList<HourlyAnalyticData>{
+        var list = ArrayList<HourlyAnalyticData>()
+        val db = dbHelper.readableDatabase
+        val query = """
+    SELECT a.Hour AS Seqno,
+    CASE
+        WHEN a.hour BETWEEN 1 AND 11 THEN a.hour || ' a.m.'
+        WHEN a.hour = 24 THEN 'midnight'
+        WHEN a.hour = 12 THEN '12 p.m.'
+        WHEN a.hour = 13 THEN '1 p.m.'
+        WHEN a.hour = 14 THEN '2 p.m.'
+        WHEN a.hour = 15 THEN '3 p.m.'
+        WHEN a.hour = 16 THEN '4 p.m.'
+        WHEN a.hour = 17 THEN '5 p.m.'
+        WHEN a.hour = 18 THEN '6 p.m.'
+        WHEN a.hour = 19 THEN '7 p.m.'
+        WHEN a.hour = 20 THEN '8 p.m.'
+        WHEN a.hour = 21 THEN '9 p.m.'
+        WHEN a.hour = 22 THEN '10 p.m.'
+        WHEN a.hour = 23 THEN '11 p.m.'
+    END AS Hour,
+    a.Reason,
+    a.SmokedCount,
+    ROUND(((a.SmokedCount * 100.0) / b.SmokedSumHourly), 2) || '%' AS ContributedReasonPercentage
+    FROM (
+            SELECT hour,
+                Reason,
+                COUNT(Smoking) AS SmokedCount
+            FROM TabQuitSmokingApp tqsaa
+            WHERE Smoking = 'Yes'
+                AND Date >= date('now', '-7 day', 'localtime')
+            GROUP BY hour, Reason
+        ) AS a,
+        (
+            SELECT hour,
+                COUNT(*) AS SmokedSumHourly
+            FROM TabQuitSmokingApp tqsab
+            WHERE Smoking = 'Yes'
+                AND Date >= date('now', '-7 day', 'localtime')
+            GROUP BY hour
+        ) AS b
+    WHERE a.hour = b.hour
+    ORDER BY 1 DESC, 4 DESC;
+""".trimIndent()
+
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val seqNo = cursor.getInt(0)
+                val hour = cursor.getString(1)
+                val reason = cursor.getString(2)
+                val smokedCount = cursor.getInt(3)
+                val contributedReasonPercentage = cursor.getString(4)
+                list.add(HourlyAnalyticData(seqNo, hour, reason, smokedCount, contributedReasonPercentage))
+
+            } while (cursor.moveToNext())
+        }
+        return list
+    }
+
+    fun get31DaysHourlyAnalytics(): ArrayList<HourlyAnalyticData>{
+        var list = ArrayList<HourlyAnalyticData>()
+        val db = dbHelper.readableDatabase
+        val query = """
+    SELECT a.Hour AS Seqno,
+    CASE
+        WHEN a.hour BETWEEN 1 AND 11 THEN a.hour || ' a.m.'
+        WHEN a.hour = 24 THEN 'midnight'
+        WHEN a.hour = 12 THEN '12 p.m.'
+        WHEN a.hour = 13 THEN '1 p.m.'
+        WHEN a.hour = 14 THEN '2 p.m.'
+        WHEN a.hour = 15 THEN '3 p.m.'
+        WHEN a.hour = 16 THEN '4 p.m.'
+        WHEN a.hour = 17 THEN '5 p.m.'
+        WHEN a.hour = 18 THEN '6 p.m.'
+        WHEN a.hour = 19 THEN '7 p.m.'
+        WHEN a.hour = 20 THEN '8 p.m.'
+        WHEN a.hour = 21 THEN '9 p.m.'
+        WHEN a.hour = 22 THEN '10 p.m.'
+        WHEN a.hour = 23 THEN '11 p.m.'
+    END AS Hour,
+    a.Reason,
+    a.SmokedCount,
+    ROUND(((a.SmokedCount * 100.0) / b.SmokedSumHourly), 2) || '%' AS ContributedReasonPercentage
+    FROM (
+            SELECT hour,
+                Reason,
+                COUNT(Smoking) AS SmokedCount
+            FROM TabQuitSmokingApp tqsaa
+            WHERE Smoking = 'Yes'
+                AND Date >= date('now', '-30 day', 'localtime')
+            GROUP BY hour, Reason
+        ) AS a,
+        (
+            SELECT hour,
+                COUNT(*) AS SmokedSumHourly
+            FROM TabQuitSmokingApp tqsab
+            WHERE Smoking = 'Yes'
+                AND Date >= date('now', '-30 day', 'localtime')
+            GROUP BY hour
+        ) AS b
+    WHERE a.hour = b.hour
+    ORDER BY 1 DESC, 4 DESC;
+""".trimIndent()
+
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val seqNo = cursor.getInt(0)
+                val hour = cursor.getString(1)
+                val reason = cursor.getString(2)
+                val smokedCount = cursor.getInt(3)
+                val contributedReasonPercentage = cursor.getString(4)
+                list.add(HourlyAnalyticData(seqNo, hour, reason, smokedCount, contributedReasonPercentage))
+            } while (cursor.moveToNext())
+        }
+        return list
+    }
+
+    fun getAllDaysHourlyAnalytics(): ArrayList<HourlyAnalyticData>{
+        var list = ArrayList<HourlyAnalyticData>()
+        val db = dbHelper.readableDatabase
+        val query = """
+    SELECT a.Hour as Seqno,
+    CASE
+        WHEN a.hour BETWEEN 1 AND 11 THEN a.hour || ' a.m.'
+        WHEN a.hour = 24 THEN 'midnight'
+        WHEN a.hour = 12 THEN '12 p.m.'
+        WHEN a.hour = 13 THEN '1 p.m.'
+        WHEN a.hour = 14 THEN '2 p.m.'
+        WHEN a.hour = 15 THEN '3 p.m.'
+        WHEN a.hour = 16 THEN '4 p.m.'
+        WHEN a.hour = 17 THEN '5 p.m.'
+        WHEN a.hour = 18 THEN '6 p.m.'
+        WHEN a.hour = 19 THEN '7 p.m.'
+        WHEN a.hour = 20 THEN '8 p.m.'
+        WHEN a.hour = 21 THEN '9 p.m.'
+        WHEN a.hour = 22 THEN '10 p.m.'
+        WHEN a.hour = 23 THEN '11 p.m.'
+    END AS Hour,
+    a.Reason,
+    a.SmokedCount,
+    ROUND(((a.SmokedCount * 100.0) / b.SmokedSumHourly), 2) || '%' AS ContributedReasonPercentage
+    FROM (
+            SELECT hour,
+                Reason,
+                COUNT(Smoking) AS SmokedCount
+            FROM TabQuitSmokingApp tqsaa
+            WHERE Smoking = 'Yes'
+            GROUP BY hour, Reason
+        ) AS a,
+        (
+            SELECT hour,
+                COUNT(*) AS SmokedSumHourly
+            FROM TabQuitSmokingApp tqsab
+            WHERE Smoking = 'Yes'
+            GROUP BY hour
+        ) AS b
+    WHERE a.hour = b.hour
+    ORDER BY 1 DESC, 4 DESC;
+""".trimIndent()
+
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val seqNo = cursor.getInt(0)
+                val hour = cursor.getString(1)
+                val reason = cursor.getString(2)
+                val smokedCount = cursor.getInt(3)
+                val contributedReasonPercentage = cursor.getString(4)
+                list.add(HourlyAnalyticData(seqNo, hour, reason, smokedCount, contributedReasonPercentage))
+            } while (cursor.moveToNext())
+        }
+        return list
+    }
+
+
 
 
     inner class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {

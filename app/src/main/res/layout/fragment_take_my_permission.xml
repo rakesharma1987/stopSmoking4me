@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Upload Photo Of Your oved Ones/Self"
+                android:text="Upload Photo Of Your Loved Ones/Self"
                 android:textColor="@color/white"
                 android:layout_alignParentBottom="true"
                 android:textStyle="bold" />
@@ -185,7 +185,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_are_u_going_4_smoking"
-                android:text="Are You Going To Smoke?"
+                android:text="Are You Going to Smoke?"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:layout_marginTop="5dp"
@@ -231,7 +231,7 @@
             android:layout_height="0dp"
             android:id="@+id/rl_level_6"
             app:layout_constraintTop_toBottomOf="@+id/rl_level_5"
-            app:layout_constraintHeight_percent=".14"
+            app:layout_constraintHeight_percent=".17"
             android:backgroundTint="#E6EAE8"
             android:layout_marginTop="4dp"
             android:background="@drawable/ic_background">
@@ -251,7 +251,7 @@
                 android:layout_height="50dp"
                 android:background="@drawable/drawable_rectangle"
                 android:layout_below="@id/tv_reason"
-                android:layout_margin="4dp"
+                android:layout_marginTop="10dp"
                 android:layout_toLeftOf="@id/btn_submit">
                 <Spinner
                     android:layout_width="match_parent"
@@ -265,27 +265,17 @@
                 android:id="@+id/btn_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_reason"
                 android:layout_alignParentRight="true"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:text="Submit"
                 android:backgroundTint="@color/purple_500"
+                android:text="Submit"
                 android:textAllCaps="false"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
         </RelativeLayout>
-
-        <!--        <com.google.android.gms.ads.AdView-->
-        <!--            xmlns:ads="http://schemas.android.com/apk/res-auto"-->
-        <!--            android:id="@+id/adView"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            ads:adSize="BANNER"-->
-        <!--            ads:adUnitId="@string/ad_unit_id"-->
-        <!--            ads:layout_constraintEnd_toEndOf="parent"-->
-        <!--            ads:layout_constraintStart_toStartOf="parent"-->
-        <!--            ads:layout_constraintTop_toBottomOf="@id/rl"-->
-        <!--            android:layout_marginTop="5dp"-->
-        <!--            />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

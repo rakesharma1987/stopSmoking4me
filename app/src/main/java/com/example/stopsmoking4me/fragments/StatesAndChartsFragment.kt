@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stopsmoking4me.MainActivity
 import com.example.stopsmoking4me.adapter.DayWiseSmokeCounterAdapter
+import com.example.stopsmoking4me.adapter.HourlyAnalyticAdapter
 import com.example.stopsmoking4me.adapter.SmokCountPercentageAdapter
 import com.example.stopsmoking4me.adapter.StatesRecyclerViewAdapter
 import com.stopsmokingforfamily.aityl.R
@@ -21,8 +22,7 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var adapterData: StatesRecyclerViewAdapter
     private lateinit var smokedCountPercentageAdapter: SmokCountPercentageAdapter
     private lateinit var dayWiseSmokeCounterAdapter: DayWiseSmokeCounterAdapter
-
-
+    private lateinit var hourlyAnalyticAdapter: HourlyAnalyticAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +42,12 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
         var layoutManager = LinearLayoutManager(context)
         var layoutManager1 = LinearLayoutManager(context)
         var layoutManager2 = LinearLayoutManager(context)
+        var layoutManager3 = LinearLayoutManager(context)
 
         binding.rvData.layoutManager = layoutManager
         binding.rvData1.layoutManager = layoutManager1
         binding.rvData2.layoutManager = layoutManager2
+        binding.rvData3.layoutManager = layoutManager3
 
         adapterData = StatesRecyclerViewAdapter(requireContext(), (requireActivity() as MainActivity).dbAdapter.getOneDayAnalytics())
         smokedCountPercentageAdapter = SmokCountPercentageAdapter(requireContext(), (requireContext() as MainActivity).dbAdapter.getOneDaySmokedPercentageAnalytic())
@@ -71,9 +73,16 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             var list = (requireActivity() as MainActivity).dbAdapter.getOneDayAnalytics()
             adapterData = StatesRecyclerViewAdapter(requireContext(), list)
             binding.rvData.adapter = adapterData
+            adapterData.notifyDataSetChanged()
+
             smokedCountPercentageAdapter = SmokCountPercentageAdapter(requireContext(), (requireContext() as MainActivity).dbAdapter.getOneDaySmokedPercentageAnalytic())
             binding.rvData1.adapter = smokedCountPercentageAdapter
-            adapterData.notifyDataSetChanged()
+            smokedCountPercentageAdapter.notifyDataSetChanged()
+
+            hourlyAnalyticAdapter = HourlyAnalyticAdapter(requireContext(), (requireContext() as MainActivity).dbAdapter.getOneDayHourlyAnalytics())
+            binding.rvData3.adapter = hourlyAnalyticAdapter
+            hourlyAnalyticAdapter.notifyDataSetChanged()
+
         }
         if (value == "Last 7 Days"){
             binding.rlReason2.visibility = View.VISIBLE
@@ -90,6 +99,10 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             dayWiseSmokeCounterAdapter = DayWiseSmokeCounterAdapter(requireContext(), (requireActivity() as MainActivity).dbAdapter.getSevenDaysDayWiseAnalytics())
             binding.rvData2.adapter = dayWiseSmokeCounterAdapter
             dayWiseSmokeCounterAdapter.notifyDataSetChanged()
+
+            hourlyAnalyticAdapter = HourlyAnalyticAdapter(requireContext(), (requireContext() as MainActivity).dbAdapter.getSevenDaysHourlyAnalytics())
+            binding.rvData3.adapter = hourlyAnalyticAdapter
+            hourlyAnalyticAdapter.notifyDataSetChanged()
 
         }
         if (value == "Last 30 Days"){
@@ -108,6 +121,9 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             binding.rvData2.adapter = dayWiseSmokeCounterAdapter
             dayWiseSmokeCounterAdapter.notifyDataSetChanged()
 
+            hourlyAnalyticAdapter = HourlyAnalyticAdapter(requireContext(), (requireContext() as MainActivity).dbAdapter.get31DaysHourlyAnalytics())
+            binding.rvData3.adapter = hourlyAnalyticAdapter
+            hourlyAnalyticAdapter.notifyDataSetChanged()
         }
 
         if (value == "All"){
@@ -126,6 +142,10 @@ class StatesAndChartsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             dayWiseSmokeCounterAdapter = DayWiseSmokeCounterAdapter(requireContext(), (requireActivity() as MainActivity).dbAdapter.getLifetimeAnalyticsDayWise())
             binding.rvData2.adapter = dayWiseSmokeCounterAdapter
             dayWiseSmokeCounterAdapter.notifyDataSetChanged()
+
+            hourlyAnalyticAdapter = HourlyAnalyticAdapter(requireContext(), (requireContext() as MainActivity).dbAdapter.getAllDaysHourlyAnalytics())
+            binding.rvData3.adapter = hourlyAnalyticAdapter
+            hourlyAnalyticAdapter.notifyDataSetChanged()
 
         }
     }

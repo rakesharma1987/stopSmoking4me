@@ -160,7 +160,7 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener {
                     MyPreferences.getWhomName().isNullOrEmpty()
                 ) {
 //                    Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
-                    (requireContext() as MainActivity).showToast("Please fill details")
+                    (requireContext() as MainActivity).showToast("Fill details(Pencil Icon) in top right corner.")
                 } else if (btnYesOrNoClicked == 0) {
                     (requireContext() as MainActivity).showToast("Please confirm Are you going for smoking?")
 //                    Toast.makeText(context, "Please confirm \n Are you going for smoking?", Toast.LENGTH_SHORT).show()
@@ -209,7 +209,7 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener {
                         }
                     }
 
-                }, 5000)
+                }, 1000)
 
             }
 

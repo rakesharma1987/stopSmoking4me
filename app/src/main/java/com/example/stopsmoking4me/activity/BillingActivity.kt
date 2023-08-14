@@ -119,9 +119,10 @@ class BillingActivity : AppCompatActivity(), OnCLickProduct {
                     }
                     Log.d(TAG, productDetailList.size.toString() + " number of products")
                     runOnUiThread(Runnable {
-                        Toast.makeText(this@BillingActivity, "ProductDetail List ${productDetailList.size.toString()}", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this@BillingActivity, "ProductDetail List ${productDetailList.size.toString()}", Toast.LENGTH_SHORT).show()
                         billingActivityBinding.pbLoading.visibility = View.GONE
                         if (prodDetailsList.isNotEmpty()){
+                            Log.d("ProductList", "showProducts: ${prodDetailsList[0]}")
                             productDetailAdapter = ProductDetailAdapter(
                                 onCLickProduct,
                                 this@BillingActivity,

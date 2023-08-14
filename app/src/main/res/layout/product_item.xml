@@ -7,11 +7,11 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="7dp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="30dp"
+        app:cardCornerRadius="7dp"
         app:cardElevation="5dp"
-        app:cardMaxElevation="12dp"
+        app:cardMaxElevation="5dp"
         app:cardPreventCornerOverlap="true">
 
         <LinearLayout
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:text="R23.89"
                 android:layout_marginLeft="5dp"
-                android:textColor="@color/teal_700"
+                android:textColor="@color/black"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -46,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="R23.89"
-                    android:textColor="@color/teal_700"
+                    android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1 Monthly"
-                    android:textColor="@color/teal_200"
+                    android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 

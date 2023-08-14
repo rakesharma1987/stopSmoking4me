@@ -65,10 +65,10 @@
                     android:id="@+id/tv_header_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Date Wise Summary"
+                    android:text="Date Wise Smoke Summary"
                     android:textAlignment="center"
                     android:background="@drawable/drawable_rectangle_black_border"
-                    android:textColor="@color/purple_500"/>
+                    android:textColor="@color/heading_txt_color"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -195,7 +195,7 @@
                     android:text="No Smoke and Smoke Summary"
                     android:textAlignment="center"
                     android:background="@drawable/drawable_rectangle_black_border"
-                    android:textColor="@color/purple_500"/>
+                    android:textColor="@color/heading_txt_color"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -317,10 +317,10 @@
                     android:id="@+id/tv_header_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Day Wise Summary"
+                    android:text="Day Wise Smoke Summary"
                     android:textAlignment="center"
                     android:background="@drawable/drawable_rectangle_black_border"
-                    android:textColor="@color/purple_500"/>
+                    android:textColor="@color/heading_txt_color"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -442,10 +442,10 @@
                     android:id="@+id/tv_header_4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Hourly Summary"
+                    android:text="Hourly Smoke Summary"
                     android:textAlignment="center"
                     android:background="@drawable/drawable_rectangle_black_border"
-                    android:textColor="@color/purple_500"/>
+                    android:textColor="@color/heading_txt_color"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -476,20 +476,6 @@
                                     android:textAlignment="center"
                                     android:textColor="@color/white"
                                     android:visibility="gone"
-                                    />
-
-                                <View xmlns:android="http://schemas.android.com/apk/res/android"
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/column_haeder"/>
-
-                                <TextView
-                                    android:id="@+id/tv_sno"
-                                    android:layout_width="100dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="SeqN"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/white"
                                     />
 
                                 <View xmlns:android="http://schemas.android.com/apk/res/android"

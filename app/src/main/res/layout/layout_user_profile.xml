@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="For Whom You Want To Stop Smoking?"
+            android:text="For Whom You Want To Stop Smoke?"
             android:textSize="15sp"
             app:layout_constraintTop_toBottomOf="@id/til_name"
             android:layout_margin="10dp" />

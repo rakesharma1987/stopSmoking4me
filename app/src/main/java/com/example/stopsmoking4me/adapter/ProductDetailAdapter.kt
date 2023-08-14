@@ -29,12 +29,12 @@ class ProductDetailAdapter(private val onCLickProduct: OnCLickProduct,
         val subProductList = subscriptionOfferDetails.pricingPhases.pricingPhaseList[0].formattedPrice
         var price  = subProductList.toString()
 
-        if(subscriptionOfferDetails.basePlanId.equals("month12")){
+        if(subscriptionOfferDetails.basePlanId == "monthlysubscrtiptionstopsmoking"){
             holder.llItem.visibility = View.VISIBLE
             holder.type.text = "/Yearly"
             holder.grace.text = "Auto Renewed"
             holder.price.text = price.replace(".00","")
-        }else if(subscriptionOfferDetails.basePlanId.equals("month") && price.equals("Free")){
+        }else if(subscriptionOfferDetails.basePlanId == "monthlysubscrtiptionstopsmoking" && price == "Free"){
             holder.llItem.visibility = View.VISIBLE
             holder.type.text = "/Monthly"
             holder.grace.text = "3 days Free Trial, Auto Renewed"

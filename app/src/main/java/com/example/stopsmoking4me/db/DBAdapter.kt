@@ -628,7 +628,17 @@ class DBAdapter(private var context: Context) {
                 val reason = cursor.getString(2)
                 val smokedCount = cursor.getInt(3)
                 val contributedReasonPercentage = cursor.getString(4)
-                list.add(HourlyAnalyticData(seqNo, hour, reason, smokedCount, contributedReasonPercentage))
+                if (hour != null && reason != null && contributedReasonPercentage != null) {
+                    list.add(
+                        HourlyAnalyticData(
+                            seqNo,
+                            hour,
+                            reason,
+                            smokedCount,
+                            contributedReasonPercentage
+                        )
+                    )
+                }
             } while (cursor.moveToNext())
         }
         return list
@@ -687,7 +697,17 @@ class DBAdapter(private var context: Context) {
                 val reason = cursor.getString(2)
                 val smokedCount = cursor.getInt(3)
                 val contributedReasonPercentage = cursor.getString(4)
-                list.add(HourlyAnalyticData(seqNo, hour, reason, smokedCount, contributedReasonPercentage))
+                if (hour != null && reason != null && contributedReasonPercentage != null) {
+                    list.add(
+                        HourlyAnalyticData(
+                            seqNo,
+                            hour,
+                            reason,
+                            smokedCount,
+                            contributedReasonPercentage
+                        )
+                    )
+                }
 
             } while (cursor.moveToNext())
         }
@@ -747,7 +767,17 @@ class DBAdapter(private var context: Context) {
                 val reason = cursor.getString(2)
                 val smokedCount = cursor.getInt(3)
                 val contributedReasonPercentage = cursor.getString(4)
-                list.add(HourlyAnalyticData(seqNo, hour, reason, smokedCount, contributedReasonPercentage))
+                if (hour != null && reason != null && contributedReasonPercentage != null) {
+                    list.add(
+                        HourlyAnalyticData(
+                            seqNo,
+                            hour,
+                            reason,
+                            smokedCount,
+                            contributedReasonPercentage
+                        )
+                    )
+                }
             } while (cursor.moveToNext())
         }
         return list
@@ -804,7 +834,17 @@ class DBAdapter(private var context: Context) {
                 val reason = cursor.getString(2)
                 val smokedCount = cursor.getInt(3)
                 val contributedReasonPercentage = cursor.getString(4)
-                list.add(HourlyAnalyticData(seqNo, hour, reason, smokedCount, contributedReasonPercentage))
+                if (hour != null && reason != null && contributedReasonPercentage != null) {
+                    list.add(
+                        HourlyAnalyticData(
+                            seqNo,
+                            hour,
+                            reason,
+                            smokedCount,
+                            contributedReasonPercentage
+                        )
+                    )
+                }
             } while (cursor.moveToNext())
         }
         return list

@@ -36,6 +36,7 @@ class BillingActivity : AppCompatActivity(), OnCLickProduct {
     private lateinit var billingActivityBinding: ActivityBillingBinding
     private var TAG = "testApi"
     private var onCLickProduct = this
+    lateinit var productDetailAdapter: ProductDetailAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,15 +79,15 @@ class BillingActivity : AppCompatActivity(), OnCLickProduct {
         val productList: ImmutableList<QueryProductDetailsParams.Product> =
             ImmutableList.of( //Product 1
                 QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId("month")
+                    .setProductId("monthlysubscrtiptionstopsmoking") //monthlysubscrtiptionstopsmoking
                     .setProductType(BillingClient.ProductType.SUBS)
                     .build(),  //Product 2
                 QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId("month12")
+                    .setProductId("yearlysubscription") //yearlysubscription
                     .setProductType(BillingClient.ProductType.SUBS)
                     .build(),  //Product 3
                 QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId("nm_urgent")
+                    .setProductId("stopsmokingforfamilyself")
                     .setProductType(BillingClient.ProductType.SUBS)
                     .build()
 
@@ -94,9 +95,7 @@ class BillingActivity : AppCompatActivity(), OnCLickProduct {
         val params = QueryProductDetailsParams.newBuilder()
             .setProductList(productList)
             .build()
-        params.let {
-//            Log.d(TAG, "showProducts: ${it.}")
-        }
+
         billingClient!!.queryProductDetailsAsync(params) {
                 billingResult: BillingResult?, prodDetailsList: List<ProductDetails> ->
             productDetailList.clear()
@@ -104,18 +103,34 @@ class BillingActivity : AppCompatActivity(), OnCLickProduct {
             try {
                 Timer().schedule(2000) {
                     Log.d(TAG, "posted delayed")
-                    prodDetailsList[0].subscriptionOfferDetails?.let {
-                        productDetailList.addAll(it)
+
+                    if(prodDetailsList.isNotEmpty()) {
+                        prodDetailsList[0].subscriptionOfferDetails?.let {
+                            productDetailList.addAll(it)
+                        }
+                    }else{
+                        runOnUiThread {
+                            Toast.makeText(
+                                this@BillingActivity,
+                                "No product found.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                     Log.d(TAG, productDetailList.size.toString() + " number of products")
                     runOnUiThread(Runnable {
+                        Toast.makeText(this@BillingActivity, "ProductDetail List ${productDetailList.size.toString()}", Toast.LENGTH_SHORT).show()
                         billingActivityBinding.pbLoading.visibility = View.GONE
-                        var productDetailAdapter = ProductDetailAdapter(
-                            onCLickProduct,
-                            this@BillingActivity,
-                            prodDetailsList[0].subscriptionOfferDetails,
-                            prodDetailsList[0]
-                        )
+                        if (prodDetailsList.isNotEmpty()){
+                            productDetailAdapter = ProductDetailAdapter(
+                                onCLickProduct,
+                                this@BillingActivity,
+                                prodDetailsList[0].subscriptionOfferDetails,
+                                prodDetailsList[0]
+                            )
+                        }else{
+                            return@Runnable
+                        }
                         billingActivityBinding.rvSubscriptionList.setHasFixedSize(true)
                         billingActivityBinding.rvSubscriptionList.layoutManager =
                             LinearLayoutManager(

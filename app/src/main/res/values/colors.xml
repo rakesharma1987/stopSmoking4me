@@ -10,4 +10,5 @@
     <color name="column_haeder">#4F4F4F</color>
     <color name="column_line">#F5F7FD</color>
     <color name="txt_color">#E6EAE8</color>
+    <color name="heading_txt_color">#4f4f4f</color>
 </resources>

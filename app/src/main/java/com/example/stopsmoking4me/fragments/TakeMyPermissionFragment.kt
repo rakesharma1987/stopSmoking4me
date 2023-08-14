@@ -38,13 +38,15 @@ import java.util.*
 
 
 private const val PICK_IMAGE = 100
-class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
+
+class TakeMyPermissionFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: FragmentTakeMyPermissionBinding
-//    private lateinit var adRequest: AdRequest
+
+    //    private lateinit var adRequest: AdRequest
     var list: List<Messages> = mutableListOf<Messages>()
     private lateinit var adapter: MyRecyclerviewAdapter
     lateinit var dropDownReason: String
-    var btnYesOrNoClicked:Int = 0
+    var btnYesOrNoClicked: Int = 0
 
     private var dropDownList = mutableListOf<String>()
     private lateinit var animator1: ObjectAnimator
@@ -67,7 +69,12 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
         savedInstanceState: Bundle?
     ): View? {
         Log.d(TAG, "onCreateView: ")
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_take_my_permission, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_take_my_permission,
+            container,
+            false
+        )
 
         if (MyPreferences.getImageFromBase64()!!.isNotEmpty()) {
             val byte = android.util.Base64.decode(
@@ -95,9 +102,10 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = MyRecyclerviewAdapter(requireContext(), list)
 
-        val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, dropDownList)
+        val arrayAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, dropDownList)
         binding.dropDown.adapter = arrayAdapter
-        binding.dropDown.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+        binding.dropDown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -109,7 +117,7 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                     (requireContext() as MainActivity).reasonData.dropDownReason = dropDownReason
                     stopSmoking.reason = dropDownReason
                     reason = dropDownReason
-                }else{
+                } else {
                     (requireContext() as MainActivity).reasonData.dropDownReason = "no reason"
                     stopSmoking.reason = ""
                     reason = ""
@@ -126,19 +134,20 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-           R.id.image_view ->{
-               val gallary = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-               startActivityForResult(gallary, PICK_IMAGE)
-           }
+        when (v?.id) {
+            R.id.image_view -> {
+                val gallary =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+                startActivityForResult(gallary, PICK_IMAGE)
+            }
 
-            R.id.btn_shall_go_4_smoke ->{
+            R.id.btn_shall_go_4_smoke -> {
                 binding.tvDisplayMsg.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.GONE
                 changeColor()
             }
 
-            R.id.btn_submit ->{
+            R.id.btn_submit -> {
 //                if ((requireContext() as MainActivity).reasonData.title.isNullOrEmpty() ||
 //                    (requireContext() as MainActivity).reasonData.name.isNullOrEmpty() ||
 //                    (requireContext() as MainActivity).reasonData.forWhom.isNullOrEmpty() ||
@@ -148,19 +157,20 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                 if (MyPreferences.getTitle().isNullOrEmpty() ||
                     MyPreferences.getTitleName().isNullOrEmpty() ||
                     MyPreferences.getWhom().isNullOrEmpty() ||
-                    MyPreferences.getWhomName().isNullOrEmpty()){
+                    MyPreferences.getWhomName().isNullOrEmpty()
+                ) {
 //                    Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
                     (requireContext() as MainActivity).showToast("Please fill details")
-                }else if(btnYesOrNoClicked == 0){
+                } else if (btnYesOrNoClicked == 0) {
                     (requireContext() as MainActivity).showToast("Please confirm Are you going for smoking?")
 //                    Toast.makeText(context, "Please confirm \n Are you going for smoking?", Toast.LENGTH_SHORT).show()
-                }else{
+                } else {
 //                    (requireContext() as MainActivity).viewModel.saveReason((requireContext() as MainActivity).reasonData)
 //                    (requireActivity() as MainActivity).viewModel.saveDataIntoStopSmoking(stopSmoking)
-                    if (reason == ""){
+                    if (reason == "") {
                         (requireContext() as MainActivity).showToast("Please select reason from drop down.")
 //                        Toast.makeText(requireContext(), "", Toast.LENGTH_SHORT).show()
-                    }else {
+                    } else {
                         (requireActivity() as MainActivity).dbAdapter.saveData(reason, smoking)
                         (requireContext() as MainActivity).showToast("Data saved successfully.")
 //                        Toast.makeText(requireContext(), "", Toast.LENGTH_SHORT).show()
@@ -170,19 +180,21 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                 }
             }
 
-            R.id.btn_yes ->{
+            R.id.btn_yes -> {
                 binding.btnYes.isEnabled = false
 
                 stopSmoking.isSmoking = true
                 stopSmoking.dateString = (requireActivity() as MainActivity).getSystemDate()
-                stopSmoking.day = android.text.format.DateFormat.format("EEEE", Calendar.getInstance()).toString()
+                stopSmoking.day =
+                    android.text.format.DateFormat.format("EEEE", Calendar.getInstance()).toString()
                 stopSmoking.hour = Utility().getCurrentTime()
 
-                Handler().postDelayed(object: Runnable{
+                Handler().postDelayed(object : Runnable {
                     override fun run() {
                         binding.btnYes.isEnabled = true
 
-                        (requireContext() as MainActivity).reasonData.dateString = (requireContext() as MainActivity).getSystemDate()
+                        (requireContext() as MainActivity).reasonData.dateString =
+                            (requireContext() as MainActivity).getSystemDate()
                         (requireContext() as MainActivity).reasonData.yesOrNo = true
                         btnYesOrNoClicked = btnYesOrNoClicked.plus(1)
                         blinkTextViewReason()
@@ -190,7 +202,8 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                         smoking = "Yes"
                         CoroutineScope(Dispatchers.Main).launch {
                             delay(1000)
-                            binding.tvReason.background = resources.getDrawable(R.drawable.drawable_rectangle_shap)
+                            binding.tvReason.background =
+                                resources.getDrawable(R.drawable.drawable_rectangle_shap)
                             binding.tvReason.setTextColor(resources.getColor(R.color.white))
                             stopBlinkingReason()
                         }
@@ -200,26 +213,31 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
 
             }
 
-            R.id.btn_no ->{
+            R.id.btn_no -> {
                 if (MyPreferences.getTitle().isNullOrEmpty() ||
                     MyPreferences.getTitleName().isNullOrEmpty() ||
                     MyPreferences.getWhom().isNullOrEmpty() ||
-                    MyPreferences.getWhomName().isNullOrEmpty()){
+                    MyPreferences.getWhomName().isNullOrEmpty()
+                ) {
                     (requireContext() as MainActivity).showToast("Please fill details")
 //                    Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
-                }else {
+                } else {
                     binding.btnNo.isEnabled = false
                     smoking = "No"
 
-                    Handler().postDelayed(object: Runnable{
+                    Handler().postDelayed(object : Runnable {
                         override fun run() {
                             binding.btnNo.isEnabled = true
                             (requireContext() as MainActivity).reasonData.yesOrNo = false
                             btnYesOrNoClicked = btnYesOrNoClicked.plus(1)
 
                             stopSmoking.isSmoking = false
-                            stopSmoking.dateString = (requireActivity() as MainActivity).getSystemDate()
-                            stopSmoking.day = android.text.format.DateFormat.format("EEEE", Calendar.getInstance()).toString()
+                            stopSmoking.dateString =
+                                (requireActivity() as MainActivity).getSystemDate()
+                            stopSmoking.day = android.text.format.DateFormat.format(
+                                "EEEE",
+                                Calendar.getInstance()
+                            ).toString()
                             stopSmoking.hour = Utility().getCurrentTime()
                             stopSmoking.reason = ""
                             reason = ""
@@ -227,10 +245,16 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                             var alertDialog = AlertDialog.Builder(context, R.style.MyDialogTheme)
                             alertDialog.setMessage("Thank you so much for not smoking.")
                             alertDialog.setPositiveButton("Ok") { dialog, which ->
-                                (requireContext() as MainActivity).reasonData.dateString = (requireContext() as MainActivity).getSystemDate()
+                                (requireContext() as MainActivity).reasonData.dateString =
+                                    (requireContext() as MainActivity).getSystemDate()
                                 (requireContext() as MainActivity).viewModel.saveReason((requireContext() as MainActivity).reasonData)
-                                (requireContext() as MainActivity).viewModel.saveDataIntoStopSmoking(stopSmoking)
-                                (requireActivity() as MainActivity).dbAdapter.saveData(reason, smoking)
+                                (requireContext() as MainActivity).viewModel.saveDataIntoStopSmoking(
+                                    stopSmoking
+                                )
+                                (requireActivity() as MainActivity).dbAdapter.saveData(
+                                    reason,
+                                    smoking
+                                )
                                 dialog!!.dismiss()
                             }
                             var dialog = alertDialog.create()
@@ -246,10 +270,11 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             val imageURI = data?.data
             binding.imageView.setImageURI(imageURI)
-            val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, imageURI)
+            val bitmap: Bitmap =
+                MediaStore.Images.Media.getBitmap(requireContext().contentResolver, imageURI)
             val baos: ByteArrayOutputStream = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
             val byte = baos.toByteArray()
@@ -258,29 +283,29 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
         }
     }
 
-    private fun changeColor(){
-        object: CountDownTimer(10000, 1000){
+    private fun changeColor() {
+        object : CountDownTimer(10000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 binding.tvDisplayMsg.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.GONE
-                var value = millisUntilFinished/1000
+                var value = millisUntilFinished / 1000
                 var value1 = value.toInt()
                 val v741 = arrayOf(7, 4, 1)
                 val v852 = arrayOf(8, 5, 2)
                 val v963 = arrayOf(9, 6, 3)
                 CoroutineScope(Dispatchers.IO).launch {
-                    withContext(Dispatchers.Main){
-                        if (value1 in v741){
+                    withContext(Dispatchers.Main) {
+                        if (value1 in v741) {
                             binding.ivGreen.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_green))
                             binding.ivYellow.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_yellow))
                             binding.ivRed.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_red))
                         }
-                        if (value1 in v852){
+                        if (value1 in v852) {
                             binding.ivGreen.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_green))
                             binding.ivYellow.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_yellow))
                             binding.ivRed.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_red))
                         }
-                        if (value1 in v963){
+                        if (value1 in v963) {
                             binding.ivGreen.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_green))
                             binding.ivYellow.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_border_yellow))
                             binding.ivRed.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_red))
@@ -293,7 +318,8 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                 blinkTextviewAreYouGoingForSmoking()
                 CoroutineScope(Dispatchers.Main).launch {
                     delay(1000)
-                    binding.btnAreUGoing4Smoking.background = resources.getDrawable(R.drawable.drawable_rectangle_shap)
+                    binding.btnAreUGoing4Smoking.background =
+                        resources.getDrawable(R.drawable.drawable_rectangle_shap)
                     binding.btnAreUGoing4Smoking.setTextColor(resources.getColor(R.color.white))
                     stopBlinkingAreYouGoingForSmoking()
 
@@ -307,15 +333,15 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
 
                 val randomNumber = (1..3).random()
                 Log.d("TAG", "onFinish: $randomNumber")
-                if (randomNumber == 1){
+                if (randomNumber == 1) {
                     colorType = "G"
                     binding.ivGreen.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_green))
                 }
-                if (randomNumber == 2){
+                if (randomNumber == 2) {
                     colorType = "Y"
                     binding.ivYellow.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_yellow))
                 }
-                if (randomNumber == 3){
+                if (randomNumber == 3) {
                     colorType = "R"
                     binding.ivRed.setImageDrawable(requireContext().getDrawable(R.drawable.drawable_circle_red))
                 }
@@ -327,7 +353,7 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
                 CoroutineScope(Dispatchers.Main).launch {
                     delay(100)
                     val rand = (1..list.size).random()
-                    val messages = list[rand-1]
+                    val messages = list[rand - 1]
                     val randMsgList = mutableListOf<Messages>()
                     randMsgList.add(messages)
                     adapter = MyRecyclerviewAdapter(requireContext(), randMsgList)
@@ -337,9 +363,15 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
         }.start()
     }
 
-    fun blinkTextviewAreYouGoingForSmoking(){
+    fun blinkTextviewAreYouGoingForSmoking() {
         animator1 =
-            ObjectAnimator.ofInt(binding.btnAreUGoing4Smoking, "backgroundColor", Color.RED, Color.GREEN, Color.RED)
+            ObjectAnimator.ofInt(
+                binding.btnAreUGoing4Smoking,
+                "backgroundColor",
+                Color.RED,
+                Color.GREEN,
+                Color.RED
+            )
         animator1.duration = 500
         animator1.setEvaluator(ArgbEvaluator())
         animator1.repeatCount = Animation.ABSOLUTE
@@ -347,9 +379,15 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
         animator1.start()
     }
 
-    fun blinkTextViewReason(){
+    fun blinkTextViewReason() {
         animator2 =
-            ObjectAnimator.ofInt(binding.tvReason, "backgroundColor", Color.RED, Color.GREEN, Color.RED)
+            ObjectAnimator.ofInt(
+                binding.tvReason,
+                "backgroundColor",
+                Color.RED,
+                Color.GREEN,
+                Color.RED
+            )
         animator2.duration = 1000
         animator2.setEvaluator(ArgbEvaluator())
         animator2.repeatCount = Animation.ABSOLUTE
@@ -357,11 +395,11 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
         animator2.start()
     }
 
-    fun stopBlinkingAreYouGoingForSmoking(){
+    fun stopBlinkingAreYouGoingForSmoking() {
         animator1.cancel()
     }
 
-    fun stopBlinkingReason(){
+    fun stopBlinkingReason() {
         animator2.cancel()
     }
 
@@ -379,47 +417,41 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener{
         super.onStart()
         Log.d(TAG, "onStart: ")
     }
+
     override fun onResume() {
         super.onResume()
         Log.d(TAG, "onResume: ")
-//        if ((requireArguments() as MainActivity).hasTwoDaysPassed()){
-//            AlertDialog.Builder(requireContext())
-//                .setTitle("Reminder")
-//                .setMessage("Reminder for money")
-//                .setPositiveButton("Get Premium", object: DialogInterface.OnClickListener{
-//                    override fun onClick(dialog: DialogInterface?, which: Int) {
-//                        Log.d("WorkManager: ", "onClick: ")
-//                    }
-//
-//                })
-//                .create()
-//                .show()
-
-
-            if ((requireContext() as MainActivity).hasTwoDaysPassed()) {
-                if (!MyPreferences.isPurchased()){
-                    var alertDialog = AlertDialog.Builder(context)
-//                    alertDialog.setTitle("Reminder")
-                    alertDialog.setMessage("Go Premium! The trial version is available for 2 days.")
-                    alertDialog.setCancelable(false)
-                    alertDialog.setPositiveButton("Get Premium", object : DialogInterface.OnClickListener {
+        if ((requireContext() as MainActivity).hasTwoDaysPassed()) {
+            if (!MyPreferences.isPurchased()) {
+                var alertDialog = AlertDialog.Builder(context)
+                alertDialog.setMessage("Go Premium! The trial version is available for 3 days.")
+                alertDialog.setCancelable(false)
+                alertDialog.setPositiveButton(
+                    "Get Premium",
+                    object : DialogInterface.OnClickListener {
                         override fun onClick(dialog: DialogInterface?, which: Int) {
-                            context?.startActivity(Intent(activity?.applicationContext, BillingActivity::class.java))
+                            context?.startActivity(
+                                Intent(
+                                    activity?.applicationContext,
+                                    BillingActivity::class.java
+                                )
+                            )
                         }
 
                     })
-                    alertDialog.setNegativeButton("Cancel", object: DialogInterface.OnClickListener{
-                        override fun onClick(dialog: DialogInterface?, which: Int) {
-                            dialog?.dismiss()
-                        }
+                alertDialog.setNegativeButton("Cancel", object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        dialog?.dismiss()
+                    }
 
-                    })
-
-        alertDialog.create().show()
-    }
-}else{
-    (requireContext() as MainActivity).setRepeatingAlarm(requireContext())
-}
+                })
+                if (activity != null && !(activity?.isFinishing)!!) {
+                    alertDialog.create().show()
+                }
+            }
+        } else {
+            (requireContext() as MainActivity).setRepeatingAlarm(requireContext())
+        }
 
     }
 

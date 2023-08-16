@@ -79,9 +79,9 @@ class BillingActivity : AppCompatActivity(), OnCLickProduct {
         val productList: ImmutableList<QueryProductDetailsParams.Product> =
             ImmutableList.of( //Product 1
                 QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId("monthlysubscrtiptionstopsmoking") //monthlysubscrtiptionstopsmoking
+                    .setProductId("weeklysubscription") //monthlysubscrtiptionstopsmoking
                     .setProductType(BillingClient.ProductType.SUBS)
-                    .build(),  //Product 2
+                    .build(),
                 QueryProductDetailsParams.Product.newBuilder()
                     .setProductId("yearlysubscription") //yearlysubscription
                     .setProductType(BillingClient.ProductType.SUBS)

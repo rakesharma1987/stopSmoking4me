@@ -539,7 +539,7 @@ class MainActivity : BaseActivity() {
         dropDownMessage.add("Depression")
         dropDownMessage.add("Relaxation")
         dropDownMessage.add("Relieve boredom")
-        dropDownMessage.add("Happiness/Short Term Happiness")
+        dropDownMessage.add("Happiness")
         dropDownMessage.add("Before a meal")
         dropDownMessage.add("After a meal")
         dropDownMessage.add("During meal")

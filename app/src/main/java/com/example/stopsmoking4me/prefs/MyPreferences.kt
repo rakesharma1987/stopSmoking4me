@@ -2,6 +2,7 @@ package com.example.stopsmoking4me.prefs
 
 import android.content.Context
 import android.content.SharedPreferences
+import kotlin.properties.Delegates
 
 object MyPreferences {
     private lateinit var prefs : SharedPreferences
@@ -15,24 +16,33 @@ object MyPreferences {
     private const val WHOM_NAME = "_whom_name"
     private const val IS_FIRST_LAUNCH = "_is_first_launch"
     private var isFirstlaunch: Boolean = false
-    var firstTimeLaunch: Long = 0
+//    val firstTimeLaunch: Long = 0
+    var installationDate by Delegates.notNull<Long>()
 
 
     fun init(context: Context){
         prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         editor = prefs.edit()
-        editor.commit()
+//        editor.commit()
 
-        isFirstlaunch = prefs.getBoolean(IS_FIRST_LAUNCH, true)
-        firstTimeLaunch = prefs.getLong("first_launch_time", 0)
+//        isFirstlaunch = prefs.getBoolean(IS_FIRST_LAUNCH, true)
+//        firstTimeLaunch = prefs.getLong("first_launch_time", 0)
+        installationDate = prefs.getLong(IS_FIRST_LAUNCH, 0L)
+//        if (installationDate == 0L){
+//            editor.putLong(IS_FIRST_LAUNCH, System.currentTimeMillis())
+//        }else{
+//
+//        }
+        editor.commit()
     }
 
 //    private var isFirstlaunch: Boolean = prefs.getBoolean(IS_FIRST_LAUNCH, true)
 //    var firstTimeLaunch = prefs.getLong("first_launch_time", 0)
     public fun isFirstLaunch(){
-        if (isFirstlaunch){
-            editor.putLong("first_launch_time", System.currentTimeMillis())
-            editor.putBoolean(IS_FIRST_LAUNCH, false)
+        if (installationDate == 0L){
+//            editor.putLong("first_launch_time", System.currentTimeMillis())
+//            editor.putBoolean(IS_FIRST_LAUNCH, false)
+            editor.putLong(IS_FIRST_LAUNCH, System.currentTimeMillis())
             editor.commit()
         }
     }

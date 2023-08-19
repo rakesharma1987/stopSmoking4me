@@ -430,6 +430,7 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener {
                     "Get Premium",
                     object : DialogInterface.OnClickListener {
                         override fun onClick(dialog: DialogInterface?, which: Int) {
+                            dialog?.dismiss()
                             context?.startActivity(
                                 Intent(
                                     activity?.applicationContext,
@@ -449,9 +450,10 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener {
                     alertDialog.create().show()
                 }
             }
-        } else {
-            (requireContext() as MainActivity).setRepeatingAlarm(requireContext())
         }
+//        else {
+//            (requireContext() as MainActivity).setRepeatingAlarm(requireContext())
+//        }
 
     }
 
@@ -472,7 +474,7 @@ class TakeMyPermissionFragment : Fragment(), View.OnClickListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d(TAG, "onDestroyView: ")
+        Log.d(TAG, "TakeMyPermissionFragment onDestroyView: ")
     }
 
     override fun onDestroy() {

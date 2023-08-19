@@ -74,6 +74,7 @@ class MainActivity : BaseActivity() {
 //    lateinit var alarmManager: AlarmManager
     lateinit var alarmIntent: PendingIntent
     var twoDaysIinMillis = 0
+    private var TAG = "TakeMyPermissionFragment"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,397 +94,61 @@ class MainActivity : BaseActivity() {
             tab.text = tabsArray[position]
         }.attach()
 
+        MyPreferences.isFirstLaunch()
+
         msgList = mutableListOf()
-        /*msgList.add(
-            Messages(
-                0,
-                "Plan ahead: have healthy alternatives ready for when stress strikes, such as chewing gum or eating a snack.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "yourself occupied: stay busy with work, hobbies, or social activities to reduce idle time.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Practice positive self-talk: remind yourself of the reasons why you want to quit and stay positive and motivated.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Use nicotine replacement therapy: consider using nicotine replacement therapy, such as patches or gum, to manage cravings.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Get enough sleep: lack of sleep can increase stress levels, so make sure to get enough rest each night.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Be patient with yourself: quitting smoking is a process and it takes time, so be kind and understanding with yourself.",
-                "Y"
-            )
-        )
-        msgList.add(Messages(0, "SMOKING ALTERNATIVES", "Y"))
-        msgList.add(Messages(0, "Here are some alternatives to smoking to help you quit.", "Y"))
-        msgList.add(
-            Messages(
-                0,
-                "Nicotine replacement therapy: such as patches, gum, lozenges, inhalers, or nasal sprays.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Vaping: using an electronic cigarette or vaporizer can provide a similar experience to smoking.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Exercise: physical activity can help reduce cravings and manage stress.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Hobbies: engage in a new hobby or activity to keep your hands and mind occupied.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Relaxation techniques: try deep breathing, meditation, or yoga to manage stress and reduce cravings.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Healthy eating: maintain a healthy diet and snack on healthy foods when cravings strike.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Support groups: join a support group or online community to connect with others who are quitting smoking.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Therapeutic approaches: consider seeking the help of a therapist or counselor to support your quitting journey.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Social activities: spend time with friends and family and participate in social activities to reduce stress.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Distraction techniques: distract yourself with a book, movie, music, or puzzle to help manage cravings.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Exercise: physical activity can help reduce cravings and manage stress.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Healthy eating: maintain a healthy diet and snack on healthy foods when cravings strike.",
-                "Y"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Relaxation techniques: try deep breathing, meditation, or yoga to manage stress and reduce cravings.",
-                "Y"
-            )
-        )
-
-        msgList.add(
-            Messages(
-                0,
-                "Sleep: make sure you're getting enough sleep, as lack of sleep can increase stress levels.",
-                "R"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Mindfulness: focus on the present moment and be mindful of your thoughts and feelings to help reduce cravings.",
-                "R"
-            )
-        )
-        msgList.add(Messages(0, "FOR SOMEONE E.G. LOVED ONES IS IT POSSIBLE TO QUIT SMOKING.", "R"))
-        msgList.add(
-            Messages(
-                0,
-                "Yes, it is possible for someone to quit smoking, including loved ones. Quitting smoking is a journey that requires determination, patience, and support from loved ones. There are several evidence-based methods for quitting smoking, including nicotine replacement therapy, medication, counseling, and support from quit-smoking programs. A combination of these methods can greatly increase the chances of success. Encouraging a loved one to quit smoking and supporting them through the process can have a significant impact on their health and overall well-being.QUIT SMOKING TIPS",
-                "R"
-            )
-        )
-        msgList.add(Messages(0, "Here are some tips to help you quit smoking:", "R"))
-        msgList.add(Messages(0, "Set a quit date and stick to it.", "R"))
-        msgList.add(Messages(0, "Identify and avoid triggers that lead to smoking.", "R"))
-        msgList.add(Messages(0, "Find alternative ways to manage stress and anxiety.", "R"))
-        msgList.add(
-            Messages(
-                0,
-                "Keep yourself occupied, engage in physical activity or hobbies.",
-                "R"
-            )
-        )
-        msgList.add(Messages(0, "Seek support from family, friends, or a support group.", "R"))
-        msgList.add(
-            Messages(
-                0,
-                "Consider nicotine replacement therapy, such as patches or gum.",
-                "R"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Reward yourself for milestones achieved in quitting smoking.",
-                "R"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Stay positive and focus on the benefits of quitting, such as improved health and increased energy.",
-                "R"
-            )
-        )
-        msgList.add(Messages(0, "Avoid alcohol, which can trigger the urge to smoke.", "R"))
-        msgList.add(
-            Messages(
-                0,
-                "Stay committed and don't give up, quitting smoking is a process and it takes time.",
-                "R"
-            )
-        )
-        msgList.add(Messages(0, "QUIT SMOKING TIPS WHILE i AM HAPPY.", "R"))
-        msgList.add(
-            Messages(
-                0,
-                "Here are some tips to help you quit smoking while staying positive.",
-                "R"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Focus on the benefits: remind yourself of the positive effects quitting smoking will have on your health and wellbeing.",
-                "R"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Find a replacement activity: try to find a new hobby or physical activity to keep yourself occupied and distracted.",
-                "R"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Surround yourself with support: tell your family and friends about your goal to quit and seek their support.",
-                "R"
-            )
-        )
-
-        msgList.add(
-            Messages(
-                0,
-                "Focus on the benefits: remind yourself of the positive effects quitting smoking will have on your health and wellbeing",
-                "G"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Find a replacement activity: try to find a new hobby or physical activity to keep yourself occupied and distracted.",
-                "G"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Surround yourself with support: tell your family and friends about your goal to quit and seek their support.",
-                "G"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Keep a journal: write down your thoughts and feelings to track your progress and stay motivated.",
-                "G"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Celebrate milestones: reward yourself for reaching certain milestones, such as going a week without smoking.",
-                "G"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Be kind to yourself: quitting smoking is a challenging process, and it's important to be patient and understanding with yourself.",
-                "G"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Visualize success: imagine yourself as a non-smoker and the positive changes quitting will bring to your life.",
-                "G"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Avoid temptations: steer clear of situations that might trigger the urge to smoke.",
-                "G"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Stay active: physical activity can help reduce cravings and boost your mood.",
-                "G"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Don't give up: quitting smoking is a process and it takes time, but with determination and support, you can be successful.",
-                "G"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "are some tips to help you quit smoking while managing stress.",
-                "R"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Practice stress-management techniques: try relaxation techniques such as deep breathing, meditation, or yoga to manage stress.",
-                "G"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Find a healthy outlet: engage in physical activity or hobbies to channel stress in a positive way.",
-                "G"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Avoid triggers: identify and avoid situations that trigger the urge to smoke, such as alcohol or certain people.",
-                "G"
-            )
-        )
-        msgList.add(
-            Messages(
-                0,
-                "Seek support: turn to family, friends, or support groups for encouragement and understanding.",
-                "G"
-            )
-        )*/
-
-        msgList.add(Messages(0, "Plan ahead: have healthy alternatives ready for when craving strikes, such as chewing gum or eating a snack.", "Y"))
-        msgList.add(Messages(0, "Yourself occupied: stay busy with work, hobbies, or social activities to reduce idle time.", "Y"))
-        msgList.add(Messages(0, "Practice positive self-talk: remind yourself of the reasons why you want to quit and stay positive and motivated.", "Y"))
-        msgList.add(Messages(0, "Get enough sleep: lack of sleep can increase stress levels, so make sure to get enough rest each night.", "Y"))
-        msgList.add(Messages(0, "Be patient with yourself: quitting smoking is a process and it takes time, so be kind and understanding with yourself.", "Y"))
-        msgList.add(Messages(0, "Vaping: using an electronic cigarette or vaporizer can provide a similar experience to smoking.", "Y"))
-        msgList.add(Messages(0, "Exercise: physical activity can help reduce cravings and manage stress/anxiety.", "Y"))
-        msgList.add(Messages(0, "Hobbies: engage in a new hobby or activity to keep your hands and mind occupied.", "Y"))
-        msgList.add(Messages(0, "Relaxation techniques: try deep breathing, meditation, or yoga to manage stress and reduce cravings.", "Y"))
-        msgList.add(Messages(0, "Healthy eating: maintain a healthy diet and snack on healthy foods when cravings strike.", "Y"))
-        msgList.add(Messages(0, "Therapeutic approaches: consider seeking the help of a therapist or counselor to support your quitting journey.", "Y"))
-        msgList.add(Messages(0, "Social activities: spend time with friends and family and participate in social activities.", "Y"))
-        msgList.add(Messages(0, "Distraction techniques: distract yourself with a book, movie, music, or puzzle to help manage cravings.", "Y"))
-        msgList.add(Messages(0, "Healthy eating: maintain a healthy diet and snack on healthy foods when cravings strike.", "Y"))
+        msgList.add(Messages(0, "Plan ahead: Have healthy alternatives ready for when craving strikes, such as chewing gum or eating a snack.", "Y"))
+        msgList.add(Messages(0, "Yourself occupied: Stay busy with work, hobbies, or social activities to reduce idle time.", "Y"))
+        msgList.add(Messages(0, "Practice positive self-talk: Remind yourself of the reasons why you want to quit and stay positive and motivated.", "Y"))
+        msgList.add(Messages(0, "Get enough sleep: Lack of sleep can increase stress levels, so make sure to get enough rest each night.", "Y"))
+        msgList.add(Messages(0, "Be patient with yourself: Quitting smoking is a process and it takes time, so be kind and understanding with yourself.", "Y"))
+        msgList.add(Messages(0, "Exercise: Physical activity can help reduce cravings and manage stress/anxiety.", "Y"))
+        msgList.add(Messages(0, "Hobbies: Engage in a new hobby or activity to keep your hands and mind occupied.", "Y"))
+        msgList.add(Messages(0, "Relaxation techniques: Try deep breathing, meditation, or yoga to manage stress and reduce cravings.", "Y"))
+        msgList.add(Messages(0, "Healthy eating: Maintain A healthy diet and snack on healthy foods when cravings strike.", "Y"))
+        msgList.add(Messages(0, "Therapeutic approaches: Consider seeking the help of a therapist or counselor to support your quitting journey.", "Y"))
+        msgList.add(Messages(0, "Social activities: Spend time with friends and family and participate in social activities.", "Y"))
+        msgList.add(Messages(0, "Distraction techniques: Distract yourself with a book, movie, music, or puzzle to help manage cravings.", "Y"))
+        msgList.add(Messages(0, "Healthy eating: Maintain a healthy diet and snack on healthy foods when cravings strike.", "Y"))
         msgList.add(Messages(0, "Be Patient and Persistent: Quitting smoking is a process, and it's normal to experience setbacks. If you slip up, don't be too hard on yourself. Learn from the experience and recommit to your decision.", "Y"))
         msgList.add(Messages(0, "Create a Smoke-Free Environment: Avoid places where people smoke, at least during the initial stages of quitting.", "Y"))
         msgList.add(Messages(0, "Get Rid of Smoking Paraphernalia: Discard all cigarettes, lighters, and ashtrays from your home, car, and workplace. Removing these reminders can make it easier to resist the temptation.", "Y"))
         msgList.add(Messages(0, "Understand Your Triggers: Identify the situations, emotions, or habits that trigger your urge to smoke. Once you know them, find healthier alternatives or coping mechanisms for those triggers.", "Y"))
         msgList.add(Messages(0, "Regular practice of meditation: Regular meditation enhances attention and concentration, leading to improved productivity and cognitive abilities.", "Y"))
 
-        msgList.add(Messages(0, "Sleep: make sure you're getting enough sleep, as lack of sleep can increase stress levels.", "R"))
+        msgList.add(Messages(0, "Sleep: Make sure you're getting enough sleep, as lack of sleep can increase stress levels.", "R"))
         msgList.add(Messages(0, "Be Patient and Persistent: Quitting smoking is a process, and it's normal to experience setbacks. If you slip up, don't be too hard on yourself. Learn from the experience and recommit to your decision.", "R"))
         msgList.add(Messages(0, "Create a Smoke-Free Environment: Avoid places where people smoke, at least during the initial stages of quitting.", "R"))
         msgList.add(Messages(0, "Get Rid of Smoking Paraphernalia: Discard all cigarettes, lighters, and ashtrays from your home, car, and workplace. Removing these reminders can make it easier to resist the temptation.", "R"))
-        msgList.add(Messages(0, "Mindfulness: focus on the present moment and be mindful of your thoughts and feelings to help reduce cravings.", "R"))
+        msgList.add(Messages(0, "Mindfulness: Focus on the present moment and be mindful of your thoughts and feelings to help reduce cravings.", "R"))
         msgList.add(Messages(0, "Identify and avoid triggers that lead to smoking.", "R"))
-        msgList.add(Messages(0, "Find alternative ways to manage stress and anxiety.", "R"))
         msgList.add(Messages(0, "Keep yourself occupied, engage in physical activity or hobbies.", "R"))
         msgList.add(Messages(0, "Seek support from family, trusted friends, or a support group.", "R"))
         msgList.add(Messages(0, "Meditation can promote emotional balance, reduce symptoms of anxiety and depression, and increase overall feelings of happiness and well-being.", "R"))
         msgList.add(Messages(0, "Reward yourself for milestones achieved in quitting smoking.", "R"))
-        msgList.add(Messages(0, "Affirmations: Use positive affirmations related to quitting smoking. Repeat statements like <I am free from smoking>, <I am in control of my choices>, or <I am committed to my health and well-being> Affirmations can reinforce your determination to quit smoking.", "R"))
+        msgList.add(Messages(0, "Affirmations: Use positive affirmations related to quitting smoking. Repeat statements like 'I am free from smoking', 'I am in control of my choices', or 'I am committed to my health and well-being', Affirmations can reinforce your determination to quit smoking.", "R"))
         msgList.add(Messages(0, "Regular meditation can help build resilience and the ability to bounce back from challenging situations.", "R"))
         msgList.add(Messages(0, "Stay positive and focus on the benefits of quitting, such as improved health and increased energy.", "R"))
         msgList.add(Messages(0, "Avoid Alcohol and Coffee: These beverages can be associated with smoking, so it might be helpful to cut down on them, especially during the initial quitting phase.", "R"))
-        msgList.add(Messages(0, "Here are some tips to help you quit smoking while staying positive.", "R"))
-        msgList.add(Messages(0, "Focus on the benefits: remind yourself of the positive effects quitting smoking will have on your health and wellbeing.", "R"))
-        msgList.add(Messages(0, "Find a replacement activity: try to find a new hobby or physical activity to keep yourself occupied and distracted.", "R"))
+        msgList.add(Messages(0, "Focus on the benefits: Remind yourself of the positive effects quitting smoking will have on your health and wellbeing.", "R"))
+        msgList.add(Messages(0, "Find a replacement activity: Try to find a new hobby or physical activity to keep yourself occupied and distracted.", "R"))
         msgList.add(Messages(0, "Understand Your Triggers: Identify the situations, emotions, or habits that trigger your urge to smoke. Once you know them, find healthier alternatives or coping mechanisms for those triggers.", "R"))
 
-        msgList.add(Messages(0, "Focus on the benefits: remind yourself of the positive effects quitting smoking will have on your health and wellbeing", "G"))
+        msgList.add(Messages(0, "Focus on the benefits: Remind yourself of the positive effects quitting smoking will have on your health and wellbeing", "G"))
         msgList.add(Messages(0, "Create a Smoke-Free Environment: Avoid places where people smoke, at least during the initial stages of quitting.", "G"))
-        msgList.add(Messages(0, "Find a replacement activity: try to find a new hobby or physical activity to keep yourself occupied and distracted.", "G"))
-        msgList.add(Messages(0, "Keep a journal: write down your thoughts and feelings to track your progress and stay motivated.", "G"))
-        msgList.add(Messages(0, "Celebrate milestones: reward yourself for reaching certain milestones, such as going a week without smoking.", "G"))
-        msgList.add(Messages(0, "Be kind to yourself: quitting smoking is a challenging process, and it's important to be patient and understanding with yourself.", "G"))
-        msgList.add(Messages(0, "Visualize success: imagine yourself as a non-smoker and the positive changes quitting will bring to your life.", "G"))
-        msgList.add(Messages(0, "Avoid temptations: steer clear of situations that might trigger the urge to smoke.", "G"))
-        msgList.add(Messages(0, "Stay active: physical activities can help reduce cravings and boost your mood.", "G"))
+        msgList.add(Messages(0, "Find a replacement activity: Try to find a new hobby or physical activity to keep yourself occupied and distracted.", "G"))
+        msgList.add(Messages(0, "Keep a journal: Write down your thoughts and feelings to track your progress and stay motivated.", "G"))
+        msgList.add(Messages(0, "Celebrate milestones: Reward yourself for reaching certain milestones, such as going a week without smoking.", "G"))
+        msgList.add(Messages(0, "Be kind to yourself: Quitting smoking is a challenging process, and it's important to be patient and understanding with yourself.", "G"))
+        msgList.add(Messages(0, "Visualize success: Imagine yourself as a non-smoker and the positive changes quitting will bring to your life.", "G"))
+        msgList.add(Messages(0, "Avoid temptations: Steer clear of situations that might trigger the urge to smoke.", "G"))
+        msgList.add(Messages(0, "Stay active: Physical activities can help reduce cravings and boost your mood.", "G"))
         msgList.add(Messages(0, "Meditation can enhance creative thinking and problem-solving abilities by quieting the mind and promoting new perspectives.", "G"))
         msgList.add(Messages(0, "Be Patient and Persistent: Quitting smoking is a process, and it's normal to experience setbacks. If you slip up, don't be too hard on yourself. Learn from the experience and recommit to your decision.", "G"))
-        msgList.add(Messages(0, "Don't give up: quitting smoking is a process and it takes time, but with determination and support, you can be successful.", "G"))
-        msgList.add(Messages(0, "Practice stress-management techniques: try relaxation techniques such as deep breathing, meditation, or yoga to manage stress.", "G"))
-        msgList.add(Messages(0, "Find a healthy outlet: engage in physical activity or hobbies to channel stress in a positive way.", "G"))
-        msgList.add(Messages(0, "Avoid triggers: identify and avoid situations that trigger the urge to smoke, such as alcohol or certain people.", "G"))
+        msgList.add(Messages(0, "Don't give up: Quitting smoking is a process and it takes time, but with determination and support, you can be successful.", "G"))
+        msgList.add(Messages(0, "Practice stress-management techniques: Try relaxation techniques such as deep breathing, meditation, or yoga to manage stress.", "G"))
+        msgList.add(Messages(0, "Find a healthy outlet: Engage in physical activity or hobbies to channel stress in a positive way.", "G"))
+        msgList.add(Messages(0, "Avoid triggers: Identify and avoid situations that trigger the urge to smoke, such as alcohol or certain people.", "G"))
         msgList.add(Messages(0, "Understand Your Triggers: Identify the situations, emotions, or habits that trigger your urge to smoke. Once you know them, find healthier alternatives or coping mechanisms for those triggers.", "G"))
         msgList.add(Messages(0, "Get Rid of Smoking Paraphernalia: Discard all cigarettes, lighters, and ashtrays from your home, car, and workplace. Removing these reminders can make it easier to resist the temptation.", "G"))
         msgList.add(Messages(0, "Through meditation, you can develop a deeper understanding of your thoughts, emotions, and behaviors, leading to greater self-awareness and self-acceptance.", "G"))
@@ -1174,7 +839,6 @@ class MainActivity : BaseActivity() {
 //            dbAdapter.sqliteDatabase.execSQL("INSERT INTO TabQuitSmokingApp (SrNo, Date, Hour, Day, Reason, Smoking) VALUES (997, '2023-06-27', 3, 'Tuesday', 'Stress', 'Yes')")
 //            dbAdapter.sqliteDatabase.execSQL("INSERT INTO TabQuitSmokingApp (SrNo, Date, Hour, Day, Reason, Smoking) VALUES (999, '2023-06-27', 5, 'Tuesday', 'Stress', 'Yes')")
 //        }
-        MyPreferences.isFirstLaunch()
     }
 
     override fun onResume() {
@@ -1302,6 +966,7 @@ class MainActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.d(TAG, "MainActivity onDestroy: ")
     }
 
     fun startPeriodicWorkRequest() {
@@ -1334,11 +999,16 @@ class MainActivity : BaseActivity() {
     }
 
     fun hasTwoDaysPassed(): Boolean {
-        var firstLaunchTime: Long = MyPreferences.firstTimeLaunch
-        var currentTime: Long = System.currentTimeMillis()
-        var timeDifference: Long = currentTime - firstLaunchTime
-        twoDaysIinMillis = 259200000
-        return timeDifference >= twoDaysIinMillis
+//        var firstLaunchTime: Long = MyPreferences.firstTimeLaunch
+//        var currentTime: Long = System.currentTimeMillis()
+//        var timeDifference: Long = currentTime - firstLaunchTime
+//        twoDaysIinMillis = 259200000
+//        return timeDifference > twoDaysIinMillis
+        val currentTime = System.currentTimeMillis()
+        val difference = currentTime - MyPreferences.installationDate
+        val daysDifference = difference / (24 * 60 * 60 * 1000)
+        return daysDifference >= 3
+//        return difference >= 5000
     }
 
     fun setRepeatingAlarm(context: Context) {

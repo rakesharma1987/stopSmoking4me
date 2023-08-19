@@ -171,17 +171,8 @@ class BillingActivity : AppCompatActivity(), OnCLickProduct {
             acknowledgePurchaseParams
         ) { billingResult: BillingResult ->
             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                //user prefs to set premium
-                Toast.makeText(
-                    this,
-                    "Subscription activated, Enjoy!",
-                    Toast.LENGTH_SHORT
-                ).show()
-                //Setting premium to 1
-                // 1 - premium
-                // 0 - no premium
-//                Preferences(requireContext()).isPayment = "true"
                 MyPreferences.savePurchaseValueToPref(true)
+                this.finish()
             }
         }
         Log.d(TAG, "Purchase Token: " + purchases.purchaseToken)
